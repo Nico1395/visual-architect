@@ -1,0 +1,29 @@
+@use "vars/colors.scss" as c;
+
+html {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: c.$content;
+    color: c.$on-content;
+    font-family: 'Inter';
+}
+
+h1 {
+    font-size: 30pt;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 24pt;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 20pt;
+    font-weight: 700;
+}

@@ -20,5 +20,9 @@
 		"svelte-check": "^4.3.4",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.6"
+	},
+	"dependencies": {
+		"shadcn-svelte": "^1.1.0",
+		"uuid": "^13.0.0"
 	}
 }

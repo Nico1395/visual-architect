@@ -1,0 +1,20 @@
+@use "vars/colors.scss" as c;
+
+.content-container {
+    background-color: c.$container;
+    border: 1px c.$container-bdr solid;
+    border-radius: 20px;
+    box-sizing: border-box;
+
+    &.small {
+        padding: 0.3rem;
+    }
+
+    &.large {
+        padding: 1rem;
+    }
+}
+
+.clickable {
+    
+}
