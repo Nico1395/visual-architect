@@ -1,3 +1,7 @@
 {
-    "common.app.name": "Visual Architect"
+    "common.app.name": "Visual Architect",
+    "app.layout.navmenu.account": "Settings",
+    "app.layout.navmenu.accountdesc": "Account management and settings",
+    "app.layout.navmenu.logout": "Log Out",
+    "app.layout.navmenu.logoutdesc": "Sad to see you leave already! 🙁"
 }

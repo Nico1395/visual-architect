@@ -44,7 +44,7 @@
                 <ul class="grid w-[300px] gap-4 p-2">
                     <li>
                         <NavigationMenu.Link href="/app/account/" class="nav-link">
-                            <Icon icon="ai-gear" size="20px" />
+                            <Icon icon="ai-gear" size="17px" />
 
                             <div>
                                 <div class="font-medium nav-link-label">{$_("app.layout.navmenu.account")}</div>
@@ -53,7 +53,7 @@
                         </NavigationMenu.Link>
 
                         <NavigationMenu.Link href="/auth/logout" class="nav-link">
-                            <Icon icon="ai-door" size="20px" />
+                            <Icon icon="ai-door" size="17px" />
 
                             <div>
                                 <div class="font-medium nav-link-label">{$_("app.layout.navmenu.logout")}</div>
@@ -97,7 +97,7 @@
     :global(.nav-link) {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: start;
         gap: 0.7rem;
         justify-content: start;
     }
