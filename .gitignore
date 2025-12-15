@@ -427,3 +427,6 @@ web/dist
 *.njsproj
 *.sln
 *.sw?
+
+webapp/.svelte-kit
+webapp/.vscode/settings.json

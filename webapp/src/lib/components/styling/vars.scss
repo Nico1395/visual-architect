@@ -1,0 +1,41 @@
+// --- General Styling ---
+$radius:                      var(--radius);                          // The border radius for elements like buttons and cards.
+$background:                  var(--background);                      // The main background color for the page/app.
+$foreground:                  var(--foreground);                      // The primary text/content color displayed over the background.
+$card:                        var(--card);                            // The background color for cards/containers.
+$card-foreground:             var(--card-foreground);                 // The text/content color displayed over the card background.
+$popover:                     var(--popover);                         // The background color for popovers and tooltips.
+$popover-foreground:          var(--popover-foreground);              // The text/content color displayed over the popover background.
+
+// --- Primary Interactions & States ---
+$primary:                     var(--primary);                         // The main color for primary buttons, links, and active elements.
+$primary-foreground:          var(--primary-foreground);              // The text/icon color displayed over the primary background.
+$secondary:                   var(--secondary);                       // The background color for secondary actions or elements.
+$secondary-foreground:        var(--secondary-foreground);            // The text/icon color displayed over the secondary background.
+$muted:                       var(--muted);                           // The background color for visually muted or secondary information (e.g., hover states).
+$muted-foreground:            var(--muted-foreground);                // The text color for muted or less important information.
+$accent:                      var(--accent);                          // The background color for accent or visually prominent elements.
+$accent-foreground:           var(--accent-foreground);               // The text/icon color displayed over the accent background.
+$destructive:                 var(--destructive);                     // The color for destructive actions (e.g., 'Delete' buttons).
+
+// --- Inputs & Visual Separators ---
+$border:                      var(--border);                          // The default color for borders and dividers.
+$input:                       var(--input);                           // The background or border color for input fields.
+$ring:                        var(--ring);                            // The focus ring color around interactive elements (often matches $primary).
+
+// --- Chart/Visualization Colors ---
+$chart-1:                     var(--chart-1);                         // Color for the first data series in charts.
+$chart-2:                     var(--chart-2);                         // Color for the second data series in charts.
+$chart-3:                     var(--chart-3);                         // Color for the third data series in charts.
+$chart-4:                     var(--chart-4);                         // Color for the fourth data series in charts.
+$chart-5:                     var(--chart-5);                         // Color for the fifth data series in charts.
+
+// --- Sidebar Specific Styling ---
+$sidebar:                     var(--sidebar);                         // The background color for a dedicated sidebar component.
+$sidebar-foreground:          var(--sidebar-foreground);              // The default text/content color in the sidebar.
+$sidebar-primary:             var(--sidebar-primary);                 // The main color for primary links/active items in the sidebar.
+$sidebar-primary-foreground:  var(--sidebar-primary-foreground);      // The text/icon color displayed over the sidebar primary background.
+$sidebar-accent:              var(--sidebar-accent);                  // The background color for accent/hover states in the sidebar.
+$sidebar-accent-foreground:   var(--sidebar-accent-foreground);       // The text/icon color displayed over the sidebar accent background.
+$sidebar-border:              var(--sidebar-border);                  // The border/divider color within the sidebar.
+$sidebar-ring:                var(--sidebar-ring);                    // The focus ring color for interactive elements in the sidebar.
