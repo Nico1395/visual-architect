@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "./NavLogo.scss";
 	import favicon from '$lib/assets/visual-architect-logo_48x48.png';
     import { _ } from 'svelte-i18n';
 </script>
@@ -8,24 +9,3 @@
 
     <h2>{$_('common.app.name')}</h2>
 </a>
-
-<style lang="scss">
-    .navbar-logo {
-        flex: none;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 0.5rem;
-
-        img {
-            height: 32px;
-            width: 32px;
-        }
-
-        > h2 {
-            margin: 0;
-            line-height: normal;
-        }
-    }
-</style>

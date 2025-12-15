@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "./NavMenu.scss";
     import * as Avatar from "$lib/components/ui/avatar";
     import * as NavigationMenu from "$lib/components/ui/navigation-menu/index.js";
 	import favicon_P from '$lib/assets/favicon.png';
@@ -66,39 +67,3 @@
         </NavigationMenu.Item>
     </NavigationMenu.List>
 </NavigationMenu.Root>
-
-<style lang="scss">
-    @use "../../lib/components/styling/vars.scss" as c;
-
-    :global(.nav-menu-button-wrapper) {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    :global(.nav-menu-button) {
-        cursor: pointer;
-        height: 40px;
-        width: 40px;
-        padding: 0.5rem;
-        border: c.$border 1px solid;
-        border-radius: 25px;
-
-        > :global(.nav-menu-avatar) {
-            height: inherit;
-            width: inherit;
-        }
-
-        > :global(svg) {
-            display: none;
-        }
-    }
-
-    :global(.nav-link) {
-        display: flex;
-        flex-direction: row;
-        align-items: start;
-        gap: 0.7rem;
-        justify-content: start;
-    }
-</style>
