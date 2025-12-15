@@ -15,6 +15,9 @@
 				secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
 				link: "text-primary underline-offset-4 hover:underline",
+				github: "bg-black text-white shadow-xs hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/90",
+    			google: "bg-white text-gray-700 shadow-xs border border-gray-300 hover:bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600",
+    			microsoft: "bg-blue-600 text-white shadow-xs hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800",
 			},
 			size: {
 				default: "h-9 px-4 py-2 has-[>svg]:px-3",

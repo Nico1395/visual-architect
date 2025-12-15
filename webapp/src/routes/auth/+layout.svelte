@@ -1,14 +1,12 @@
 <script>
+    import "./+layout.scss";
     import LayoutLoader from "$lib/components/layouts/LayoutLoader.svelte";
-    import Card from "$lib/components/ui/card/card.svelte";
 
-
+    let { children } = $props();
 </script>
 
 <LayoutLoader>
     <main>
-        <Card>
-            
-        </Card>
+        {@render children()}
     </main>
 </LayoutLoader>

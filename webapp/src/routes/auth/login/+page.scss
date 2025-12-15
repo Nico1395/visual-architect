@@ -1,0 +1,41 @@
+@use "./../../../lib/components/styling/vars.scss" as c;
+
+.login-card {
+    width: 400px;
+    height: fit-content;
+    gap: 2rem;
+
+    .login-header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: none;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+
+        > img {
+            height: 50px;
+        }
+
+        > h1 {
+            margin: 0;
+        }
+    }
+
+    .login-content {
+        .login-splash-text {
+            width: 100%;
+            text-align: center;
+            color: c.$muted-foreground;
+            white-space: wrap;
+            height: 70px;
+        }
+    }
+
+    .login-footer {
+        .login-footer-github {
+            width: 100%;
+        }
+    }
+}
