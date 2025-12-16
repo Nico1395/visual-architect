@@ -4,6 +4,7 @@
     width: 400px;
     height: fit-content;
     gap: 2rem;
+    position: relative;
 
     .login-header {
         display: flex;
@@ -15,7 +16,7 @@
         white-space: nowrap;
 
         > img {
-            height: 50px;
+            height: 40px;
         }
 
         > h1 {
@@ -30,12 +31,34 @@
             color: c.$muted-foreground;
             white-space: wrap;
             height: 70px;
+            font-weight: 600;
         }
     }
 
     .login-footer {
-        .login-footer-github {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        > * {
             width: 100%;
         }
+
+        .login-footer-microsoft {
+            > img {
+                height: 15px;
+            }
+        }
+    }
+    
+    .login-copyright {
+        color: c.$muted-foreground;
+        position: absolute;
+        text-align: center;
+        right: 0;
+        left: 0;
+        bottom: -40px;
+        font-size: 10pt;
+        font-weight: 600;
     }
 }

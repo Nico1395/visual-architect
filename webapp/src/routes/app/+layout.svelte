@@ -8,7 +8,7 @@
 </script>
 
 <LayoutLoader>
-    <main>
+    <main class="app-layout">
         <nav class="navbar">
             <NavLogo />
 

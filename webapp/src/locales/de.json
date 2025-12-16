@@ -5,6 +5,8 @@
     "app.layout.navmenu.logout": "Abmelden",
     "app.layout.navmenu.logoutdesc": "Schade, dass du schon gehst! 🙁",
     "auth.login.github": "Mit GitHub anmelden",
+    "auth.login.google": "Mit Google anmelden",
+    "auth.login.Microsoft": "Mit Microsoft anmelden",
     "auth.login.calltoaction.0": "Deine Designs starten hier! Bereit für ein bisschen Magie? ✨",
     "auth.login.calltoaction.1": "Zeit zu visualisieren! Systeme sind schöner, wenn sie so gut aussehen. 😎",
     "auth.login.calltoaction.2": "Eure Systeme laufen mal wieder nur mit Kaffee? Meld' an und bring deine Projekte in Schwung! ☕",
@@ -12,5 +14,6 @@
     "auth.login.calltoaction.4": "Management, ... ne? 🫠",
     "auth.login.calltoaction.5": "Der Vertrieb hat das neue Feature verkauft. Du weißt schon, das, von dem du noch gar nichts weißt. 💵",
     "auth.login.calltoaction.6": "Kunde hats gestern bestellt. Vertrieb wollte's vorgestern fertig haben. 😐",
-    "auth.login.calltoaction.7": "Lass uns etwas designen, damit's die Entwickler versauen. 😒"
+    "auth.login.calltoaction.7": "Lass uns etwas designen, damit's die Entwickler versauen. 😒",
+    "auth.login.copyright": "Copyright © 2026 Nicolai Wolf"
 }

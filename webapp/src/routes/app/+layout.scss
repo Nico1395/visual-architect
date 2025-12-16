@@ -1,6 +1,6 @@
 @use "../../lib/components/styling/vars.scss" as c;
 
-main {
+.app-layout {
     height: 100%;
     display: flex;
     flex-direction: column;

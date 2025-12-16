@@ -2,6 +2,7 @@
     import "./+page.scss";
     import * as Card from "$lib/components/ui/card/index";
     import logo_64x64 from "$lib/assets/visual-architect-logo_64x64.png";
+    import ms_oauth from "$lib/assets/ms-oauth.png";
     import { _ } from "svelte-i18n";
     import Button from "$lib/components/ui/button/button.svelte";
     import Icon from "$lib/components/ui/Icon.svelte";
@@ -41,5 +42,21 @@
             
             {$_("auth.login.github")}
         </Button>
+
+        <Button class="login-footer-google" variant="google">
+            <Icon icon="ai-google-fill" />
+            
+            {$_("auth.login.google")}
+        </Button>
+
+        <Button class="login-footer-microsoft" variant="microsoft">
+            <img src={ms_oauth} alt={ms_oauth} />
+            
+            {$_("auth.login.microsoft")}
+        </Button>
     </Card.Footer>
+
+    <div class="login-copyright">
+        {$_("auth.login.copyright")}
+    </div>
 </Card.Root>

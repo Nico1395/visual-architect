@@ -6,7 +6,7 @@
 </script>
 
 <LayoutLoader>
-    <main>
+    <main class="auth-layout">
         {@render children()}
     </main>
 </LayoutLoader>
