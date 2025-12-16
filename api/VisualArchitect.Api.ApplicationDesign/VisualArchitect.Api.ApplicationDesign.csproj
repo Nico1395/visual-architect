@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>c1588e61-11ff-484d-bd1a-e3d399ee47f6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../VisualArchitect.Api.Orchestration.Abstractions/VisualArchitect.Api.Orchestration.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

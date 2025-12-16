@@ -416,3 +416,17 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Editor directories and files
+web/.vscode
+web/dist
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+webapp/.svelte-kit
+webapp/.vscode/settings.json

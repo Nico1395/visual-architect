@@ -1,0 +1,19 @@
+{
+    "common.app.name": "Visual Architect",
+    "app.layout.navmenu.account": "Settings",
+    "app.layout.navmenu.accountdesc": "Account management and settings",
+    "app.layout.navmenu.logout": "Log Out",
+    "app.layout.navmenu.logoutdesc": "Sad to see you leave already! 🙁",
+    "auth.login.github": "Login with GitHub",
+    "auth.login.google": "Login with Google",
+    "auth.login.microsoft": "Login with Microsoft",
+    "auth.login.calltoaction.[0]": "Your designs start here! Ready to make some magic? ✨",
+    "auth.login.calltoaction.[1]": "Time to visualize! Systems are fun when they look this good. 😎",
+    "auth.login.calltoaction.[2]": "Systems running on coffee? Log in and get your projects moving! ☕",
+    "auth.login.calltoaction.[3]": "Got a new feature? Visualize your specs before the standup. 💬",
+    "auth.login.calltoaction.[4]": "Management, ... eh? 🫠",
+    "auth.login.calltoaction.[5]": "Sales sold that new feature btw. Oh you know, the one you don't even know about yet. 💵",
+    "auth.login.calltoaction.[6]": "Customer ordered yesterday, sales wanted it done the day before that. 😐",
+    "auth.login.calltoaction.[7]": "Let's design something the devs will garble. 😒",
+    "auth.login.copyright": "Copyright © 2026 Nicolai Wolf"
+}

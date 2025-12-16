@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Domains/">
+    <Project Path="VisualArchitect.Api.ApplicationDesign/VisualArchitect.Api.ApplicationDesign.csproj" />
+    <Project Path="VisualArchitect.Api.Authentication/VisualArchitect.Api.Authentication.csproj" />
+  </Folder>
+  <Folder Name="/Orchestration/">
+    <Project Path="VisualArchitect.Api.Orchestration.Abstractions/VisualArchitect.Api.Orchestration.Abstractions.csproj" />
+    <Project Path="VisualArchitect.Api.Orchestration/VisualArchitect.Api.Orchestration.csproj" />
+  </Folder>
+  <Project Path="VisualArchitect.Api/VisualArchitect.Api.csproj" />
+</Solution>
