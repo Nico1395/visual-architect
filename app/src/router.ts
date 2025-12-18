@@ -12,6 +12,11 @@ const router = createRouter({
             meta: { layout: BlankLayout },
         },
         {
+            path: "/:pathMatch(.*)*",
+            name: "not-found",
+            component: () => import("./routes/NotFoundView.vue"),
+        },
+        {
             path: "/app/home",
             name: "home",
             component: () => import("./routes/app/home/HomeView.vue"),

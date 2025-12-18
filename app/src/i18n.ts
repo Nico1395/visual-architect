@@ -4,6 +4,12 @@ const en = {
     layout: {
         header: {
             appname: "Visual Architect",
+            usermenu: {
+                settings: "Settings",
+                settingsdesc: "Account management and settings",
+                logout: "Log Out",
+                logoutdesc: "Sad to see you leave already! 🙁",
+            },
         },
     },
 }
@@ -12,6 +18,12 @@ const de = {
     layout: {
         header: {
             appname: "Visual Architect",
+            usermenu: {
+                settings: "Einstellungen",
+                settingsdesc: "Kontoverwaltung und Einstellungen",
+                logout: "Abmelden",
+                logoutdesc: "Schade, dass du schon gehst! 🙁",
+            },
         },
     },
 }
