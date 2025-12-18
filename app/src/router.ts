@@ -1,21 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router"
-import BlankLayout from "./BlankLayout.vue"
-import AppLayout from "./app/AppLayout.vue"
+import BlankLayout from "./routes/BlankLayout.vue"
+import AppLayout from "./routes/app/AppLayout.vue"
 
-export const router = createRouter({
+const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: "/",
             name: "index",
-            component: () => import("./IndexView.vue"),
+            component: () => import("./routes/IndexView.vue"),
             meta: { layout: BlankLayout },
         },
         {
             path: "/app/home",
             name: "home",
-            component: () => import("./app/home/HomeView.vue"),
+            component: () => import("./routes/app/home/HomeView.vue"),
             meta: { layout: AppLayout },
         },
     ],
 })
+
+export default router

@@ -1,9 +1,23 @@
+<script setup lang="ts">
+import { useI18n } from "vue-i18n"
+
+const { t } = useI18n()
+</script>
+
 <template>
-    <div class="layout-header">
-        <nav class="layout-navbar"></nav>
+    <div class="header">
+        <nav class="navbar">
+            <a class="navbar-logo" href="/app/home">
+                <img />
+
+                <span> {{ t("layout.header.appname") }} </span>
+            </a>
+
+            <div class="navbar-actions"></div>
+        </nav>
     </div>
 
-    <div class="layout-content"><slot /></div>
+    <div class="content"><slot /></div>
 </template>
 
 <style>
@@ -26,16 +40,24 @@ body {
     box-sizing: border-box;
 }
 
-.layout-header {
+.header {
     flex: none;
 
-    .layout-navbar {
+    .navbar {
         border: 1px solid black;
         height: 60px;
+
+        .navbar-logo {
+            > img {
+            }
+        }
+
+        .navbar-actions {
+        }
     }
 }
 
-.layout-content {
+.content {
     flex: 1;
 }
 </style>
