@@ -17,8 +17,7 @@ internal sealed class Program
         app.UseAuthorization();
         app.UseMiddleware<CsrfMiddleware>();
 
-        app.MapPublicTest();
-        app.MapSecureTest();
+        app.MapAuthentication();
 
         app.Run();
     }

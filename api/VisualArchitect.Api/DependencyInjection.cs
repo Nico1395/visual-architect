@@ -7,7 +7,7 @@ internal static class DependencyInjection
 {
     public static IServiceCollection AddVisualArchitect(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddVisualArchitectAuthentication();
+        services.AddVisualArchitectAuthentication(configuration);
         services.AddVisualArchitectApplicationDesign();
 
         return services;

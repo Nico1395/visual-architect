@@ -7,6 +7,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddVisualArchitectOrchestration(this IServiceCollection services)
     {
+        services.AddHttpContextAccessor();
         services.AddTransient<IMediator, Mediator.Mediator>();
 
         return services;
