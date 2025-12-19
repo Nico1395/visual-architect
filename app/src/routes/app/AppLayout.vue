@@ -26,26 +26,10 @@ const { t } = useI18n()
     <div class="content"><slot /></div>
 </template>
 
+<style scoped>
+</style>
+
 <style>
-html,
-body,
-#app {
-    margin: 0;
-    height: 100%;
-}
-
-body {
-    font-family: "Inter", sans-serif;
-}
-
-#app {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    box-sizing: border-box;
-}
-
 .header {
     flex: none;
 
