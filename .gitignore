@@ -430,3 +430,4 @@ web/dist
 
 webapp/.svelte-kit
 webapp/.vscode/settings.json
+api/VisualArchitect.Api/appsettings.Development.json
