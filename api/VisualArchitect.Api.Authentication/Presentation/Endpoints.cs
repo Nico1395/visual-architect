@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class Endpoints
         builder.MapSecureTest();
 
         builder.MapLogin();
+        builder.MapMe();
 
         builder.MapCallbackGitHub();
     }
@@ -32,12 +34,43 @@ public static class Endpoints
 
     private static void MapLogin(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/login", (HttpContext ctx) =>
+        builder.MapGet("/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string returnUri) =>
         {
-            return Results.Challenge(new AuthenticationProperties
+            if (providerKey == "github")
             {
-                RedirectUri = "/auth/github/callback",
-            }, ["GitHub"]);
+                return Results.Challenge(new AuthenticationProperties
+                {
+                    RedirectUri = "/auth/github/callback",
+                    Items =
+                    {
+                        ["returnUri"] = returnUri,
+                    }
+                }, ["GitHub"]);
+            }
+
+            return Results.BadRequest();
+        });
+    }
+
+    private static void MapMe(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGet("/api/auth/me", (HttpContext ctx) =>
+        {
+            if (!ctx.User.Identity?.IsAuthenticated ?? true)
+                return Results.Unauthorized();
+
+            var user = new
+            {
+                isAuthenticated = true,
+                name = ctx.User.Identity!.Name,
+                claims = ctx.User.Claims.Select(c => new
+                {
+                    type = c.Type,
+                    value = c.Value
+                })
+            };
+
+            return Results.Ok(user);
         });
     }
 
@@ -45,17 +78,23 @@ public static class Endpoints
     {
         builder.MapGet("/auth/github/callback", async (HttpContext httpContext) =>
         {
-            var result = await httpContext.AuthenticateAsync("GitHub");                 // Exchanges the authorization code for tokens 
+            var result = await httpContext.AuthenticateAsync("GitHub");                             // Exchanges the authorization code for tokens 
             if (!result.Succeeded)
-                return Results.Redirect("/login?error=true");
+                return Results.Redirect("https://localhost:5173/auth/login?error=oauth");           // Send back to clients login page with an error
 
             // TODO -> Create an identity if not present, or update stored claims
-            var claims = result.Principal?.Claims;
+            var claims = result.Principal.Claims;
             
-            await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Principal);
+            await httpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                result.Principal,
+                result.Properties);
+
             httpContext.RequestServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(httpContext);
 
-            return Results.Redirect("/"); // SPA
+            // TODO -> Decide whether the returnUri not existing should also lead to a redirect to the auth page
+            var returnUrl = result.Properties?.Items["returnUri"] ?? "http://localhost:5173/";
+            return Results.Redirect($"http://localhost:5173/{returnUrl.TrimStart('/')}");
         });
     }
 }

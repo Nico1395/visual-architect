@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/card'
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n"
-
 const { t } = useI18n()
 
 function getSplashTextKey(index: number) {
@@ -25,6 +24,11 @@ function toggleSplashText() {
 }
 
 toggleSplashText();
+
+function login() {
+    const returnUrl = encodeURIComponent("/");
+    window.location.href = `https://localhost:7050/auth/login?p=github&r=${returnUrl}`;
+}
 </script>
 
 <template>
@@ -49,7 +53,7 @@ toggleSplashText();
         </CardContent>
 
         <CardFooter class="login-footer">
-            <Button variant="github">
+            <Button variant="github" @click="login">
                 {{ t("auth.login.oauth.github") }}
             </Button>
 

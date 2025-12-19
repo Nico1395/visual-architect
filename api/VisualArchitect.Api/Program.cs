@@ -13,6 +13,7 @@ internal sealed class Program
 
         var app = builder.Build();
 
+        app.UseCors("virtual-architect-client");
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseMiddleware<CsrfMiddleware>();

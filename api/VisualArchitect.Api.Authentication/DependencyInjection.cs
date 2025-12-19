@@ -33,9 +33,24 @@ public static class DependencyInjection
                 options.Cookie.Name = "vac";
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.Cookie.SameSite = SameSiteMode.None;
                 options.LoginPath = "/auth/login";
                 options.LogoutPath = "/auth/logout";
+
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/auth"))
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return Task.CompletedTask;
+                        }
+
+                        ctx.Response.Redirect(ctx.RedirectUri);
+                        return Task.CompletedTask;
+                    }
+                };
             })
             .AddOAuth("GitHub", options =>
             {
@@ -74,6 +89,18 @@ public static class DependencyInjection
             });
 
         services.AddAuthorization();
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("virtual-architect-client", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
 
         return services;
     }
