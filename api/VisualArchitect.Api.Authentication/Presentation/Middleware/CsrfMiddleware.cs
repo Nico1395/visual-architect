@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace VisualArchitect.Api.Authentication.Presentation.Middleware;
 
-public sealed class CsrfMiddleware(RequestDelegate next)
+public sealed class CsrfMiddleware(IAntiforgery _antiforgery) : IMiddleware
 {
-    private readonly RequestDelegate _next = next;
-
-    public async Task InvokeAsync(HttpContext context, IAntiforgery antiforgery)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         // Prüfe nur für Methoden, die CSRF-relevant sind
         if (HttpMethods.IsPost(context.Request.Method) ||
@@ -17,7 +15,7 @@ public sealed class CsrfMiddleware(RequestDelegate next)
         {
             try
             {
-                await antiforgery.ValidateRequestAsync(context);
+                await _antiforgery.ValidateRequestAsync(context);
             }
             catch (AntiforgeryValidationException)
             {
@@ -27,6 +25,6 @@ public sealed class CsrfMiddleware(RequestDelegate next)
             }
         }
 
-        await _next(context);
+        await next(context);
     }
 }
