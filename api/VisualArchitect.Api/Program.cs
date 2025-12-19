@@ -1,3 +1,6 @@
+using VisualArchitect.Api.Authentication.Presentation;
+using VisualArchitect.Api.Authentication.Presentation.Middleware;
+
 namespace VisualArchitect.Api;
 
 internal sealed class Program
@@ -6,9 +9,16 @@ internal sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddVisualArchitect();
+        builder.Services.AddVisualArchitect(builder.Configuration);
 
         var app = builder.Build();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<CsrfMiddleware>();
+
+        app.MapPublicTest();
+        app.MapSecureTest();
 
         app.Run();
     }

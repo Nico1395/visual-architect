@@ -5,7 +5,7 @@ namespace VisualArchitect.Api;
 
 internal static class DependencyInjection
 {
-    public static IServiceCollection AddVisualArchitect(this IServiceCollection services)
+    public static IServiceCollection AddVisualArchitect(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddVisualArchitectAuthentication();
         services.AddVisualArchitectApplicationDesign();
