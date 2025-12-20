@@ -1,6 +1,4 @@
-using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -77,19 +75,7 @@ public static class DependencyInjection
 
                 options.Events = new OAuthEvents
                 {
-                    OnCreatingTicket = async context =>
-                    {
-                        // GitHub UserInfo abrufen
-                        var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
-                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
-                        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                        var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
-                        response.EnsureSuccessStatusCode();
-
-                        using var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-                        context.RunClaimActions(user.RootElement);
-                    }
+                    OnCreatingTicket = OAuthEventHandler.HandleGitHubOnCreatingTicketAsync,
                 };
             });
 

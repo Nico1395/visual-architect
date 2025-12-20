@@ -15,7 +15,7 @@
     <Folder Include="Domain\Constants\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Presentation\Middleware\" />
-    <Folder Include="UseCases\" />
+    <Folder Include="Application\" />
   </ItemGroup>
 
   <ItemGroup>
