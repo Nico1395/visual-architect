@@ -13,9 +13,12 @@
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="Domain\Constants\" />
-    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Auth\Cookie\" />
+    <Folder Include="Infrastructure\Auth\Google\" />
+    <Folder Include="Infrastructure\Auth\Microsoft\" />
+    <Folder Include="Infrastructure\OAuth\" />
     <Folder Include="Presentation\Middleware\" />
-    <Folder Include="Application\" />
+    <Folder Include="UseCases\" />
   </ItemGroup>
 
   <ItemGroup>

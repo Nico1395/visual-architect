@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
-namespace VisualArchitect.Api.Authentication;
+namespace VisualArchitect.Api.Authentication.Infrastructure.Auth.GitHub;
 
-public static class OAuthEventHandler
+public static class GitHubOAuthEventHandler
 {
-    public static async Task HandleGitHubOnCreatingTicketAsync(OAuthCreatingTicketContext context)
+    public static async Task HandleOnCreatingTicketAsync(OAuthCreatingTicketContext context)
     {
         // Fetch easily accessible user info
         var userRequest = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
