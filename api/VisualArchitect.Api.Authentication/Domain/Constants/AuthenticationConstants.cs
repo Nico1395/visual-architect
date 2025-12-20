@@ -37,6 +37,8 @@ public static class AuthenticationConstants
 
             public static class Configuration
             {
+                public const string ClientId = "Authentication:GitHub:ClientId";
+                public const string ClientSecret = "Authentication:GitHub:ClientSecret";
             }
 
             public static class ClaimTypes
@@ -51,12 +53,26 @@ public static class AuthenticationConstants
         {
             public const string Scheme = "Google";
             public const string ProviderKey = "google";
+            
+            public static class Configuration
+            {
+                public const string ClientId = "Authentication:Google:ClientId";
+                public const string ClientSecret = "Authentication:Google:ClientSecret";
+            }
+
         }
 
         public static class Microsoft
         {
             public const string Scheme = "Microsoft";
             public const string ProviderKey = "microsoft";
+            
+            public static class Configuration
+            {
+                public const string ClientId = "Authentication:Microsoft:ClientId";
+                public const string ClientSecret = "Authentication:Microsoft:ClientSecret";
+            }
+
         }
     }
 
@@ -70,6 +86,6 @@ public static class AuthenticationConstants
 
     public static class Configuration
     {
-        public const string ClientBaseUrl = "VA_CLIENT_BASE_URL";
+        public const string ClientBaseUrl = "Clients:VisualArchitect:BaseUrl";
     }
 }

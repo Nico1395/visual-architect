@@ -17,8 +17,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddVisualArchitectAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        var gitHubClientId = configuration["Authentication:GitHub:ClientId"] ?? throw new MissingConfigurationException("Authentication:GitHub:ClientId");
-        var gitHubClientSecret = configuration["Authentication:GitHub:ClientSecret"] ?? throw new MissingConfigurationException("Authentication:GitHub:ClientSecret");
+        var gitHubClientId = configuration[AuthenticationConstants.Schemes.GitHub.Configuration.ClientId] ?? throw new MissingConfigurationException(AuthenticationConstants.Schemes.GitHub.Configuration.ClientId);
+        var gitHubClientSecret = configuration[AuthenticationConstants.Schemes.GitHub.Configuration.ClientSecret] ?? throw new MissingConfigurationException(AuthenticationConstants.Schemes.GitHub.Configuration.ClientSecret);
+
+        var clientBaseUrl = configuration[AuthenticationConstants.Configuration.ClientBaseUrl] ?? throw new MissingConfigurationException(AuthenticationConstants.Configuration.ClientBaseUrl);
 
         services.AddAntiforgery(options =>
         {
@@ -98,7 +100,7 @@ public static class DependencyInjection
             options.AddPolicy(AuthenticationConstants.Cors.VirtualArchitectClient.PolicyName, policy =>
             {
                 policy
-                    .WithOrigins("https://localhost:5173")
+                    .WithOrigins(clientBaseUrl)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

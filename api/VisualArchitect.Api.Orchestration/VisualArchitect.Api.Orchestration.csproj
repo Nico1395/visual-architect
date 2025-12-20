@@ -11,4 +11,8 @@
     <ProjectReference Include="../VisualArchitect.Api.Authentication/VisualArchitect.Api.Authentication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>

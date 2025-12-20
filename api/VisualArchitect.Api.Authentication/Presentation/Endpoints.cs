@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using VisualArchitect.Api.Authentication.Domain.Constants;
+using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
 
 namespace VisualArchitect.Api.Authentication.Presentation;
 
@@ -96,12 +97,15 @@ public static class Endpoints
 
     private static void MapOAuthCallback(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromRoute(Name = "providerKey")] string providerKey) =>
+        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromServices] IClientUrlBuilder clientUrlBuilder, [FromRoute(Name = "providerKey")] string providerKey) =>
         {
             var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);
-            var result = await httpContext.AuthenticateAsync(scheme);                                               // Exchanges the authorization code for tokens
+            var result = await httpContext.AuthenticateAsync(scheme);               // Exchanges the authorization code for tokens
             if (!result.Succeeded)
-                return Results.Redirect("https://localhost:5173/auth/login?error=oauth");                           // Send back to clients login page with an error
+            {
+                var loginUrl = clientUrlBuilder.CreateRequiredUrl("/auth/login", [("error", "oauth")]);
+                return Results.Redirect(loginUrl);                                  // Send back to clients login page with an error
+            }
 
             var returnUri = result.Properties.Items["returnUri"];
             if (string.IsNullOrWhiteSpace(returnUri))
@@ -117,7 +121,9 @@ public static class Endpoints
                 result.Properties);
 
             httpContext.RequestServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(httpContext);
-            return Results.Redirect($"https://localhost:5173/{returnUri.TrimStart('/')}");
+
+            var returnUrl = clientUrlBuilder.CreateRequiredUrl(returnUri);
+            return Results.Redirect(returnUrl);
         });
     }
 }
