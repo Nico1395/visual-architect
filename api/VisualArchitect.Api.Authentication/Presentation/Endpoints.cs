@@ -20,7 +20,7 @@ public static class Endpoints
         builder.MapLogin();
         builder.MapMe();
 
-        builder.MapCallbackGitHub();
+        builder.MapOAuthCallback();
     }
 
     private static void MapPublicTest(this IEndpointRouteBuilder builder)
@@ -41,7 +41,7 @@ public static class Endpoints
             {
                 return Results.Challenge(new AuthenticationProperties
                 {
-                    RedirectUri = "/auth/github/callback",
+                    RedirectUri = "/auth/callback/github",
                     Items =
                     {
                         ["returnUri"] = returnUri,
@@ -75,9 +75,9 @@ public static class Endpoints
         });
     }
 
-    private static void MapCallbackGitHub(this IEndpointRouteBuilder builder)
+    private static void MapOAuthCallback(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/github/callback", async (HttpContext httpContext) =>
+        builder.MapGet("/auth/callback/github", async (HttpContext httpContext) =>
         {
             var result = await httpContext.AuthenticateAsync(AuthenticationConstants.Schemes.GitHub.Scheme);                             // Exchanges the authorization code for tokens 
             if (!result.Succeeded)
