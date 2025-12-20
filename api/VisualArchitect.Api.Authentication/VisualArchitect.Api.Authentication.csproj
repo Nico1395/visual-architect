@@ -16,6 +16,7 @@
     <Folder Include="Infrastructure\Auth\Cookie\" />
     <Folder Include="Infrastructure\Auth\Google\" />
     <Folder Include="Infrastructure\Auth\Microsoft\" />
+    <Folder Include="Infrastructure\EntityConfigurations\" />
     <Folder Include="Infrastructure\OAuth\" />
     <Folder Include="Presentation\Middleware\" />
     <Folder Include="UseCases\" />
