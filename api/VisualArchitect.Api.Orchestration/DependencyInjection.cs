@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Configuration;
 using VisualArchitect.Api.Orchestration.Infrastructure.Context;
+using VisualArchitect.Api.Preferences;
 
 namespace VisualArchitect.Api.Orchestration;
 
@@ -15,8 +17,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddVisualArchitectOrchestration(this IServiceCollection services, IConfiguration configuration)
     {
+        var assemblies = YieldAssemblies().ToList();
+
         services.AddVisualArchitectAuthentication(configuration);
         services.AddVisualArchitectApplicationDesign();
+        services.AddVisualArchitectPreferences();
 
         services.AddHttpContextAccessor();
         services.AddTransient<IMediator, Mediator.Mediator>();
@@ -30,10 +35,18 @@ public static class DependencyInjection
         services.AddOptions<ClientsOptions>()
             .Bind(configuration.GetSection("Clients"))
             .ValidateOnStart();
-    
+
         services.AddTransient<IInterceptor, DomainInterfaceSaveChangesInterceptor>();
         services.AddDbContext<OrchestrationDbContext>();
 
         return services;
+    }
+
+    public static IEnumerable<Assembly> YieldAssemblies()
+    {
+        yield return Assembly.Load("VisualArchitect.Api.ApplicationDesign");
+        yield return Assembly.Load("VisualArchitect.Api.Authentication");
+        yield return Assembly.Load("VisualArchitect.Api.Preferences");
+        yield return Assembly.Load("VisualArchitect.Api.Orchestration");
     }
 }

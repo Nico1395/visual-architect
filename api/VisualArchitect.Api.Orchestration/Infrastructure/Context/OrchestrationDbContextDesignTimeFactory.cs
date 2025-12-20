@@ -21,7 +21,13 @@ public sealed class OrchestrationDbContextDesignTimeFactory : IDesignTimeDbConte
         var connectionStrings = new ConnectionStringsOptions(configuration.GetConnectionString("Default") ?? throw new MissingConfigurationException("ConnectionStrings:Default"));
         var options = Options.Create(connectionStrings);
 
+        // Configure assemblies
+        var dbContextConfiguration = new DbContextConfiguration() { AssembliesToScan = DependencyInjection.YieldAssemblies().ToList() };
+
         // Create the DbContext
-        return new OrchestrationDbContext(options, []);
+        return new OrchestrationDbContext(
+            options,
+            dbContextConfiguration,
+            _interceptors: []);
     }
 }

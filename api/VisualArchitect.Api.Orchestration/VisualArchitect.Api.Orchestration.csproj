@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="../VisualArchitect.Api.ApplicationDesign/VisualArchitect.Api.ApplicationDesign.csproj" />
     <ProjectReference Include="../VisualArchitect.Api.Authentication/VisualArchitect.Api.Authentication.csproj" />
+    <ProjectReference Include="..\VisualArchitect.Api.Preferences\VisualArchitect.Api.Preferences.csproj" />
   </ItemGroup>
 
   <ItemGroup>
