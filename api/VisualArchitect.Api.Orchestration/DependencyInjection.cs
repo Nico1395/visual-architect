@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VisualArchitect.Api.ApplicationDesign;
@@ -6,6 +7,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Configuration;
+using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 
 namespace VisualArchitect.Api.Orchestration;
 
@@ -29,6 +31,9 @@ public static class DependencyInjection
             .Bind(configuration.GetSection("Clients"))
             .ValidateOnStart();
     
+        services.AddTransient<IInterceptor, DomainInterfaceSaveChangesInterceptor>();
+        services.AddDbContext<OrchestrationDbContext>();
+
         return services;
     }
 }
