@@ -6,6 +6,18 @@ public static class AuthenticationConstants
 {
     public static class Schemes
     {
+        public static string ToScheme(string providerKey)
+        {
+            ArgumentNullException.ThrowIfNull(providerKey, nameof(providerKey));
+            return providerKey switch
+            {
+                GitHub.ProviderKey => GitHub.Scheme,
+                Google.ProviderKey => Google.Scheme,
+                Microsoft.ProviderKey => Microsoft.Scheme,
+                _ => throw new ArgumentException("Unsupported provider key!", nameof(providerKey)),
+            };
+        }
+
         public static class Cookie
         {
             public const string Scheme = CookieAuthenticationDefaults.AuthenticationScheme;

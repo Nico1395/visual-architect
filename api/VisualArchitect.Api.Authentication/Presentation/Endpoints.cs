@@ -35,21 +35,17 @@ public static class Endpoints
 
     private static void MapLogin(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string returnUri) =>
+        builder.MapGet("/api/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string? returnUri) =>
         {
-            if (providerKey == AuthenticationConstants.Schemes.GitHub.ProviderKey)
-            {
-                return Results.Challenge(new AuthenticationProperties
-                {
-                    RedirectUri = "/auth/callback/github",
-                    Items =
-                    {
-                        ["returnUri"] = returnUri,
-                    }
-                }, [AuthenticationConstants.Schemes.GitHub.Scheme]);
-            }
+            if (string.IsNullOrWhiteSpace(providerKey) || string.IsNullOrWhiteSpace(returnUri))
+                return Results.BadRequest("Both 'p' and 'r' are mandatory query parameters!");
 
-            return Results.BadRequest();
+            var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);
+            return Results.Challenge(new AuthenticationProperties
+            {
+                RedirectUri = $"/auth/callback/{providerKey}",
+                Items = { ["returnUri"] = returnUri, }
+            }, authenticationSchemes: [scheme]);
         });
     }
 
@@ -79,9 +75,8 @@ public static class Endpoints
     {
         builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromRoute(Name = "providerKey")] string providerKey) =>
         {
-            // TODO -> Map the provider key to the correct authentication scheme!
-
-            var result = await httpContext.AuthenticateAsync(AuthenticationConstants.Schemes.GitHub.Scheme);        // Exchanges the authorization code for tokens 
+            var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);
+            var result = await httpContext.AuthenticateAsync(scheme);                                               // Exchanges the authorization code for tokens
             if (!result.Succeeded)
                 return Results.Redirect("https://localhost:5173/auth/login?error=oauth");                           // Send back to clients login page with an error
 
