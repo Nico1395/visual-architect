@@ -77,15 +77,18 @@ public static class Endpoints
 
     private static void MapOAuthCallback(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/callback/github", async (HttpContext httpContext) =>
+        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromRoute(Name = "providerKey")] string providerKey) =>
         {
-            var result = await httpContext.AuthenticateAsync(AuthenticationConstants.Schemes.GitHub.Scheme);                             // Exchanges the authorization code for tokens 
+            // TODO -> Map the provider key to the correct authentication scheme!
+
+            var result = await httpContext.AuthenticateAsync(AuthenticationConstants.Schemes.GitHub.Scheme);        // Exchanges the authorization code for tokens 
             if (!result.Succeeded)
-                return Results.Redirect("https://localhost:5173/auth/login?error=oauth");           // Send back to clients login page with an error
+                return Results.Redirect("https://localhost:5173/auth/login?error=oauth");                           // Send back to clients login page with an error
 
             // TODO -> Create an identity if not present, or update stored claims
+            // TODO -> Remember to respect the providerKey when exctracting claims. Providers might have different names for different claims.
             var claims = result.Principal.Claims;
-            
+
             await httpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 result.Principal,
