@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VisualArchitect.Api.Authentication.Domain.Constants;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
 using VisualArchitect.Api.Orchestration.Abstractions.Exceptions;
 
@@ -21,16 +22,16 @@ public static class DependencyInjection
 
         services.AddAntiforgery(options =>
         {
-            options.HeaderName = "X-CSRF-TOKEN";
-            options.Cookie.Name = "vac_csrf";
+            options.HeaderName = AuthenticationConstants.Schemes.Antiforgery.HeaderName;
+            options.Cookie.Name = AuthenticationConstants.Schemes.Antiforgery.Name;
             options.Cookie.HttpOnly = false;
         });
         services.AddTransient<CsrfMiddleware>();
 
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        services.AddAuthentication(AuthenticationConstants.Schemes.Cookie.Scheme)
+            .AddCookie(AuthenticationConstants.Schemes.Cookie.Scheme, options =>
             {
-                options.Cookie.Name = "vac";
+                options.Cookie.Name = AuthenticationConstants.Schemes.Cookie.Name;
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
@@ -52,7 +53,7 @@ public static class DependencyInjection
                     }
                 };
             })
-            .AddOAuth("GitHub", options =>
+            .AddOAuth(AuthenticationConstants.Schemes.GitHub.Scheme, options =>
             {
                 options.ClientId = gitHubClientId;
                 options.ClientSecret = gitHubClientSecret;
@@ -66,9 +67,9 @@ public static class DependencyInjection
 
                 options.SaveTokens = true; // Tokens bleiben im AuthenticationTicket, serverseitig
 
-                options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
-                options.ClaimActions.MapJsonKey(ClaimTypes.Name, "login");
-                options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+                options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Id);
+                options.ClaimActions.MapJsonKey(ClaimTypes.Name, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Login);
+                options.ClaimActions.MapJsonKey(ClaimTypes.Email, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Email);
 
                 options.Events = new OAuthEvents
                 {
@@ -92,7 +93,7 @@ public static class DependencyInjection
 
         services.AddCors(options =>
         {
-            options.AddPolicy("virtual-architect-client", policy =>
+            options.AddPolicy(AuthenticationConstants.Cors.VirtualArchitectClient.PolicyName, policy =>
             {
                 policy
                     .WithOrigins("http://localhost:5173")

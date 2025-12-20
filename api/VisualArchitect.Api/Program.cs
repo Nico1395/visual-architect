@@ -1,3 +1,4 @@
+using VisualArchitect.Api.Authentication.Domain.Constants;
 using VisualArchitect.Api.Authentication.Presentation;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
 
@@ -14,7 +15,7 @@ internal sealed class Program
 
         var app = builder.Build();
 
-        app.UseCors("virtual-architect-client");
+        app.UseCors(AuthenticationConstants.Cors.VirtualArchitectClient.PolicyName);
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseMiddleware<CsrfMiddleware>();

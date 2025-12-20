@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using VisualArchitect.Api.Authentication.Domain.Constants;
 
 namespace VisualArchitect.Api.Authentication.Presentation;
 
@@ -36,7 +37,7 @@ public static class Endpoints
     {
         builder.MapGet("/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string returnUri) =>
         {
-            if (providerKey == "github")
+            if (providerKey == AuthenticationConstants.Schemes.GitHub.ProviderKey)
             {
                 return Results.Challenge(new AuthenticationProperties
                 {
@@ -45,7 +46,7 @@ public static class Endpoints
                     {
                         ["returnUri"] = returnUri,
                     }
-                }, ["GitHub"]);
+                }, [AuthenticationConstants.Schemes.GitHub.Scheme]);
             }
 
             return Results.BadRequest();
@@ -78,7 +79,7 @@ public static class Endpoints
     {
         builder.MapGet("/auth/github/callback", async (HttpContext httpContext) =>
         {
-            var result = await httpContext.AuthenticateAsync("GitHub");                             // Exchanges the authorization code for tokens 
+            var result = await httpContext.AuthenticateAsync(AuthenticationConstants.Schemes.GitHub.Scheme);                             // Exchanges the authorization code for tokens 
             if (!result.Succeeded)
                 return Results.Redirect("https://localhost:5173/auth/login?error=oauth");           // Send back to clients login page with an error
 

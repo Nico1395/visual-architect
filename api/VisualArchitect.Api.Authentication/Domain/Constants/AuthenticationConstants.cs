@@ -15,7 +15,7 @@ public static class AuthenticationConstants
         public static class Antiforgery
         {
             public const string HeaderName = "X-CSRF-TOKEN";
-            public const string Name = "vac-csrf";
+            public const string Name = "vac_csrf";
         }
 
         public static class GitHub
