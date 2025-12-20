@@ -1,18 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router"
-import BlankLayout from "./routes/BlankLayout.vue"
 import AppLayout from "./routes/app/AppLayout.vue"
 import AuthLayout from "./routes/auth/AuthLayout.vue"
-import http from "./http"
+import { isAuthenticated } from "./auth"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {
-            path: "/",
-            name: "index",
-            component: () => import("./routes/IndexView.vue"),
-            meta: { layout: BlankLayout },
-        },
         {
             path: "/:pathMatch(.*)*",
             name: "not-found",
@@ -39,19 +32,18 @@ const router = createRouter({
     ],
 })
 
-const publicNames = ["index", "login"];
-router.beforeEach(async (to, from, next) => {
+const publicNames = ["login"];
+router.beforeEach(async (to, _, next) => {
     const nextName = to.name?.toString();
     if (nextName && publicNames.includes(nextName)) {
         return next();
     }
 
-    try {
-        await http.get("/api/auth/me");
-        next();
-    } catch {
-        next({ path: "/auth/login", query: { returnUrl: to.fullPath } });
+    if (await isAuthenticated()) {
+        return next();
     }
+
+    next({ path: "/auth/login", query: { returnUrl: to.fullPath } });
 });
 
 export default router

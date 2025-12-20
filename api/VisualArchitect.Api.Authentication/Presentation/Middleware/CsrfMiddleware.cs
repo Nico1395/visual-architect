@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 
@@ -19,6 +20,8 @@ public sealed class CsrfMiddleware(IAntiforgery _antiforgery) : IMiddleware
             }
             catch (AntiforgeryValidationException ex)
             {
+                Debug.WriteLine(ex.Message);
+
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsync("Invalid CSRF token");
                 return;

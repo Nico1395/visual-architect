@@ -8,13 +8,14 @@ import {
 } from '@/components/ui/card'
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n"
+
 const { t } = useI18n()
+const splashTextKey = ref("")
 
 function getSplashTextKey(index: number) {
     return `auth.login.splash.spl${index}`;
 }
 
-const splashTextKey = ref("")
 function toggleSplashText() {
     const splashTextKeyIndex = parseInt(localStorage.getItem("splash_index") ?? "0");
     splashTextKey.value = getSplashTextKey(splashTextKeyIndex);
@@ -23,14 +24,14 @@ function toggleSplashText() {
     localStorage.setItem("splash_index", nextIndex.toString());
 }
 
-toggleSplashText();
-
 function login() {
     const returnUrl = encodeURIComponent(
         new URLSearchParams(window.location.search).get("returnUrl") || "/app/home"
     );
     window.location.href = `https://localhost:7050/api/auth/login?p=github&r=${returnUrl}`;
 }
+
+toggleSplashText();
 </script>
 
 <template>
