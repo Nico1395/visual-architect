@@ -35,7 +35,7 @@ public static class Endpoints
 
     private static void MapLogin(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string returnUri) =>
+        builder.MapGet("/api/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string returnUri) =>
         {
             if (providerKey == AuthenticationConstants.Schemes.GitHub.ProviderKey)
             {

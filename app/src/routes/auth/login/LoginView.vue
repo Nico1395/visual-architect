@@ -27,7 +27,7 @@ toggleSplashText();
 
 function login() {
     const returnUrl = encodeURIComponent("/");
-    window.location.href = `https://localhost:7050/auth/login?p=github&r=${returnUrl}`;
+    window.location.href = `https://localhost:7050/api/auth/login?p=github&r=${returnUrl}`;
 }
 </script>
 

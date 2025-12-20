@@ -35,8 +35,8 @@ public static class DependencyInjection
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
-                options.LoginPath = "/auth/login";
-                options.LogoutPath = "/auth/logout";
+                options.LoginPath = "/api/auth/login";
+                options.LogoutPath = "/api/auth/logout";
 
                 options.Events = new CookieAuthenticationEvents
                 {
