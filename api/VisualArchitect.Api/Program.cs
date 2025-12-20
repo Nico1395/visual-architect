@@ -10,6 +10,7 @@ internal sealed class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddVisualArchitect(builder.Configuration);
+        builder.Configuration.AddEnvironmentVariables();
 
         var app = builder.Build();
 
