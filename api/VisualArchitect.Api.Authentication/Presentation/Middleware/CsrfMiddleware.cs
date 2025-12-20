@@ -17,7 +17,7 @@ public sealed class CsrfMiddleware(IAntiforgery _antiforgery) : IMiddleware
             {
                 await _antiforgery.ValidateRequestAsync(context);
             }
-            catch (AntiforgeryValidationException)
+            catch (AntiforgeryValidationException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsync("Invalid CSRF token");

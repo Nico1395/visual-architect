@@ -5,11 +5,24 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import UserMenuItem from "./UserMenuItem.vue"
+import UserMenuItemLink from "./UserMenuItemLink.vue"
+import UserMenuItemButton from "./UserMenuItemButton.vue"
 import { useI18n } from "vue-i18n"
 import Separator from "@/components/ui/separator/Separator.vue"
+import http from "@/http";
+import { useRouter } from "vue-router"
 
 const { t } = useI18n()
+const router = useRouter();
+
+async function logout() {
+  try {
+    await http.post("/api/auth/logout");
+  } finally {
+    sessionStorage.removeItem("vat");
+    router.replace("/auth/login");
+  }
+}
 </script>
 
 <template>
@@ -25,7 +38,7 @@ const { t } = useI18n()
 
         <DropdownMenuContent align="end" :side-offset="8">
             <div class="user-menu-content">
-                <UserMenuItem
+                <UserMenuItemLink
                     href="/app/settings"
                     icon="ai-gear"
                     :title="t('layout.header.usermenu.settings')"
@@ -34,8 +47,8 @@ const { t } = useI18n()
 
                 <Separator />
 
-                <UserMenuItem
-                    href="/auth/logout"
+                <UserMenuItemButton
+                    @click="logout"
                     icon="ai-door"
                     :title="t('layout.header.usermenu.logout')"
                     :description="t('layout.header.usermenu.logoutdesc')"

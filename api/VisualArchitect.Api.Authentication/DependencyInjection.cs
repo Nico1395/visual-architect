@@ -24,7 +24,9 @@ public static class DependencyInjection
         {
             options.HeaderName = AuthenticationConstants.Schemes.Antiforgery.HeaderName;
             options.Cookie.Name = AuthenticationConstants.Schemes.Antiforgery.Name;
-            options.Cookie.HttpOnly = false;
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.None;
         });
         services.AddTransient<CsrfMiddleware>();
 
@@ -96,7 +98,7 @@ public static class DependencyInjection
             options.AddPolicy(AuthenticationConstants.Cors.VirtualArchitectClient.PolicyName, policy =>
             {
                 policy
-                    .WithOrigins("http://localhost:5173")
+                    .WithOrigins("https://localhost:5173")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

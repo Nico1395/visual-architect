@@ -18,8 +18,9 @@ public static class Endpoints
         builder.MapSecureTest();
 
         builder.MapLogin();
+        builder.MapLogout();
         builder.MapMe();
-
+        builder.MapCsrf();
         builder.MapOAuthCallback();
     }
 
@@ -47,6 +48,28 @@ public static class Endpoints
                 Items = { ["returnUri"] = returnUri, }
             }, authenticationSchemes: [scheme]);
         });
+    }
+
+    private static void MapLogout(this IEndpointRouteBuilder builder)
+    {
+        builder.MapPost("/api/auth/logout", async (HttpContext httpContext) =>
+        {
+            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            httpContext.Response.Cookies.Delete("vac_csrf");
+
+            return Results.NoContent();
+        })
+        .RequireAuthorization();
+    }
+
+    private static void MapCsrf(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGet("/api/auth/csrf", (HttpContext httpContext, IAntiforgery antiforgery) =>
+        {
+            var tokens = antiforgery.GetAndStoreTokens(httpContext);
+            return Results.Ok(new { token = tokens.RequestToken });
+        })
+        .RequireAuthorization();
     }
 
     private static void MapMe(this IEndpointRouteBuilder builder)
@@ -80,6 +103,10 @@ public static class Endpoints
             if (!result.Succeeded)
                 return Results.Redirect("https://localhost:5173/auth/login?error=oauth");                           // Send back to clients login page with an error
 
+            var returnUri = result.Properties.Items["returnUri"];
+            if (string.IsNullOrWhiteSpace(returnUri))
+                return Results.BadRequest("No return URI specified!");
+
             // TODO -> Create an identity if not present, or update stored claims
             // TODO -> Remember to respect the providerKey when exctracting claims. Providers might have different names for different claims.
             var claims = result.Principal.Claims;
@@ -90,10 +117,7 @@ public static class Endpoints
                 result.Properties);
 
             httpContext.RequestServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(httpContext);
-
-            // TODO -> Decide whether the returnUri not existing should also lead to a redirect to the auth page
-            var returnUrl = result.Properties?.Items["returnUri"] ?? "http://localhost:5173/";
-            return Results.Redirect($"http://localhost:5173/{returnUrl.TrimStart('/')}");
+            return Results.Redirect($"https://localhost:5173/{returnUri.TrimStart('/')}");
         });
     }
 }
