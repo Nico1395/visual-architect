@@ -1,5 +1,5 @@
+using VisualArchitect.Api.Authentication;
 using VisualArchitect.Api.Authentication.Domain.Constants;
-using VisualArchitect.Api.Authentication.Presentation;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
 
 namespace VisualArchitect.Api;
@@ -20,7 +20,7 @@ internal sealed class Program
         app.UseAuthorization();
         app.UseMiddleware<CsrfMiddleware>();
 
-        app.MapAuthentication();
+        app.MapVisualArchitect();
 
         app.Run();
     }

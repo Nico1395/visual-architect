@@ -17,6 +17,7 @@
     <Folder Include="Infrastructure\Auth\Microsoft\" />
     <Folder Include="Infrastructure\EntityConfigurations\" />
     <Folder Include="Infrastructure\OAuth\" />
+    <Folder Include="Presentation\Contracts\" />
     <Folder Include="Presentation\Middleware\" />
   </ItemGroup>
 
