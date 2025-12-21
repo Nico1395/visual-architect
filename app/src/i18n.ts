@@ -9,6 +9,7 @@ const en = {
                 settingsdesc: "Account management and settings",
                 logout: "Log Out",
                 logoutdesc: "Sad to see you leave already! 🙁",
+                signedinas: "Signed in as",
             },
         },
     },
