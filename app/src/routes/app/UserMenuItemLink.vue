@@ -13,7 +13,7 @@ const props = defineProps<{
 
 <template>
     <DropdownMenuItem class="user-menu-item">
-        <a :href>
+        <router-link :to="href">
             <div class="icon-section">
                 <Icon :icon :size="props.iconSize" />
             </div>
@@ -22,7 +22,7 @@ const props = defineProps<{
                 <div class="title">{{ props.title }}</div>
                 <div class="description">{{ props.description }}</div>
             </div>
-        </a>
+        </router-link>
     </DropdownMenuItem>
 </template>
 

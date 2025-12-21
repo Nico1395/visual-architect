@@ -5,29 +5,43 @@ import { isAuthenticated } from "./auth"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
+    routes: [{
+        path: "/auth",
+        redirect: "/auth/login",
+        component: AuthLayout,
+        children: [{
+            path: "login",
+            name: "login",
+            component: () => import("./routes/auth/login/LoginView.vue"),
+        },
+        {
+            path: "register",
+            name: "register",
+            component: () => import("./routes/auth/register/RegisterView.vue"),
+        },
+        ],
+    },
+    {
+        path: "/app",
+        redirect: "/app/home",
+        component: AppLayout,
+        children: [
+        {
+            path: "home",
+            name: "home",
+            component: () => import("./routes/app/home/HomeView.vue"),
+        },
+        {
+            path: "profile",
+            name: "profile",
+            component: () => import("./routes/app/profile/ProfileView.vue"),
+        }
+        ],
+        },
         {
             path: "/:pathMatch(.*)*",
             name: "not-found",
             component: () => import("./routes/NotFoundView.vue"),
-        },
-        {
-            path: "/app/home",
-            name: "home",
-            component: () => import("./routes/app/home/HomeView.vue"),
-            meta: { layout: AppLayout },
-        },
-        {
-            path: "/auth/login",
-            name: "login",
-            component: () => import("./routes/auth/login/LoginView.vue"),
-            meta: { layout: AuthLayout },
-        },
-        {
-            path: "/auth/register",
-            name: "register",
-            component: () => import("./routes/auth/register/RegisterView.vue"),
-            meta: { layout: AuthLayout },
         },
     ],
 })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
 import UserMenu from "./UserMenu.vue"
+import logo_64x64 from "@/assets/img/logo/visual-architect-logo_64x64.png"
 
 const { t } = useI18n()
 </script>
@@ -8,14 +9,14 @@ const { t } = useI18n()
 <template>
     <div class="header">
         <nav class="navbar">
-            <a class="navbar-logo" href="/app/home">
+            <router-link class="navbar-logo" to="/app/home">
                 <img
-                    src="@/assets/logo/visual-architect-logo_64x64.png"
+                    :src="logo_64x64"
                     alt="Visual Architect Logo"
                 />
 
                 <span> {{ t("layout.header.appname") }} </span>
-            </a>
+            </router-link>
 
             <div class="navbar-actions">
                 <UserMenu />
@@ -23,7 +24,9 @@ const { t } = useI18n()
         </nav>
     </div>
 
-    <div class="content"><slot /></div>
+    <div class="content">
+        <router-view />
+    </div>
 </template>
 
 <style scoped>
