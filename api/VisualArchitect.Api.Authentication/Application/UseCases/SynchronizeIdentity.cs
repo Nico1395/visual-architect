@@ -1,13 +1,26 @@
+using System.Security.Claims;
 using VisualArchitect.Api.Authentication.Application.Persistence;
 using VisualArchitect.Api.Authentication.Domain;
 using VisualArchitect.Api.Authentication.Domain.Repositories;
+using VisualArchitect.Api.Authentication.Infrastructure.Auth;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 
 namespace VisualArchitect.Api.Authentication.Application.UseCases;
 
 internal static class SynchronizeIdentity
 {
-    public sealed record SynchronizeIdentityCommand(string ProviderKey, string ExternalId, string? DisplayName, string Email, string? AvatarUrl) : ICommand;
+    public sealed record SynchronizeIdentityCommand(string ProviderKey, string ExternalId, string? DisplayName, string Email, string? AvatarUrl) : ICommand
+    {
+        public static SynchronizeIdentityCommand Create(string providerKey, IReadOnlyList<Claim> claims)
+        {
+            return new SynchronizeIdentityCommand(
+                providerKey,
+                ExternalId: claims.GetSingleClaim(ClaimTypes.NameIdentifier),
+                DisplayName: claims.GetSingleClaimOrDefault(ClaimTypes.Name),
+                Email: claims.GetSingleClaim(ClaimTypes.Email),
+                AvatarUrl: claims.GetClaimOrDefault("avatarurl"));
+        }
+    }
 
     private sealed class SynchronizeIdentityCommandHandler(
         IAuthenticationUnitOfWork _authenticationUnitOfWork,
@@ -27,7 +40,7 @@ internal static class SynchronizeIdentity
         {
             var exists = await _identityReadRepository.ExistsAsync(oAuthIdentity.IdentityId, cancellationToken);
             if (exists)
-                return CommandResponseFactory.NoContent_204();
+                return CommandResponseFactory.NoContent_204().Build();
 
             var identity = new Identity()
             {
@@ -39,14 +52,14 @@ internal static class SynchronizeIdentity
             await _identityWriteRepsitory.AddAsync(identity, cancellationToken);
             await _authenticationUnitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResponseFactory.Created_201();
+            return CommandResponseFactory.Created_201().Build();
         }
 
         private async Task<ICommandResponse> CreateOAuthIdentityAsync(SynchronizeIdentityCommand request, CancellationToken cancellationToken)
         {
             var provider = await _oAuthProviderReadRepository.GetByKeyAsync(request.ProviderKey, cancellationToken);
             if (provider == null)
-                return CommandResponseFactory.BadRequest_400();
+                return CommandResponseFactory.BadRequest_400().Build();
 
             var identity = new Identity()
             {
@@ -67,7 +80,10 @@ internal static class SynchronizeIdentity
             await _oAuthIdentityWriteRepository.AddAsync(oAuthIdentity, cancellationToken);
             await _authenticationUnitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResponseFactory.Created_201();
+            return CommandResponseFactory
+                .Created_201()
+                .WithMetadata("id", identity.Id)
+                .Build();
         }
     }
 }
