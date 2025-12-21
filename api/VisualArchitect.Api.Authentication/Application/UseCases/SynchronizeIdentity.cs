@@ -40,7 +40,7 @@ internal static class SynchronizeIdentity
         {
             var exists = await _identityReadRepository.ExistsAsync(oAuthIdentity.IdentityId, cancellationToken);
             if (exists)
-                return CommandResponseFactory.NoContent_204().Build();
+                return CommandResponseFactory.NoContent_204().WithMetadata("id", oAuthIdentity.IdentityId).Build();
 
             var identity = new Identity()
             {
@@ -52,7 +52,10 @@ internal static class SynchronizeIdentity
             await _identityWriteRepsitory.AddAsync(identity, cancellationToken);
             await _authenticationUnitOfWork.CommitAsync(cancellationToken);
 
-            return CommandResponseFactory.Created_201().Build();
+            return CommandResponseFactory
+                .Created_201()
+                .WithMetadata("id", identity.Id)
+                .Build();
         }
 
         private async Task<ICommandResponse> CreateOAuthIdentityAsync(SynchronizeIdentityCommand request, CancellationToken cancellationToken)
