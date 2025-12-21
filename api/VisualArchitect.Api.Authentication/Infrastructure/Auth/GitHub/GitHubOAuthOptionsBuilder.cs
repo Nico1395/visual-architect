@@ -30,6 +30,7 @@ public static class GitHubOAuthOptionsBuilder
         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Id);
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Login);
         options.ClaimActions.MapJsonKey(ClaimTypes.Email, AuthenticationConstants.Schemes.GitHub.ClaimTypes.Email);
+        options.ClaimActions.MapJsonKey("avatar", AuthenticationConstants.Schemes.GitHub.ClaimTypes.AvatarUrl);
 
         options.Events = new OAuthEvents
         {

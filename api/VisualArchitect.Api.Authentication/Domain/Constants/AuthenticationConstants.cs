@@ -46,6 +46,7 @@ public static class AuthenticationConstants
                 public const string Id = "id";
                 public const string Login = "login";
                 public const string Email = "email";
+                public const string AvatarUrl = "avatarurl";
             }
         }
 

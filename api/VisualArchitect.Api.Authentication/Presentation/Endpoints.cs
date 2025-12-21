@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,8 +7,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using VisualArchitect.Api.Authentication.Application.UseCases;
 using VisualArchitect.Api.Authentication.Domain.Constants;
+using VisualArchitect.Api.Authentication.Infrastructure.Auth;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
+using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 
 namespace VisualArchitect.Api.Authentication.Presentation;
 
@@ -97,7 +103,7 @@ public static class Endpoints
 
     private static void MapOAuthCallback(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromServices] IClientUrlBuilder clientUrlBuilder, [FromRoute(Name = "providerKey")] string providerKey) =>
+        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromServices] IClientUrlBuilder clientUrlBuilder, [FromServices] IMediator mediator, [FromRoute(Name = "providerKey")] string providerKey) =>
         {
             var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);
             var result = await httpContext.AuthenticateAsync(scheme);               // Exchanges the authorization code for tokens
@@ -111,9 +117,16 @@ public static class Endpoints
             if (string.IsNullOrWhiteSpace(returnUri))
                 return Results.BadRequest("No return URI specified!");
 
-            // TODO -> Create an identity if not present, or update stored claims
-            // TODO -> Remember to respect the providerKey when exctracting claims. Providers might have different names for different claims.
             var claims = result.Principal.Claims;
+            var command = new SynchronizeIdentity.SynchronizeIdentityCommand(
+                providerKey,
+                ExternalId: claims.GetSingleClaim(ClaimTypes.NameIdentifier),
+                DisplayName: claims.GetSingleClaimOrDefault(ClaimTypes.Name),
+                Email: claims.GetSingleClaim(ClaimTypes.Email),
+                AvatarUrl: claims.GetClaimOrDefault("avatarurl"));
+            var syncResponse = await mediator.SendAsync<SynchronizeIdentity.SynchronizeIdentityCommand, ICommandResponse>(command, httpContext.RequestAborted);
+            if (!syncResponse.IsSuccess_2xx())
+                return syncResponse.ToResult();
 
             await httpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,

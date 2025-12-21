@@ -14,5 +14,11 @@ internal sealed class OAuthProviderEntityConfiguration : IEntityTypeConfiguratio
 
         builder.Property(p => p.Id).HasColumnName("id").UseIdentityColumn().IsRequired();
         builder.Property(p => p.Key).HasColumnName("key").HasMaxLength(15).IsRequired();
+
+        builder.HasData([
+            new OAuthProvider() { Id = 1, Key = "github" },
+            new OAuthProvider() { Id = 2, Key = "google" },
+            new OAuthProvider() { Id = 3, Key = "microsoft" },
+        ]);
     }
 }
