@@ -6,7 +6,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Exceptions;
 
 namespace VisualArchitect.Api.Orchestration.Infrastructure.Context;
 
-public sealed class OrchestrationDbContext(IOptions<ConnectionStringsOptions> _connectionStrings, DbContextConfiguration dbContextConfiguration, IEnumerable<IInterceptor> _interceptors) : DbContext
+public sealed class OrchestrationDbContext(IOptions<ConnectionStringsOptions> _connectionStrings, DbContextConfiguration _dbContextConfiguration, IEnumerable<IInterceptor> _interceptors) : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -16,7 +16,7 @@ public sealed class OrchestrationDbContext(IOptions<ConnectionStringsOptions> _c
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        foreach (var assembly in dbContextConfiguration.AssembliesToScan)
+        foreach (var assembly in _dbContextConfiguration.AssembliesToScan)
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
     }
 }
