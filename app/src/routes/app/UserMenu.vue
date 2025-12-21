@@ -11,9 +11,17 @@ import { useI18n } from "vue-i18n"
 import Separator from "@/components/ui/separator/Separator.vue"
 import http from "@/http";
 import { useRouter } from "vue-router"
+import { useProfileStore } from "@/persistence/stores/profile.store"
+import { onMounted } from "vue";
+import avatarFallback from '@/assets/img/avatar-fallback.png'
 
 const { t } = useI18n()
 const router = useRouter();
+const profileStore = useProfileStore();
+
+onMounted(async () => {
+    await profileStore.getProfile();
+})
 
 async function logout() {
   try {
@@ -30,22 +38,32 @@ async function logout() {
         <DropdownMenuTrigger as-child>
             <div class="user-menu">
                 <Avatar class="user-avatar">
-                    <AvatarImage src="" />
-                    <AvatarFallback class="user-avatar-fallback"> UN </AvatarFallback>
+                    <AvatarImage :src="profileStore.$state.profile?.avatarUrl || ''" />
+                    <AvatarFallback class="user-avatar-fallback">
+                        <img :src="avatarFallback" />
+                    </AvatarFallback>
                 </Avatar>
             </div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" :side-offset="8">
             <div class="user-menu-content">
+                <div class="user-menu-info">
+                    {{ t('layout.header.usermenu.signedinas') }}
+
+                    <span>
+                        {{ profileStore.$state.profile?.displayName }}
+                    </span>
+                </div>
+
+                <Separator />
+
                 <UserMenuItemLink
-                    href="/app/settings"
+                    href="/app/profile"
                     icon="ai-gear"
                     :title="t('layout.header.usermenu.settings')"
                     :description="t('layout.header.usermenu.settingsdesc')"
                 />
-
-                <Separator />
 
                 <UserMenuItemButton
                     @click="logout"
@@ -71,6 +89,11 @@ async function logout() {
 
     .user-avatar-fallback {
         background-color: transparent;
+
+        > img {
+            height: 20px;
+            width: 20px;
+        }
     }
 }
 
@@ -79,5 +102,18 @@ async function logout() {
     flex-direction: column;
     gap: 0.3rem;
     padding: 0.2rem;
+
+    .user-menu-info {
+        text-align: center;
+        white-space: wrap;
+        padding: 0.7rem;
+        font-weight: 500;
+        font-size: 11pt;
+        color: var(--muted-foreground);
+
+        > span {
+            color: var(--foreground);
+        }
+    }
 }
 </style>

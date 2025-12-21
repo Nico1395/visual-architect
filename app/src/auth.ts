@@ -3,7 +3,7 @@ import router from "@/router";
 
 export const gitHubKey = "github";
 export const googleKey = "google";
-export const msKey = "ms";
+export const msKey = "microsoft";
 
 export async function isAuthenticated(): Promise<boolean> {
     try {

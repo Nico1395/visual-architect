@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card'
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n"
+import logo_64x64 from "@/assets/img/logo/visual-architect-logo_64x64.png"
 
 const { t } = useI18n()
 const splashTextKey = ref("")
@@ -38,7 +39,7 @@ toggleSplashText();
     <Card class="login-card">
         <CardHeader class="login-header">
             <img
-                src="@/assets/logo/visual-architect-logo_64x64.png"
+                :src="logo_64x64"
                 alt="Visual Architect Logo"
             />
 
