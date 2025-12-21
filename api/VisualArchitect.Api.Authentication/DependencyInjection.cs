@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VisualArchitect.Api.Authentication.Application.Persistence;
 using VisualArchitect.Api.Authentication.Domain.Constants;
+using VisualArchitect.Api.Authentication.Domain.Repositories;
 using VisualArchitect.Api.Authentication.Infrastructure.Auth.Cookie;
 using VisualArchitect.Api.Authentication.Infrastructure.Auth.GitHub;
+using VisualArchitect.Api.Authentication.Infrastructure.Persistence;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
 using VisualArchitect.Api.Orchestration.Abstractions.Exceptions;
 
@@ -42,6 +45,14 @@ public static class DependencyInjection
                     .AllowCredentials();
             });
         });
+
+        services.AddScoped<IAuthenticationUnitOfWork, AuthenticationUnitOfWork>();
+
+        services.AddScoped<IIdentityReadRepository, IdentityReadRepository>();
+        services.AddScoped<IIdentityWriteRepository, IdentityWriteRepository>();
+        services.AddScoped<IOAuthIdentityReadRepository, OAuthIdentityReadRepository>();
+        services.AddScoped<IOAuthIdentityWriteRepository, OAuthIdentityWriteRepository>();
+        services.AddScoped<IOAuthProviderReadRepository, OAuthProviderReadRepository>();
 
         return services;
     }

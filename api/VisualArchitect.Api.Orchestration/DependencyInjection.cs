@@ -1,14 +1,17 @@
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VisualArchitect.Api.ApplicationDesign;
 using VisualArchitect.Api.Authentication;
+using VisualArchitect.Api.Orchestration.Abstractions.Application.Persistence;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Configuration;
 using VisualArchitect.Api.Orchestration.Infrastructure.Context;
+using VisualArchitect.Api.Orchestration.Infrastructure.Persistence;
 using VisualArchitect.Api.Preferences;
 
 namespace VisualArchitect.Api.Orchestration;
@@ -38,6 +41,9 @@ public static class DependencyInjection
 
         services.AddTransient<IInterceptor, DomainInterfaceSaveChangesInterceptor>();
         services.AddDbContext<OrchestrationDbContext>();
+        services.AddScoped<DbContext>(sp => sp.GetRequiredService<OrchestrationDbContext>());       // For as long as we only use one DbContext, which will probably be sufficient for a long time!
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
