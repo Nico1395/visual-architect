@@ -15,4 +15,6 @@ public static class QueryResponseFactory
     public static IQueryResponseBuilder<TData> InternalServerError_500<TData>() => new QueryResponseBuilder<TData>(CqrsResponseStatus.InternalServerError_500);
     public static IQueryResponseBuilder<TData> NotImplemented_501<TData>() => new QueryResponseBuilder<TData>(CqrsResponseStatus.NotImplemented_501);
     public static IQueryResponseBuilder<TData> ServiceUnavailable_503<TData>() => new QueryResponseBuilder<TData>(CqrsResponseStatus.ServiceUnavailable_503);
+
+    public static IQueryResponse<TData> FromData<TData>(TData? data) => (data == null ? BadRequest_400<TData>() : OK_200(data)).Build();
 }
