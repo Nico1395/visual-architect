@@ -8,10 +8,10 @@ using VisualArchitect.Api.Authentication;
 using VisualArchitect.Api.Orchestration.Abstractions.Application.Persistence;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
-using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Configuration;
 using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 using VisualArchitect.Api.Orchestration.Infrastructure.Persistence;
+using VisualArchitect.Api.Orchestration.Mediator;
 using VisualArchitect.Api.Preferences;
 
 namespace VisualArchitect.Api.Orchestration;
@@ -27,19 +27,15 @@ public static class DependencyInjection
         services.AddVisualArchitectPreferences();
 
         services.AddHttpContextAccessor();
-        services.AddTransient<IMediator, Mediator.Mediator>();
+        services.AddMediator(assemblies);
         services.AddScoped<IClientUrlBuilder, ClientUrlBuilder>();
 
-        services.AddOptions<AuthenticationOptions>()
-            .Bind(configuration.GetSection("Authentication"))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        services.AddOptions<ClientsOptions>()
-            .Bind(configuration.GetSection("Clients"))
-            .ValidateOnStart();
+        services.AddOptions<AuthenticationOptions>().Bind(configuration.GetSection("Authentication")).ValidateDataAnnotations().ValidateOnStart();
+        services.AddOptions<ClientsOptions>() .Bind(configuration.GetSection("Clients")).ValidateOnStart();
+        services.AddOptions<ConnectionStringsOptions>().Bind(configuration.GetSection("ConnectionStrings")).ValidateDataAnnotations().ValidateOnStart();
 
         services.AddTransient<IInterceptor, DomainInterfaceSaveChangesInterceptor>();
+        services.AddSingleton(new DbContextConfiguration() { AssembliesToScan = assemblies });
         services.AddDbContext<OrchestrationDbContext>();
         services.AddScoped<DbContext>(sp => sp.GetRequiredService<OrchestrationDbContext>());       // For as long as we only use one DbContext, which will probably be sufficient for a long time!
 
