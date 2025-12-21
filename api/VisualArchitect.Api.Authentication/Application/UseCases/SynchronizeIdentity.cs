@@ -7,7 +7,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 
 namespace VisualArchitect.Api.Authentication.Application.UseCases;
 
-internal static class SynchronizeIdentity
+public static class SynchronizeIdentity
 {
     public sealed record SynchronizeIdentityCommand(string ProviderKey, string ExternalId, string? DisplayName, string Email, string? AvatarUrl) : ICommand
     {

@@ -1,0 +1,6 @@
+namespace VisualArchitect.Api.Tests.Lib.Fixtures;
+
+public interface ITestFixture
+{
+    ITestScope GetScope();
+}

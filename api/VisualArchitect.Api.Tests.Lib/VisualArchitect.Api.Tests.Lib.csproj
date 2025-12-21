@@ -9,10 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VisualArchitect.Api.Orchestration.Abstractions\VisualArchitect.Api.Orchestration.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VisualArchitect.Api.Orchestration\VisualArchitect.Api.Orchestration.csproj" />
-    <ProjectReference Include="..\VisualArchitect.Api.Tests.Lib\VisualArchitect.Api.Tests.Lib.csproj" />
+    <Folder Include="Asserts\" />
+    <Folder Include="Fixtures\" />
   </ItemGroup>
 
 </Project>

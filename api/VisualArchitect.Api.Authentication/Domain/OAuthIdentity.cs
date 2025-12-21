@@ -2,7 +2,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Domain;
 
 namespace VisualArchitect.Api.Authentication.Domain;
 
-internal sealed class OAuthIdentity : ICreated
+public sealed class OAuthIdentity : ICreated
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     public required string ExternalId { get; init; }
