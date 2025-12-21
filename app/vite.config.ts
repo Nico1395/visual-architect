@@ -4,6 +4,7 @@ import vueI18n from "@intlify/unplugin-vue-i18n/vite"
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import vueDevTools from "vite-plugin-vue-devtools"
+import mkcert from 'vite-plugin-mkcert'
 
 import tailwindcss from "@tailwindcss/vite"
 
@@ -17,6 +18,7 @@ export default defineConfig({
         }),
         vueDevTools(),
         tailwindcss(),
+        mkcert()
     ],
     resolve: {
         alias: {

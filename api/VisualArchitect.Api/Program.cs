@@ -1,3 +1,7 @@
+using VisualArchitect.Api.Authentication;
+using VisualArchitect.Api.Authentication.Domain.Constants;
+using VisualArchitect.Api.Authentication.Presentation.Middleware;
+
 namespace VisualArchitect.Api;
 
 internal sealed class Program
@@ -6,9 +10,17 @@ internal sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddVisualArchitect();
+        builder.Services.AddVisualArchitect(builder.Configuration);
+        builder.Configuration.AddEnvironmentVariables();
 
         var app = builder.Build();
+
+        app.UseCors(AuthenticationConstants.Cors.VirtualArchitectClient.PolicyName);
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<CsrfMiddleware>();
+
+        app.MapVisualArchitect();
 
         app.Run();
     }

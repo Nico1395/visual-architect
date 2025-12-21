@@ -10,4 +10,20 @@
     <ProjectReference Include="../VisualArchitect.Api.Orchestration.Abstractions/VisualArchitect.Api.Orchestration.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Constants\" />
+    <Folder Include="Infrastructure\Auth\Cookie\" />
+    <Folder Include="Infrastructure\Auth\Google\" />
+    <Folder Include="Infrastructure\Auth\Microsoft\" />
+    <Folder Include="Infrastructure\EntityConfigurations\" />
+    <Folder Include="Infrastructure\OAuth\" />
+    <Folder Include="Presentation\Contracts\" />
+    <Folder Include="Presentation\Middleware\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OAuth" />
+  </ItemGroup>
+
 </Project>
