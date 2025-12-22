@@ -9,8 +9,42 @@ import {
   ItemDescription,
   ItemTitle,
 } from '@/components/ui/item'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '@/components/ui/dialog';
+import { ref } from 'vue';
+import { useProfileStore } from '@/persistence/stores/profile.store';
+import { toast } from 'vue-sonner'
+import http from '@/http';
 
 const { t } = useI18n();
+const showDeleteDialog = ref(false);
+const profileStore = useProfileStore();
+
+async function confirmDelete() {
+    const promise = logoutAndDelete();
+
+    toast.promise(promise, {
+        loading: t('settings.account.delete.toast.loading'),
+        success: t('settings.account.delete.toast.success'),
+        error: t('settings.account.delete.toast.error'),
+    });
+
+    await promise;
+    window.location.href = "/auth/login";
+}
+
+async function logoutAndDelete() {
+    await profileStore.deleteProfile()
+    await http.post("/api/auth/logout");
+    localStorage.clear();
+    sessionStorage.clear();
+}
 </script>
 
 <template>
@@ -39,11 +73,34 @@ const { t } = useI18n();
             </ItemContent>
 
             <ItemActions>
-                <Button variant="destructive" >
+                <Button variant="destructive" @click="showDeleteDialog = true">
                     {{ t('settings.account.delete.button') }}
                 </Button>
             </ItemActions>
         </Item>
+
+        <Dialog v-model:open="showDeleteDialog">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>
+                        {{ t('settings.account.delete.modal.title') }}
+                    </DialogTitle>
+
+                    <DialogDescription>
+                        {{ t('settings.account.delete.modal.description') }}
+                    </DialogDescription>
+                </DialogHeader>
+                <DialogFooter class="flex justify-end gap-2">
+                    <Button variant="outline" @click="showDeleteDialog = false" :disabled="profileStore.busy">
+                        {{ t('settings.account.delete.modal.cancel') }}
+                    </Button>
+
+                    <Button variant="destructive" @click="confirmDelete" :disabled="profileStore.busy">
+                        {{ t('settings.account.delete.modal.confirm') }}
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </div>
 </template>
 

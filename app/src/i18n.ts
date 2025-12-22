@@ -49,6 +49,11 @@ const en = {
             email: "E-mail",
             emaildesc: "Your e-mail address is only used for contacting you. Changing it does not have an effect on how you authenticate yourself in the app.",
             displayname: "Display name",
+            toast: {
+                loading: "Saving...",
+                success: "Saved successfully!",
+                error: "Failed to save.",
+            }
         },
         account: {
             menuitem: "Account",
@@ -58,6 +63,17 @@ const en = {
                 title: "Delete Account",
                 description: "Deleting your account removes your identity and all data associated with it from our databases. This action is non-reversable.",
                 button: "Delete",
+                modal: {
+                    title: "Deleting your account",
+                    description: "You are about to delete your account. Do you really want to do that?",
+                    cancel: "No I dont",
+                    confirm: "Yes I do",
+                },
+                toast: {
+                    loading: "Deleting your account...",
+                    success: "Account deleted successfully 🙁",
+                    error: "Error deleting your account",
+                }
             },
         },
         personalization: {
@@ -116,6 +132,11 @@ const de = {
             email: "E-Mail",
             emaildesc: "Deine E-Mailadresse wird ausschließlich verwendet um dich zu erreichen. Sie zu ändern sorgt nicht dafür, dass du dich in der App anders authentifizieren müsstest.",
             displayname: "Anzeigename",
+            toast: {
+                loading: "Speichere...",
+                success: "Erfolgreich gespeichert!",
+                error: "Fehler beim Speichern.",
+            }
         },
         account: {
             menuitem: "Konto",
@@ -125,6 +146,17 @@ const de = {
                 title: "Konto löschen",
                 description: "Das Löschen deines Kontos löscht deine Identität und alle mit ihr in Verbindung stehenden Daten. Diese Aktion kann nicht rückgängig gemacht werden.",
                 button: "Löschen",
+                modal: {
+                    title: "Deinen Account löschen",
+                    description: "Du löscht gerade dein Konto. Möchtest du das wirklich tun?",
+                    cancel: "Nein, möchte ich nicht",
+                    confirm: "Ja, möchte ich",
+                },
+                toast: {
+                    loading: "Lösche deinen Account...",
+                    success: "Account erfolgreich gelöscht 🙁",
+                    error: "Fehler beim Löschen deines Accounts",
+                }
             },
         },
         personalization: {

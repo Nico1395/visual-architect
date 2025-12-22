@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { ProfileDto } from "../dtos/profile.dtos";
-import { getProfile, saveProfile } from "../apis/profile.api";
+import { deleteProfile, getProfile, saveProfile } from "../apis/profile.api";
 
 export const useProfileStore = defineStore("profile", {
     state: () => ({
@@ -32,6 +32,19 @@ export const useProfileStore = defineStore("profile", {
             try {
                 Object.assign(this.profile, profile)
                 await saveProfile(this.profile)
+            } finally {
+                this.busy = false
+            }
+        },
+        async deleteProfile() {
+            if (this.busy || !this.profile)
+                return;
+
+            this.busy = true
+
+            try {
+                await deleteProfile()
+                this.profile = null
             } finally {
                 this.busy = false
             }

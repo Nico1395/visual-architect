@@ -26,9 +26,9 @@ const displayNameChanged = computed(() => form.displayName !== originalProfile.d
 
 async function saveChanges(promise: Promise<void>) {
     toast.promise(promise, {
-        loading: "Saving...",
-        success: "Saved successfully!",
-        error: "Failed to save.",
+        loading: t('settings.profile.toast.loading'),
+        success: t('settings.profile.toast.success'),
+        error: t('settings.profile.toast.error'),
     });
 
     await promise;

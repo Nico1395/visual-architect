@@ -18,3 +18,7 @@ export async function saveProfile(profile: ProfileDto) {
 
     await http.patch(`/api/profile/save`, payload);
 }
+
+export async function deleteProfile() {
+    await http.delete(`/api/profile/delete`);
+}
