@@ -91,6 +91,10 @@ watch(profile, (p) => {
                     :disabled="profileStore.busy"
                 />
             </template>
+
+            <template #desc>
+                    {{ t('settings.profile.emaildesc') }}
+            </template>
         </SettingsViewField>
 
         <SettingsViewField :disabled="profileStore.busy" :changed="displayNameChanged" @reset="resetField('displayName')" @save="saveDisplayName()">

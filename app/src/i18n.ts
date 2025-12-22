@@ -43,16 +43,25 @@ const en = {
             reset: "Reset",
         },
         profile: {
+            menuitem: "Profile",
             header: "Profile settings",
             description: "Update and manage your personal information. Change your display name, email address, or avatar, and control who can see your profile. Keep your presence in the app exactly how you want it.",
             email: "E-mail",
+            emaildesc: "Your e-mail address is only used for contacting you. Changing it does not have an effect on how you authenticate yourself in the app.",
             displayname: "Display name",
         },
         account: {
+            menuitem: "Account",
             header: "Account settings",
             description: "Access key account settings and management options. Here you can review your account details, adjust security settings, and delete your account if needed. Everything related to your account’s status and control is in one place.",
+            delete: {
+                title: "Delete Account",
+                description: "Deleting your account removes your identity and all data associated with it from our databases. This action is non-reversable.",
+                button: "Delete",
+            },
         },
         personalization: {
+            menuitem: "Personalization",
             header: "Personalization settings",
             description: "Tailor the app to fit your style and preferences. Adjust the theme, switch between light and dark modes, change colors, and set your preferred language to create the experience that works best for you.",
         },
@@ -101,16 +110,25 @@ const de = {
             reset: "Zurücksetzen",
         },
         profile: {
+            menuitem: "Profil",
             header: "Profileinstellungen",
             description: "Aktualisieren und verwalten Sie Ihre persönlichen Informationen. Ändern Sie Ihren Anzeigenamen, Ihre E-Mail-Adresse oder Ihr Avatar und steuern Sie, wer Ihr Profil sehen kann. Halten Sie Ihre Präsenz in der App genau so, wie Sie es möchten.",
             email: "E-Mail",
+            emaildesc: "Deine E-Mailadresse wird ausschließlich verwendet um dich zu erreichen. Sie zu ändern sorgt nicht dafür, dass du dich in der App anders authentifizieren müsstest.",
             displayname: "Anzeigename",
         },
         account: {
+            menuitem: "Konto",
             header: "Kontoeinstellungen",
             description: "Greifen Sie auf wichtige Kontoeinstellungen und Verwaltungsoptionen zu. Hier können Sie Ihre Kontodaten überprüfen, Sicherheitseinstellungen anpassen und Ihr Konto bei Bedarf löschen. Alles, was den Status und die Kontrolle Ihres Kontos betrifft, finden Sie an einem Ort.",
+            delete: {
+                title: "Konto löschen",
+                description: "Das Löschen deines Kontos löscht deine Identität und alle mit ihr in Verbindung stehenden Daten. Diese Aktion kann nicht rückgängig gemacht werden.",
+                button: "Löschen",
+            },
         },
         personalization: {
+            menuitem: "Personalisierung",
             header: "Personalisierung",
             description: "Passen Sie die App an Ihren Stil und Ihre Vorlieben an. Ändern Sie das Theme, wechseln Sie zwischen Hell- und Dunkelmodus, passen Sie Farben an und wählen Sie Ihre bevorzugte Sprache, um das Erlebnis zu schaffen, das am besten zu Ihnen passt.",
         },

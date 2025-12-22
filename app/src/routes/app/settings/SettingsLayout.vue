@@ -7,12 +7,10 @@ import avatarFallback from '@/assets/img/avatar-fallback.png'
 import SettingsMenuItem from './SettingsMenuItem.vue';
 import SettingsMenuSeparator from './SettingsMenuSeparator.vue';
 import Icon from '@/components/Icon.vue';
-// import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
-// import Button from '@/components/ui/button/Button.vue';
-// import { useI18n } from "vue-i18n"
+import { useI18n } from "vue-i18n"
 
 const profileStore = useProfileStore();
-// const { t } = useI18n();
+const { t } = useI18n();
 </script>
 
 <template>
@@ -36,18 +34,6 @@ const profileStore = useProfileStore();
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="settings-actions">
-                <ButtonGroup>
-                    <Button variant="outline">
-                        {{ t('settings.header.reset') }}
-                    </Button>
-
-                    <Button variant="successful">
-                        {{ t('settings.header.save') }}
-                    </Button>
-                </ButtonGroup>
-            </div> -->
         </div>
 
         <div class="settings-body">
@@ -56,7 +42,7 @@ const profileStore = useProfileStore();
                     <Icon icon="ai-person" />
 
                     <span>
-                        Profile
+                        {{ t('settings.profile.menuitem') }}
                     </span>
                 </SettingsMenuItem>
 
@@ -64,7 +50,7 @@ const profileStore = useProfileStore();
                     <Icon icon="ai-pencil" />
 
                     <span>
-                        Personalization
+                        {{ t('settings.personalization.menuitem') }}
                     </span>
                 </SettingsMenuItem>
 
@@ -74,7 +60,7 @@ const profileStore = useProfileStore();
                     <Icon icon="ai-gear" />
 
                     <span>
-                        Account
+                        {{ t('settings.account.menuitem') }}
                     </span>
                 </SettingsMenuItem>
             </div>
