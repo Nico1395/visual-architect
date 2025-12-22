@@ -15,4 +15,10 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Events\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Transactions\" />
+  </ItemGroup>
+
 </Project>

@@ -18,5 +18,6 @@ public static class Endpoints
 
         builder.MapGetProfile();
         builder.MapSaveProfile();
+        builder.MapDeleteProfile();
     }
 }

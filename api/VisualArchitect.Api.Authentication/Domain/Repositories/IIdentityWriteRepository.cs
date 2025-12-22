@@ -4,4 +4,5 @@ internal interface IIdentityWriteRepository
 {
     Task AddAsync(Identity identity, CancellationToken cancellationToken);
     Task UpdateAsync(Identity identity, CancellationToken cancellationToken);
+    Task DeleteAsync(Identity identity, CancellationToken cancellationToken);
 }

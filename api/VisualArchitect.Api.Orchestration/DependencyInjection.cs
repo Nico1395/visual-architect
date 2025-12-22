@@ -8,9 +8,11 @@ using VisualArchitect.Api.Authentication;
 using VisualArchitect.Api.Orchestration.Abstractions.Application.Persistence;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration;
 using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
+using VisualArchitect.Api.Orchestration.Abstractions.Infrastructure.Transactions;
 using VisualArchitect.Api.Orchestration.Configuration;
 using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 using VisualArchitect.Api.Orchestration.Infrastructure.Persistence;
+using VisualArchitect.Api.Orchestration.Infrastructure.Transactions;
 using VisualArchitect.Api.Orchestration.Mediator;
 using VisualArchitect.Api.Preferences;
 
@@ -40,6 +42,7 @@ public static class DependencyInjection
         services.AddScoped<DbContext>(sp => sp.GetRequiredService<OrchestrationDbContext>());       // For as long as we only use one DbContext, which will probably be sufficient for a long time!
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddSingleton<ITransactionFactory, TransactionFactory>();
 
         return services;
     }

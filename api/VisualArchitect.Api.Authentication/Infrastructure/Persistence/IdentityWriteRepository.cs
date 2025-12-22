@@ -17,4 +17,11 @@ internal sealed class IdentityWriteRepository(DbContext _context) : IIdentityWri
         _context.Update(identity);
         return Task.CompletedTask;
     }
+
+    public Task DeleteAsync(Identity identity, CancellationToken cancellationToken)
+    {
+        // This should also remove the corresponding OAuthIdentity via foreign keys
+        _context.Remove(identity);
+        return Task.CompletedTask;
+    }
 }

@@ -38,6 +38,21 @@ internal static class ProfileEndpoints
             var response = await mediator.SendAsync(command, httpContext.RequestAborted);
 
             return response.ToResult();
-        });
+        }).RequireAuthorization();
+    }
+
+    internal static void MapDeleteProfile(this IEndpointRouteBuilder builder)
+    {
+        builder.MapDelete("/api/profile/delete", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
+        {
+            var idClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrWhiteSpace(idClaim) || !Guid.TryParse(idClaim, out var identityId))
+                return Results.Unauthorized();
+
+            var command = new DeleteIdentity.DeleteIdentityCommand(identityId);
+            var response = await mediator.SendAsync(command, httpContext.RequestAborted);
+
+            return response.ToResult();
+        }).RequireAuthorization();
     }
 }
