@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useColorMode } from "@vueuse/core"
+import { Toaster } from 'vue-sonner';
 
 useColorMode({
     attribute: "class",
@@ -11,5 +12,7 @@ useColorMode({
 </script>
 
 <template>
-    <router-view />
+    <RouterView />
+
+    <Toaster position="top-center" richColors />
 </template>

@@ -7,6 +7,7 @@ using VisualArchitect.Api.Authentication.Application.UseCases;
 using VisualArchitect.Api.Authentication.Domain;
 using VisualArchitect.Api.Authentication.Presentation.Contracts;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 
@@ -23,9 +24,20 @@ internal static class ProfileEndpoints
                 return Results.Unauthorized();
 
             var query = new GetIdentity.GetIdentityQuery(identityId);
-            var response = await mediator.SendAsync<GetIdentity.GetIdentityQuery, IQueryResponse<Identity>>(query, httpContext.RequestAborted);
+            var response = await mediator.SendAsync<GetIdentity.GetIdentityQuery, Identity>(query, httpContext.RequestAborted);
 
             return response.Map(IdentityDto.From).ToResult();
         }).RequireAuthorization();
+    }
+
+    internal static void MapSaveProfile(this IEndpointRouteBuilder builder)
+    {
+        builder.MapPatch("/api/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDto identity) =>
+        {
+            var command = new SaveIdentity.SaveIdentityCommand(identity.To());
+            var response = await mediator.SendAsync(command, httpContext.RequestAborted);
+
+            return response.ToResult();
+        });
     }
 }

@@ -11,4 +11,10 @@ internal sealed class IdentityWriteRepository(DbContext _context) : IIdentityWri
         _context.Add(identity);
         return Task.CompletedTask;
     }
+
+    public Task UpdateAsync(Identity identity, CancellationToken cancellationToken)
+    {
+        _context.Update(identity);
+        return Task.CompletedTask;
+    }
 }

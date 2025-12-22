@@ -32,9 +32,27 @@ const router = createRouter({
             component: () => import("./routes/app/home/HomeView.vue"),
         },
         {
-            path: "profile",
-            name: "profile",
-            component: () => import("./routes/app/profile/ProfileView.vue"),
+            path: "settings",
+            redirect: "/app/settings/profile",
+            name: "settings",
+            component: () => import("./routes/app/settings/SettingsLayout.vue"),
+            children: [
+                {
+                    path: "profile",
+                    name: "profile-settings",
+                    component: () => import("./routes/app/settings/profile/ProfileSettingsView.vue"),
+                },
+                {
+                    path: "personalization",
+                    name: "personalization-settings",
+                    component: () => import("./routes/app/settings/personalization/PersonalizationSettingsView.vue"),
+                },
+                {
+                    path: "account",
+                    name: "account-settings",
+                    component: () => import("./routes/app/settings/account/AccountSettingsView.vue"),
+                },
+            ]
         }
         ],
         },

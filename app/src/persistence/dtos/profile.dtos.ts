@@ -3,6 +3,6 @@ export interface ProfileDto {
     email: string,
     displayName: string,
     avatarUrl?: string | null,
-    createdAtUtc: string,
-    updatedAtUtc: string,
+    createdAt: string,
+    updatedAt: string,
 }

@@ -36,6 +36,26 @@ const en = {
         },
         register: {
         }
+    },
+    settings: {
+        header: {
+            save: "Save",
+            reset: "Reset",
+        },
+        profile: {
+            header: "Profile settings",
+            description: "Update and manage your personal information. Change your display name, email address, or avatar, and control who can see your profile. Keep your presence in the app exactly how you want it.",
+            email: "E-mail",
+            displayname: "Display name",
+        },
+        account: {
+            header: "Account settings",
+            description: "Access key account settings and management options. Here you can review your account details, adjust security settings, and delete your account if needed. Everything related to your account’s status and control is in one place.",
+        },
+        personalization: {
+            header: "Personalization settings",
+            description: "Tailor the app to fit your style and preferences. Adjust the theme, switch between light and dark modes, change colors, and set your preferred language to create the experience that works best for you.",
+        },
     }
 }
 
@@ -74,6 +94,26 @@ const de = {
         },
         register: {
         }
+    },
+    settings: {
+        header: {
+            save: "Speichern",
+            reset: "Zurücksetzen",
+        },
+        profile: {
+            header: "Profileinstellungen",
+            description: "Aktualisieren und verwalten Sie Ihre persönlichen Informationen. Ändern Sie Ihren Anzeigenamen, Ihre E-Mail-Adresse oder Ihr Avatar und steuern Sie, wer Ihr Profil sehen kann. Halten Sie Ihre Präsenz in der App genau so, wie Sie es möchten.",
+            email: "E-Mail",
+            displayname: "Anzeigename",
+        },
+        account: {
+            header: "Kontoeinstellungen",
+            description: "Greifen Sie auf wichtige Kontoeinstellungen und Verwaltungsoptionen zu. Hier können Sie Ihre Kontodaten überprüfen, Sicherheitseinstellungen anpassen und Ihr Konto bei Bedarf löschen. Alles, was den Status und die Kontrolle Ihres Kontos betrifft, finden Sie an einem Ort.",
+        },
+        personalization: {
+            header: "Personalisierung",
+            description: "Passen Sie die App an Ihren Stil und Ihre Vorlieben an. Ändern Sie das Theme, wechseln Sie zwischen Hell- und Dunkelmodus, passen Sie Farben an und wählen Sie Ihre bevorzugte Sprache, um das Erlebnis zu schaffen, das am besten zu Ihnen passt.",
+        },
     }
 }
 

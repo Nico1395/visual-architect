@@ -6,5 +6,5 @@ const props = defineProps<{
 </script>
 
 <template>
-    <i :class="props.icon" :style="`font-size: ${props.size}`"></i>
+    <i :class="`icon ${props.icon}`" :style="`font-size: ${props.size}`"></i>
 </template>
