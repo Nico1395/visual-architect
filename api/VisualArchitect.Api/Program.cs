@@ -1,4 +1,3 @@
-using VisualArchitect.Api.Authentication;
 using VisualArchitect.Api.Authentication.Domain.Constants;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
 

@@ -15,21 +15,19 @@ public static class GetPreferences
     {
         public async Task<IQueryResponse<IReadOnlyList<GetPreferencesQuery.Prefence>>> HandleAsync(GetPreferencesQuery request, CancellationToken cancellationToken)
         {
-            // If none are requested, then what are we supposed to look for?
-            if (request.Keys.Count == 0)
-                return QueryResponseFactory.OK_200<IReadOnlyList<GetPreferencesQuery.Prefence>>([]).Build();
+            var keys = request.Keys ?? [];
 
             // Does the identity even exists?
             var identityExistsResponse = await _mediator.SendAsync<IdentityExistsQuery, bool>(new IdentityExistsQuery(request.IdentityId), cancellationToken);
             if (identityExistsResponse.ResultedInFalse())
                 return QueryResponseFactory.BadRequest_400<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
 
-            // Get all settings and if none evene exists, we wont have to search any further -> thats a faulty request.
-            var settings = await _settingReadRepository.GetByKeysAsync(request.Keys, cancellationToken);
+            // Get all settings and if none even exists, we wont have to search any further -> thats a faulty request.
+            var settings = await _settingReadRepository.GetByKeysOrAllAsync(keys, cancellationToken);
             if (settings.Count == 0)
                 return QueryResponseFactory.BadRequest_400<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
 
-            var identitySettings = await _identitySettingReadRepository.GetForIdentityByKeysAsync(request.IdentityId, request.Keys, cancellationToken);
+            var identitySettings = await _identitySettingReadRepository.GetByKeysOrAllAsync(request.IdentityId, keys, cancellationToken);
             var preferences = new List<GetPreferencesQuery.Prefence>();
 
             // Basically:
@@ -43,6 +41,7 @@ public static class GetPreferences
                     request.IdentityId,
                     setting.Key,
                     identitySetting != null ? identitySetting.Value : setting.DefaultValue,
+                    setting.DefaultValue,
                     identitySetting?.UpdatedAt
                 ));
             }

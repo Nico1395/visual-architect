@@ -32,7 +32,7 @@ public static class SetPreference
             if (setting == null)
                 return CommandResponseFactory.BadRequest_400().Build();
 
-            var identitySetting = await _identitySettingReadRepository.GetForIdentityByKeyAsync(request.IdentityId, request.Key, cancellationToken);
+            var identitySetting = await _identitySettingReadRepository.GetByKeyAsync(request.IdentityId, request.Key, cancellationToken);
             if (identitySetting == null)
             {
                 // If its not set and we want to reset to default, we dont really have to do anything.

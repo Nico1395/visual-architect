@@ -1,6 +1,6 @@
 namespace VisualArchitect.Api.Preferences.Presentation.Contracts;
 
-public sealed class SetPreferenceRequestDto
+public sealed class SetPreferenceDto
 {
     public required string Key { get; init; }
     public required string? Value { get; init; }

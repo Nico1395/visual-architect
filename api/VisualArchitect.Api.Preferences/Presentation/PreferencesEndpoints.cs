@@ -10,7 +10,6 @@ using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Abstractions.Presentation.Http;
 using VisualArchitect.Api.Preferences.Application.UseCases;
 using VisualArchitect.Api.Preferences.Presentation.Contracts;
-using VisualArchitect.Api.Preferences.Presentation.Filter;
 
 namespace VisualArchitect.Api.Preferences.Presentation;
 
@@ -18,12 +17,12 @@ internal static class PreferencesEndpoints
 {
     public static void MapGetPreferences(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/preferences", async (HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] IdentitySettingsFilterDto filter) =>
+        builder.MapGet("/api/preferences", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromQuery(Name = "key")] string[]? keys) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
-            var query = new GetPreferencesQuery(identityId, filter.Keys ?? []);
+            var query = new GetPreferencesQuery(identityId, keys?.ToList() ?? []);
             var response = await mediator.SendAsync<GetPreferencesQuery, IReadOnlyList<GetPreferencesQuery.Prefence>>(query, httpContext.RequestAborted);
 
             return response
@@ -35,7 +34,7 @@ internal static class PreferencesEndpoints
 
     public static void MapSetPreference(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceRequestDto request) =>
+        builder.MapPost("/api/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceDto request) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();

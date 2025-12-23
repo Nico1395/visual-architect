@@ -6,9 +6,13 @@ namespace VisualArchitect.Api.Preferences.Infrastructure.Persistence;
 
 public sealed class SettingReadRepository(DbContext _context) : ISettingReadRepository
 {
-    public async Task<IReadOnlyList<Setting>> GetByKeysAsync(IEnumerable<string> keys, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<Setting>> GetByKeysOrAllAsync(List<string> keys, CancellationToken cancellationToken)
     {
-        return await _context.Set<Setting>().Where(s => keys.Contains(s.Key)).ToListAsync(cancellationToken);
+        var query = _context.Set<Setting>().AsQueryable();
+        if (keys.Count > 0)
+            query = query.Where(s => keys.Contains(s.Key));
+
+        return await query.ToListAsync(cancellationToken);
     }
 
     public Task<Setting?> GetByKeyAsync(string settingKey, CancellationToken cancellationToken)
