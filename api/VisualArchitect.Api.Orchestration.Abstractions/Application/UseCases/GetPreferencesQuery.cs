@@ -8,5 +8,5 @@ public sealed record GetPreferencesQuery(Guid IdentityId, List<string> Keys) : I
         Guid IdentityId,
         string Key,
         string? Value,
-        DateTime UpdatedAt);
+        DateTime? UpdatedAt);
 }

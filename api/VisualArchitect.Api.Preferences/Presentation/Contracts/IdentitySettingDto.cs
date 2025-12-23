@@ -7,7 +7,7 @@ internal class IdentitySettingDto
     public required Guid IdentityId { get; init; }
     public required string Key { get; init; }
     public required string? Value { get; init; }
-    public required DateTime UpdatedAt { get; init; }
+    public required DateTime? UpdatedAt { get; init; }
 
     public static IdentitySettingDto From(GetPreferencesQuery.Prefence preference)
     {
