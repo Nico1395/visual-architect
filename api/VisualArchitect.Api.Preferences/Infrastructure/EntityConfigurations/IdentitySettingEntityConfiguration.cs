@@ -16,6 +16,6 @@ internal sealed class IdentitySettingEntityConfiguration : IEntityTypeConfigurat
         builder.Property(i => i.Value).HasColumnName("value").HasMaxLength(2048);
         builder.Property(i => i.UpdatedAt).HasColumnName("updated_at").IsRequired();
 
-        builder.HasOne(i => i.Setting).WithMany().HasForeignKey(i => i.SettingId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(i => i.Setting).WithMany().HasForeignKey(i => i.SettingId).IsRequired().OnDelete(DeleteBehavior.Cascade);
     }
 }
