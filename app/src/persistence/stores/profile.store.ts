@@ -32,6 +32,8 @@ export const useProfileStore = defineStore("profile", {
             try {
                 Object.assign(this.profile, profile)
                 await saveProfile(this.profile)
+            } catch (error) {
+                console.error(error)
             } finally {
                 this.busy = false
             }
@@ -45,6 +47,8 @@ export const useProfileStore = defineStore("profile", {
             try {
                 await deleteProfile()
                 this.profile = null
+            } catch (error) {
+                console.error(error)
             } finally {
                 this.busy = false
             }

@@ -21,9 +21,9 @@ import {
 } from '@/components/ui/popover'
 import { useColorMode } from '@vueuse/core';
 import ThemePreview from './ThemePreview.vue';
-import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Toggle from '@/components/ui/toggle/Toggle.vue';
 import Icon from '@/components/Icon.vue';
+import { usePreferenceStore } from '@/persistence/stores/preference.store';
 
 const frameworks = [
     {
@@ -50,6 +50,7 @@ const frameworks = [
 
 const mode = useColorMode()
 const { t } = useI18n();
+const preferenceStore = usePreferenceStore()
 
 const open = ref(false)
 const value = ref('')
@@ -63,14 +64,17 @@ function selectFramework(selectedValue: string) {
     open.value = false
 }
 
-function setSystemTheme(useSystem: boolean | undefined) {
+async function setSystemAsTheme(useSystem: boolean | undefined) {
     useSystemTheme.value = useSystem ?? useSystemTheme.value
 
     if (useSystemTheme.value)
         mode.store.value = 'auto'
+
+    await setTheme("auto")
 }
 
-function pickTheme(selected: string) {
+async function setTheme(theme: string) {
+    await preferenceStore.setPreference("theme", theme)
 }
 </script>
 
@@ -98,18 +102,18 @@ function pickTheme(selected: string) {
                     style="width: fit-content"
                     variant="outline"
                     v-model:model-value="useSystemTheme"
-                    v-on:update:model-value="(useSystem) => setSystemTheme(useSystem)">
+                    v-on:update:model-value="(useSystem) => setSystemAsTheme(useSystem)">
                     {{ t('settings.personalization.theme.usesystem') }}
 
                     <Icon icon="ai-desktop-device" />
                 </Toggle>
 
                 <div class="personalization-settings-theme-picker">
-                    <ThemePreview theme="light" @click="pickTheme((mode = 'light'))" :disabled="useSystemTheme">
+                    <ThemePreview theme="light" @click="setTheme((mode = 'light'))" :disabled="useSystemTheme">
                         {{ t('settings.personalization.theme.light') }}
                     </ThemePreview>
 
-                    <ThemePreview theme="dark" @click="pickTheme((mode = 'dark'))" :disabled="useSystemTheme">
+                    <ThemePreview theme="dark" @click="setTheme((mode = 'dark'))" :disabled="useSystemTheme">
                         {{ t('settings.personalization.theme.dark') }}
                     </ThemePreview>
                 </div>

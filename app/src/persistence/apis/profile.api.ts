@@ -7,16 +7,14 @@ export async function getProfile() {
 }
 
 export async function saveProfile(profile: ProfileDto) {
-    const payload = {
+    await http.patch(`/api/profile/save`, {
         id: profile.id,
         email: profile.email,
         displayName: profile.displayName,
         avatarUrl: profile.avatarUrl ?? null,
         createdAt: profile.createdAt,
         updatedAt: profile.updatedAt,
-    };
-
-    await http.patch(`/api/profile/save`, payload);
+    });
 }
 
 export async function deleteProfile() {
