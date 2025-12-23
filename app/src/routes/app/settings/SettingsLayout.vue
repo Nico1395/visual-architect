@@ -8,6 +8,7 @@ import SettingsMenuItem from './SettingsMenuItem.vue';
 import SettingsMenuSeparator from './SettingsMenuSeparator.vue';
 import Icon from '@/components/Icon.vue';
 import { useI18n } from "vue-i18n"
+import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue';
 
 const profileStore = useProfileStore();
 const { t } = useI18n();

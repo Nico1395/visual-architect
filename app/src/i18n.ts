@@ -34,8 +34,6 @@ const en = {
                 "spl7": "Let's design something the devs will garble. 😒",
             }
         },
-        register: {
-        }
     },
     settings: {
         header: {
@@ -80,6 +78,16 @@ const en = {
             menuitem: "Personalization",
             header: "Personalization settings",
             description: "Tailor the app to fit your style and preferences. Adjust the theme, switch between light and dark modes, change colors, and set your preferred language to create the experience that works best for you.",
+            theme: {
+                title: "Theme",
+                usesystem: "Use system theme",
+                light: "Light",
+                dark: "Dark",
+                description: "Your selected theme will be persisted across devices.",
+            },
+            language: {
+                title: "Language",
+            },
         },
     }
 }
@@ -117,8 +125,6 @@ const de = {
                 "spl7": "Lass uns etwas designen, damit's die Entwickler versauen. 😒",
             }
         },
-        register: {
-        }
     },
     settings: {
         header: {
@@ -163,6 +169,16 @@ const de = {
             menuitem: "Personalisierung",
             header: "Personalisierung",
             description: "Passen Sie die App an Ihren Stil und Ihre Vorlieben an. Ändern Sie das Theme, wechseln Sie zwischen Hell- und Dunkelmodus, passen Sie Farben an und wählen Sie Ihre bevorzugte Sprache, um das Erlebnis zu schaffen, das am besten zu Ihnen passt.",
+            theme: {
+                title: "Farbschema",
+                usesystem: "Systemfarbschema verwenden",
+                light: "Hell",
+                dark: "Dunkel",
+                description: "Dein gewähltes Farbschema wird über deine Geräte hinaus gespeichert.",
+            },
+            language: {
+                title: "Language",
+            },
         },
     }
 }

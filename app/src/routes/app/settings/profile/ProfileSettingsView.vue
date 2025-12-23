@@ -78,7 +78,7 @@ watch(profile, (p) => {
             </SettingsViewHeader>
         </div>
 
-        <SettingsViewField :disabled="profileStore.busy" :changed="emailChanged" @reset="resetField('email')" @save="saveEmail()">
+        <SettingsViewField :disabled="profileStore.busy" :changed="emailChanged" @reset="resetField('email')" @save="saveEmail()" :grouped="true">
             <template #name>
                 {{ t('settings.profile.email') }}
             </template>
@@ -97,7 +97,7 @@ watch(profile, (p) => {
             </template>
         </SettingsViewField>
 
-        <SettingsViewField :disabled="profileStore.busy" :changed="displayNameChanged" @reset="resetField('displayName')" @save="saveDisplayName()">
+        <SettingsViewField :disabled="profileStore.busy" :changed="displayNameChanged" @reset="resetField('displayName')" @save="saveDisplayName()" :grouped="true">
             <template #name>
                 {{ t('settings.profile.displayname') }}
             </template>

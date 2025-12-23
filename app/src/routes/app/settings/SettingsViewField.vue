@@ -10,6 +10,7 @@ const props = defineProps<{
     inputClass?: string | null,
     changed?: boolean,
     disabled?: boolean,
+    grouped?: boolean
 }>()
 const emits = defineEmits<{
   (e: "save"): void,
@@ -31,17 +32,30 @@ function reset() {
             <slot name="name" />
         </h2>
 
-        <ButtonGroup :class="props.inputClass">
-            <slot name="input" />
+<component
+  :is="props.grouped ? ButtonGroup : 'div'"
+  :class="props.inputClass"
+>
+  <slot name="input" />
 
-            <Button variant="outline" v-if="props.changed" @click="reset()" :disabled>
-                <Icon icon="ai-arrow-counter-clockwise" />
-            </Button>
+  <Button
+    v-if="props.changed"
+    variant="outline"
+    @click="reset()"
+    :disabled="props.disabled"
+  >
+    <Icon icon="ai-arrow-counter-clockwise" />
+  </Button>
 
-            <Button variant="successful" v-if="props.changed" @click="save()" :disabled>
-                <Icon icon="ai-check" />
-            </Button>
-        </ButtonGroup>
+  <Button
+    v-if="props.changed"
+    variant="successful"
+    @click="save()"
+    :disabled="props.disabled"
+  >
+    <Icon icon="ai-check" />
+  </Button>
+</component>
 
         <p v-if="slots.desc">
             <slot name="desc" />
