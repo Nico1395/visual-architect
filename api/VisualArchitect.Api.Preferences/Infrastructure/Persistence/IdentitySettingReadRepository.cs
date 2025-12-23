@@ -13,4 +13,9 @@ public sealed class IdentitySettingReadRepository(DbContext _context) : IIdentit
             .Where(i => i.IdentityId == identityId && keys.Contains(i.Setting!.Key))
             .ToDictionaryAsync(i => i.Setting!.Key, i => i, cancellationToken);
     }
+
+    public Task<IdentitySetting?> GetForIdentityByKeyAsync(Guid identityId, string key, CancellationToken cancellationToken)
+    {
+        return _context.Set<IdentitySetting>().SingleOrDefaultAsync(i => i.IdentityId == identityId && i.Setting!.Key == key, cancellationToken);
+    }
 }

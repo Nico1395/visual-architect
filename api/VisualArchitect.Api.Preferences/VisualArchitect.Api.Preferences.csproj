@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Persistence\" />
-    <Folder Include="Application\UseCases\" />
     <Folder Include="Domain\Repositories\" />
-    <Folder Include="Application\" />
-    <Folder Include="Presentation\Contracts\" />
   </ItemGroup>
 
 </Project>

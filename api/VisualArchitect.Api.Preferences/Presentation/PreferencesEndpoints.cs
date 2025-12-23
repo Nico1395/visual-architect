@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using VisualArchitect.Api.Orchestration.Abstractions.Application.UseCases;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
 using VisualArchitect.Api.Orchestration.Abstractions.Presentation.Http;
+using VisualArchitect.Api.Preferences.Application.UseCases;
 using VisualArchitect.Api.Preferences.Presentation.Contracts;
 using VisualArchitect.Api.Preferences.Presentation.Filter;
 
@@ -28,6 +30,20 @@ internal static class PreferencesEndpoints
                 .Map(preferences => preferences
                     .Select(IdentitySettingDto.From).ToList())
                 .ToResult();
+        }).RequireAuthorization();
+    }
+
+    public static void MapSetPreference(this IEndpointRouteBuilder builder)
+    {
+        builder.MapPost("/api/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceRequestDto request) =>
+        {
+            if (!httpContext.TryGetIdentityId(out var identityId))
+                return Results.Unauthorized();
+
+            var command = new SetPreference.SetPreferenceCommand(identityId, request.Key, request.Value, request.ResetToDefault);
+            var response = await mediator.SendAsync(command, httpContext.RequestAborted);
+            
+            return response.ToResult();
         }).RequireAuthorization();
     }
 }

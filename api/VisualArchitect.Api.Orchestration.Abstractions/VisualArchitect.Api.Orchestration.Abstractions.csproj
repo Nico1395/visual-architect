@@ -18,6 +18,7 @@
   <ItemGroup>
     <Folder Include="Application\Events\" />
     <Folder Include="Application\UseCases\" />
+    <Folder Include="Domain\Constants\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\Transactions\" />
     <Folder Include="Presentation\" />

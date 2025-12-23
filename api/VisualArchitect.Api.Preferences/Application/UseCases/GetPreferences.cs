@@ -16,7 +16,7 @@ public static class GetPreferences
         {
             var identityExistsResponse = await _mediator.SendAsync<IdentityExistsQuery, bool>(new IdentityExistsQuery(request.IdentityId), cancellationToken);
             if (identityExistsResponse.ResultedInFalse())
-                return QueryResponseFactory.Unauthorized_401<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
+                return QueryResponseFactory.BadRequest_400<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
 
             var identitySettings = await _identitySettingReadRepository.GetForIdentityByKeysAsync(request.IdentityId, request.Keys, cancellationToken);
             var preferences = identitySettings

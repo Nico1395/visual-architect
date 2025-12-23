@@ -12,6 +12,7 @@ public static class DependencyInjection
         services.AddScoped<IPreferencesUnitOfWork, PreferencesUnitOfWork>();
         services.AddScoped<IIdentitySettingReadRepository, IdentitySettingReadRepository>();
         services.AddScoped<IIdentitySettingWriteRepository, IdentitySettingWriteRepository>();
+        services.AddScoped<ISettingReadRepository, SettingReadRepository>();
 
         return services;
     }
