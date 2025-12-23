@@ -17,8 +17,11 @@
 
   <ItemGroup>
     <Folder Include="Application\Events\" />
+    <Folder Include="Application\UseCases\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\Transactions\" />
+    <Folder Include="Presentation\" />
+    <Folder Include="Presentation\Http\" />
   </ItemGroup>
 
 </Project>

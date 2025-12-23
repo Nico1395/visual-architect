@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using VisualArchitect.Api.Authentication.Domain;
+using VisualArchitect.Api.Preferences.Domain;
 
 namespace VisualArchitect.Api.Preferences.Infrastructure.EntityConfigurations;
 

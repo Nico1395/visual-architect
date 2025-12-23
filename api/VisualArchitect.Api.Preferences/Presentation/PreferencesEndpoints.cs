@@ -1,0 +1,33 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using VisualArchitect.Api.Orchestration.Abstractions.Application.UseCases;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
+using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
+using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
+using VisualArchitect.Api.Orchestration.Abstractions.Presentation.Http;
+using VisualArchitect.Api.Preferences.Presentation.Contracts;
+using VisualArchitect.Api.Preferences.Presentation.Filter;
+
+namespace VisualArchitect.Api.Preferences.Presentation;
+
+internal static class PreferencesEndpoints
+{
+    public static void MapGetPreferences(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGet("/api/preferences", async (HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] IdentitySettingsFilterDto filter) =>
+        {
+            if (!httpContext.TryGetIdentityId(out var identityId))
+                return Results.Unauthorized();
+
+            var query = new GetPreferencesQuery(identityId, filter.Keys ?? []);
+            var response = await mediator.SendAsync<GetPreferencesQuery, IReadOnlyList<GetPreferencesQuery.Prefence>>(query, httpContext.RequestAborted);
+
+            return response
+                .Map(preferences => preferences
+                    .Select(IdentitySettingDto.From).ToList())
+                .ToResult();
+        }).RequireAuthorization();
+    }
+}
