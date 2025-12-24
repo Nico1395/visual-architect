@@ -12,8 +12,8 @@ using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
 {
     [DbContext(typeof(OrchestrationDbContext))]
-    [Migration("20251221021920_AuthAndSettings")]
-    partial class AuthAndSettings
+    [Migration("20251224194904_AuthenticationAndPreferences")]
+    partial class AuthenticationAndPreferences
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,30 +60,6 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("identity", "authentication");
-                });
-
-            modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.IdentitySetting", b =>
-                {
-                    b.Property<Guid>("IdentityId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("identity_id");
-
-                    b.Property<int>("SettingId")
-                        .HasColumnType("integer")
-                        .HasColumnName("setting_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("Value")
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
-                        .HasColumnName("value");
-
-                    b.HasKey("IdentityId", "SettingId");
-
-                    b.ToTable("identity_setting", "preferences");
                 });
 
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.OAuthIdentity", b =>
@@ -142,9 +118,52 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         .IsUnique();
 
                     b.ToTable("oauth_provider", "authentication");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Key = "github"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Key = "google"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Key = "microsoft"
+                        });
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.Setting", b =>
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentityPreference", b =>
+                {
+                    b.Property<Guid>("IdentityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("identity_id");
+
+                    b.Property<int>("PreferenceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("preference_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("value");
+
+                    b.HasKey("IdentityId", "PreferenceId");
+
+                    b.HasIndex("PreferenceId");
+
+                    b.ToTable("identity_preference", "preferences");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.Preference", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +185,21 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("setting", "preferences");
+                    b.ToTable("preference", "preferences");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DefaultValue = "light",
+                            Key = "theme"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DefaultValue = "en",
+                            Key = "language"
+                        });
                 });
 
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.OAuthIdentity", b =>
@@ -186,6 +219,17 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.Navigation("Identity");
 
                     b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentityPreference", b =>
+                {
+                    b.HasOne("VisualArchitect.Api.Preferences.Domain.Preference", "Preference")
+                        .WithMany()
+                        .HasForeignKey("PreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Preference");
                 });
 #pragma warning restore 612, 618
         }

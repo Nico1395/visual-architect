@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SettingsViewField from '../SettingsViewField.vue';
-import SettingsViewHeader from '../SettingsViewHeader.vue';
+import SettingsViewField from '../PreferencesViewField.vue';
+import SettingsViewHeader from '../PreferencesViewHeader.vue';
 import { useI18n } from "vue-i18n"
 import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core';
@@ -47,22 +47,22 @@ async function saveWithToast(promise: Promise<void>) {
 </script>
 
 <template>
-    <div class="personalization-settings">
-        <div class="personalization-settings-header">
+    <div class="personalization-preferences">
+        <div class="personalization-preferences-header">
             <SettingsViewHeader>
-                <template #settings-header>
-                    {{ t('settings.personalization.header') }}
+                <template #preferences-header>
+                    {{ t('preferences.personalization.header') }}
                 </template>
 
-                <template #settings-description>
-                    {{ t('settings.personalization.description') }}
+                <template #preferences-description>
+                    {{ t('preferences.personalization.description') }}
                 </template>
             </SettingsViewHeader>
         </div>
 
-        <SettingsViewField class="personalization-settings-theme-field">
+        <SettingsViewField class="personalization-preferences-theme-field">
             <template #name>
-                {{ t('settings.personalization.theme.title') }}
+                {{ t('preferences.personalization.theme.title') }}
             </template>
 
             <template #input>
@@ -71,30 +71,30 @@ async function saveWithToast(promise: Promise<void>) {
                     variant="outline"
                     v-model:model-value="useSystemTheme"
                     v-on:update:model-value="(useSystem) => saveWithToast(setSystemAsTheme(useSystem))">
-                    {{ t('settings.personalization.theme.usesystem') }}
+                    {{ t('preferences.personalization.theme.usesystem') }}
 
                     <Icon icon="ai-desktop-device" />
                 </Toggle>
 
-                <div class="personalization-settings-theme-picker">
+                <div class="personalization-preferences-theme-picker">
                     <ThemePreview theme="light" @click="saveWithToast(setTheme((mode = 'light')))" :disabled="useSystemTheme">
-                        {{ t('settings.personalization.theme.light') }}
+                        {{ t('preferences.personalization.theme.light') }}
                     </ThemePreview>
 
                     <ThemePreview theme="dark" @click="saveWithToast(setTheme((mode = 'dark')))" :disabled="useSystemTheme">
-                        {{ t('settings.personalization.theme.dark') }}
+                        {{ t('preferences.personalization.theme.dark') }}
                     </ThemePreview>
                 </div>
             </template>
 
             <template #desc>
-                {{ t('settings.personalization.theme.description') }}
+                {{ t('preferences.personalization.theme.description') }}
             </template>
         </SettingsViewField>
 
         <SettingsViewField>
             <template #name>
-                {{ t('settings.personalization.language.title') }}
+                {{ t('preferences.personalization.language.title') }}
             </template>
 
             <template #input>
@@ -108,25 +108,25 @@ async function saveWithToast(promise: Promise<void>) {
 </template>
 
 <style>
-.personalization-settings {
+.personalization-preferences {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 
-    .personalization-settings-theme-field {
+    .personalization-preferences-theme-field {
         > div {
             width: 100%;
             display: flex;
             flex-direction: column;
             gap: 1rem;
 
-            .personalization-settings-use-system-theme {
+            .personalization-preferences-use-system-theme {
                 font-size: 11pt;
                 cursor: pointer;
                 width: fit-content;
             }
 
-            .personalization-settings-theme-picker {
+            .personalization-preferences-theme-picker {
                 width: 100%;
                 display: grid;
                 grid-template-columns: repeat(auto-fill, 300px);

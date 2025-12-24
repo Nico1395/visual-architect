@@ -70,11 +70,11 @@ function selectLanguage(lang: string) {
       <Command>
         <CommandInput
           class="h-9"
-          :placeholder="t('settings.personalization.language.search')"
+          :placeholder="t('preferences.personalization.language.search')"
         />
         <CommandList>
           <CommandEmpty>
-            {{ t('settings.personalization.language.notfound') }}
+            {{ t('preferences.personalization.language.notfound') }}
           </CommandEmpty>
 
           <CommandGroup>

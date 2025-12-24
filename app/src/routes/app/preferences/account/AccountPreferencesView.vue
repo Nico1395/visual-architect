@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SettingsViewHeader from '../SettingsViewHeader.vue';
+import SettingsViewHeader from '../PreferencesViewHeader.vue';
 import { useI18n } from "vue-i18n"
 import { Button } from '@/components/ui/button'
 import {
@@ -30,9 +30,9 @@ async function confirmDelete() {
     const promise = logoutAndDelete();
 
     toast.promise(promise, {
-        loading: t('settings.account.delete.toast.loading'),
-        success: t('settings.account.delete.toast.success'),
-        error: t('settings.account.delete.toast.error'),
+        loading: t('preferences.account.delete.toast.loading'),
+        success: t('preferences.account.delete.toast.success'),
+        error: t('preferences.account.delete.toast.error'),
     });
 
     await promise;
@@ -49,15 +49,15 @@ async function logoutAndDelete() {
 </script>
 
 <template>
-    <div class="account-settings">
-        <div class="account-settings-header">
+    <div class="account-preferences">
+        <div class="account-preferences-header">
             <SettingsViewHeader>
-                <template #settings-header>
-                    {{ t('settings.account.header') }}
+                <template #preferences-header>
+                    {{ t('preferences.account.header') }}
                 </template>
 
-                <template #settings-description>
-                    {{ t('settings.account.description') }}
+                <template #preferences-description>
+                    {{ t('preferences.account.description') }}
                 </template>
             </SettingsViewHeader>
         </div>
@@ -65,17 +65,17 @@ async function logoutAndDelete() {
         <Item variant="outline" class="account-delete-card">
             <ItemContent class="account-delete-card-content">
                 <ItemTitle class="account-delete-title">
-                    {{ t('settings.account.delete.title') }}
+                    {{ t('preferences.account.delete.title') }}
                 </ItemTitle>
 
                 <ItemDescription class="account-delete-description">
-                    {{ t('settings.account.delete.description') }}
+                    {{ t('preferences.account.delete.description') }}
                 </ItemDescription>
             </ItemContent>
 
             <ItemActions>
                 <Button variant="destructive" @click="showDeleteDialog = true">
-                    {{ t('settings.account.delete.button') }}
+                    {{ t('preferences.account.delete.button') }}
                 </Button>
             </ItemActions>
         </Item>
@@ -84,20 +84,20 @@ async function logoutAndDelete() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>
-                        {{ t('settings.account.delete.modal.title') }}
+                        {{ t('preferences.account.delete.modal.title') }}
                     </DialogTitle>
 
                     <DialogDescription>
-                        {{ t('settings.account.delete.modal.description') }}
+                        {{ t('preferences.account.delete.modal.description') }}
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter class="flex justify-end gap-2">
                     <Button variant="outline" @click="showDeleteDialog = false" :disabled="profileStore.busy">
-                        {{ t('settings.account.delete.modal.cancel') }}
+                        {{ t('preferences.account.delete.modal.cancel') }}
                     </Button>
 
                     <Button variant="destructive" @click="confirmDelete" :disabled="profileStore.busy">
-                        {{ t('settings.account.delete.modal.confirm') }}
+                        {{ t('preferences.account.delete.modal.confirm') }}
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -106,7 +106,7 @@ async function logoutAndDelete() {
 </template>
 
 <style>
-.account-settings {
+.account-preferences {
     display: flex;
     flex-direction: column;
     gap: 2rem;

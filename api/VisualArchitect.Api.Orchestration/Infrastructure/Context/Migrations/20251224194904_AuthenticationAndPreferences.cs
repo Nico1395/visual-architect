@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class AuthAndSettings : Migration
+    public partial class AuthenticationAndPreferences : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,21 +38,6 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "identity_setting",
-                schema: "preferences",
-                columns: table => new
-                {
-                    identity_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    setting_id = table.Column<int>(type: "integer", nullable: false),
-                    value = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_identity_setting", x => new { x.identity_id, x.setting_id });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "oauth_provider",
                 schema: "authentication",
                 columns: table => new
@@ -65,7 +52,7 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "setting",
+                name: "preference",
                 schema: "preferences",
                 columns: table => new
                 {
@@ -76,7 +63,7 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_setting", x => x.id);
+                    table.PrimaryKey("PK_preference", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +96,55 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "identity_preference",
+                schema: "preferences",
+                columns: table => new
+                {
+                    identity_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    preference_id = table.Column<int>(type: "integer", nullable: false),
+                    value = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_identity_preference", x => new { x.identity_id, x.preference_id });
+                    table.ForeignKey(
+                        name: "FK_identity_preference_preference_preference_id",
+                        column: x => x.preference_id,
+                        principalSchema: "preferences",
+                        principalTable: "preference",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                schema: "authentication",
+                table: "oauth_provider",
+                columns: new[] { "id", "key" },
+                values: new object[,]
+                {
+                    { 1, "github" },
+                    { 2, "google" },
+                    { 3, "microsoft" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "preferences",
+                table: "preference",
+                columns: new[] { "id", "default_value", "key" },
+                values: new object[,]
+                {
+                    { 1, "light", "theme" },
+                    { 2, "en", "language" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_identity_preference_preference_id",
+                schema: "preferences",
+                table: "identity_preference",
+                column: "preference_id");
+
             migrationBuilder.CreateIndex(
                 name: "IX_oauth_identity_identity_id",
                 schema: "authentication",
@@ -134,7 +170,7 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "identity_setting",
+                name: "identity_preference",
                 schema: "preferences");
 
             migrationBuilder.DropTable(
@@ -142,7 +178,7 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                 schema: "authentication");
 
             migrationBuilder.DropTable(
-                name: "setting",
+                name: "preference",
                 schema: "preferences");
 
             migrationBuilder.DropTable(

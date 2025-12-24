@@ -59,10 +59,10 @@ async function logout() {
                 <Separator />
 
                 <UserMenuItemLink
-                    href="/app/settings/profile"
+                    href="/app/preferences/profile"
                     icon="ai-gear"
-                    :title="t('layout.header.usermenu.settings')"
-                    :description="t('layout.header.usermenu.settingsdesc')"
+                    :title="t('layout.header.usermenu.preferences')"
+                    :description="t('layout.header.usermenu.preferencesdesc')"
                 />
 
                 <UserMenuItemButton

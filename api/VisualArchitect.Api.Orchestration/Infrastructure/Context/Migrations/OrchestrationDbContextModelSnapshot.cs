@@ -134,15 +134,15 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         });
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentitySetting", b =>
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentityPreference", b =>
                 {
                     b.Property<Guid>("IdentityId")
                         .HasColumnType("uuid")
                         .HasColumnName("identity_id");
 
-                    b.Property<int>("SettingId")
+                    b.Property<int>("PreferenceId")
                         .HasColumnType("integer")
-                        .HasColumnName("setting_id");
+                        .HasColumnName("preference_id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -153,14 +153,14 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         .HasColumnType("character varying(2048)")
                         .HasColumnName("value");
 
-                    b.HasKey("IdentityId", "SettingId");
+                    b.HasKey("IdentityId", "PreferenceId");
 
-                    b.HasIndex("SettingId");
+                    b.HasIndex("PreferenceId");
 
-                    b.ToTable("identity_setting", "preferences");
+                    b.ToTable("identity_preference", "preferences");
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.Setting", b =>
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.Preference", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("setting", "preferences");
+                    b.ToTable("preference", "preferences");
 
                     b.HasData(
                         new
@@ -218,15 +218,15 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.Navigation("Provider");
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentitySetting", b =>
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentityPreference", b =>
                 {
-                    b.HasOne("VisualArchitect.Api.Preferences.Domain.Setting", "Setting")
+                    b.HasOne("VisualArchitect.Api.Preferences.Domain.Preference", "Preference")
                         .WithMany()
-                        .HasForeignKey("SettingId")
+                        .HasForeignKey("PreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Setting");
+                    b.Navigation("Preference");
                 });
 #pragma warning restore 612, 618
         }

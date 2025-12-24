@@ -1,17 +1,17 @@
 <template>
-    <div class="settings-view-header">
+    <div class="preferences-view-header">
         <h1>
-            <slot name="settings-header" />
+            <slot name="preferences-header" />
         </h1>
 
         <p>
-            <slot name="settings-description" />
+            <slot name="preferences-description" />
         </p>
     </div>
 </template>
 
 <style>
-.settings-view-header {
+.preferences-view-header {
     flex: none;
     margin-bottom: 1rem;
 

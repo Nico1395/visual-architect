@@ -14,9 +14,9 @@ public static class SetPreference
     public sealed record SetPreferenceCommand(Guid IdentityId, string Key, string? Value, bool ResetToDefault) : ICommand;
 
     private sealed class SetPreferenceCommandHandler(
-        IIdentitySettingReadRepository _identitySettingReadRepository,
-        IIdentitySettingWriteRepository _identitySettingWriteRepository,
-        ISettingReadRepository _settingReadRepository,
+        IIdentityPreferenceReadRepository _identityPreferenceReadRepository,
+        IIdentityPreferenceWriteRepository _identityPreferenceWriteRepository,
+        IPreferenceReadRepository _preferenceReadRepository,
         IPreferencesUnitOfWork _preferencesUnitOfWork,
         IMediator _mediator) : ICommandHandler<SetPreferenceCommand>
     {
@@ -27,23 +27,23 @@ public static class SetPreference
             if (identityExistsResponse.ResultedInFalse())
                 return CommandResponseFactory.BadRequest_400().Build();
 
-            // Does the setting even exists?
-            var setting = await _settingReadRepository.GetByKeyAsync(request.Key, cancellationToken);
-            if (setting == null)
+            // Does the preference even exists?
+            var preference = await _preferenceReadRepository.GetByKeyAsync(request.Key, cancellationToken);
+            if (preference == null)
                 return CommandResponseFactory.BadRequest_400().Build();
 
-            var identitySetting = await _identitySettingReadRepository.GetByKeyAsync(request.IdentityId, request.Key, cancellationToken);
-            if (identitySetting == null)
+            var identityPreference = await _identityPreferenceReadRepository.GetByKeyAsync(request.IdentityId, request.Key, cancellationToken);
+            if (identityPreference == null)
             {
                 // If its not set and we want to reset to default, we dont really have to do anything.
                 if (request.ResetToDefault)
                     return CommandResponseFactory.Accepted_202().Build();
 
-                await _identitySettingWriteRepository.AddAsync(new IdentitySetting()
+                await _identityPreferenceWriteRepository.AddAsync(new IdentityPreference()
                 {
                     IdentityId = request.IdentityId,
-                    SettingId = setting.Id,
-                    Setting = setting,
+                    PreferenceId = preference.Id,
+                    Preference = preference,
                     Value = request.Value,
                 }, cancellationToken);
             }
@@ -52,12 +52,12 @@ public static class SetPreference
                 if (request.ResetToDefault)
                 {
                     // Delete the identity preference to fallback to the default value on the next query
-                    await _identitySettingWriteRepository.DeleteAsync(identitySetting, cancellationToken);
+                    await _identityPreferenceWriteRepository.DeleteAsync(identityPreference, cancellationToken);
                 }
                 else
                 {
-                    identitySetting.Value = request.Value;
-                    await _identitySettingWriteRepository.UpdateAsync(identitySetting, cancellationToken);
+                    identityPreference.Value = request.Value;
+                    await _identityPreferenceWriteRepository.UpdateAsync(identityPreference, cancellationToken);
                 }
             }
             

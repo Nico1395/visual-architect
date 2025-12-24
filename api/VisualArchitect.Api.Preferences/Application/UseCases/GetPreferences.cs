@@ -9,8 +9,8 @@ namespace VisualArchitect.Api.Preferences.Application.UseCases;
 public static class GetPreferences
 {
     private sealed class GetPreferencesQueryHandler(
-        IIdentitySettingReadRepository _identitySettingReadRepository,
-        ISettingReadRepository _settingReadRepository,
+        IIdentityPreferenceReadRepository _identityPreferenceReadRepository,
+        IPreferenceReadRepository _preferenceReadRepository,
         IMediator _mediator) : IQueryHandler<GetPreferencesQuery, IReadOnlyList<GetPreferencesQuery.Prefence>>
     {
         public async Task<IQueryResponse<IReadOnlyList<GetPreferencesQuery.Prefence>>> HandleAsync(GetPreferencesQuery request, CancellationToken cancellationToken)
@@ -22,31 +22,31 @@ public static class GetPreferences
             if (identityExistsResponse.ResultedInFalse())
                 return QueryResponseFactory.BadRequest_400<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
 
-            // Get all settings and if none even exists, we wont have to search any further -> thats a faulty request.
-            var settings = await _settingReadRepository.GetByKeysOrAllAsync(keys, cancellationToken);
-            if (settings.Count == 0)
+            // Get all preferences and if none even exists, we wont have to search any further -> thats a faulty request.
+            var preferences = await _preferenceReadRepository.GetByKeysOrAllAsync(keys, cancellationToken);
+            if (preferences.Count == 0)
                 return QueryResponseFactory.BadRequest_400<IReadOnlyList<GetPreferencesQuery.Prefence>>().Build();
 
-            var identitySettings = await _identitySettingReadRepository.GetByKeysOrAllAsync(request.IdentityId, keys, cancellationToken);
-            var preferences = new List<GetPreferencesQuery.Prefence>();
+            var identityPreferences = await _identityPreferenceReadRepository.GetByKeysOrAllAsync(request.IdentityId, keys, cancellationToken);
+            var totalPreferences = new List<GetPreferencesQuery.Prefence>();
 
             // Basically:
             // 1. Matchmake identity and key
-            // 2. Get the identity setting's value and if not set yet, get the default value from the setting
+            // 2. Get the identity preference's value and if not set yet, get the default value from the preference
             // 3. If it has never set, UpdatedAt should be null
-            foreach (var setting in settings)
+            foreach (var preference in preferences)
             {
-                var identitySetting = identitySettings.SingleOrDefault(i => i.SettingId == setting.Id);
-                preferences.Add(new GetPreferencesQuery.Prefence(
+                var identityPreference = identityPreferences.SingleOrDefault(i => i.PreferenceId == preference.Id);
+                totalPreferences.Add(new GetPreferencesQuery.Prefence(
                     request.IdentityId,
-                    setting.Key,
-                    identitySetting != null ? identitySetting.Value : setting.DefaultValue,
-                    setting.DefaultValue,
-                    identitySetting?.UpdatedAt
+                    preference.Key,
+                    identityPreference != null ? identityPreference.Value : preference.DefaultValue,
+                    preference.DefaultValue,
+                    identityPreference?.UpdatedAt
                 ));
             }
 
-            return QueryResponseFactory.OK_200(preferences as IReadOnlyList<GetPreferencesQuery.Prefence>).Build();
+            return QueryResponseFactory.OK_200(totalPreferences as IReadOnlyList<GetPreferencesQuery.Prefence>).Build();
         }
     }
 }

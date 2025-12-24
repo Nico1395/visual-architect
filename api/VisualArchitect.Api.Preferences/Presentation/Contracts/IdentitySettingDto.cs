@@ -2,7 +2,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Application.UseCases;
 
 namespace VisualArchitect.Api.Preferences.Presentation.Contracts;
 
-internal class IdentitySettingDto
+internal class IdentityPreferenceDto
 {
     public required Guid IdentityId { get; init; }
     public required string Key { get; init; }
@@ -10,7 +10,7 @@ internal class IdentitySettingDto
     public required string? DefaultValue { get; init; }
     public required DateTime? UpdatedAt { get; init; }
 
-    public static IdentitySettingDto From(GetPreferencesQuery.Prefence preference)
+    public static IdentityPreferenceDto From(GetPreferencesQuery.Prefence preference)
     {
         return new()
         {
