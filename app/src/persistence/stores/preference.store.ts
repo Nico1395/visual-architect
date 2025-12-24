@@ -23,6 +23,9 @@ export const usePreferenceStore = defineStore("preference", {
             }
         },
         getCachedPreference(key: string): string | null {
+            if (!this.preferences || !this.preferences.find)
+                return null
+
             const preference = this.preferences.find(p => p.key == key)
             if (!preference)
                 return null

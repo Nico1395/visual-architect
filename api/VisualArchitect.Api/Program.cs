@@ -1,5 +1,6 @@
 using VisualArchitect.Api.Authentication.Domain.Constants;
 using VisualArchitect.Api.Authentication.Presentation.Middleware;
+using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 
 namespace VisualArchitect.Api;
 
@@ -21,6 +22,7 @@ internal sealed class Program
 
         app.MapVisualArchitect();
 
+        app.RunMigrations();
         app.Run();
     }
 }
