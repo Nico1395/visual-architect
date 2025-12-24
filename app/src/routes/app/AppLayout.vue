@@ -29,9 +29,6 @@ const { t } = useI18n()
     </div>
 </template>
 
-<style scoped>
-</style>
-
 <style>
 .header {
     flex: none;
@@ -39,8 +36,7 @@ const { t } = useI18n()
     .navbar {
         background-color: var(--sidebar);
         color: var(--sidebar-foreground);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
+        border-bottom: 1px solid var(--border);
         height: 60px;
         padding: 1rem;
         display: flex;
