@@ -13,7 +13,9 @@ public static class WebApplicationMigrationExtensions
         if (!runOnStartup)
             return;
 
-        using var context = app.Services.GetRequiredService<DbContext>();
+        using var scope = app.Services.CreateScope();
+        using var context = scope.ServiceProvider.GetRequiredService<DbContext>();
+
         context.Database.Migrate();
     }
 }
