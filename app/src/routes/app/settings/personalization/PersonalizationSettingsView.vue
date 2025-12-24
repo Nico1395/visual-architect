@@ -9,6 +9,7 @@ import Toggle from '@/components/ui/toggle/Toggle.vue';
 import Icon from '@/components/Icon.vue';
 import { usePreferenceStore } from '@/persistence/stores/preference.store';
 import LanguagePicker from './LanguagePicker.vue';
+import { toast } from 'vue-sonner'
 
 const mode = useColorMode()
 const { t, locale } = useI18n();
@@ -32,6 +33,16 @@ async function setTheme(theme: string) {
 async function setLanguage(language: string) {
     locale.value = language
     await preferenceStore.setPreference("language", language)
+}
+
+async function saveWithToast(promise: Promise<void>) {
+    toast.promise(promise, {
+        loading: t('toasts.saving.loading'),
+        success: t('toasts.saving.success'),
+        error: t('toasts.saving.error'),
+    });
+
+    await promise;
 }
 </script>
 
@@ -59,18 +70,18 @@ async function setLanguage(language: string) {
                     style="width: fit-content"
                     variant="outline"
                     v-model:model-value="useSystemTheme"
-                    v-on:update:model-value="(useSystem) => setSystemAsTheme(useSystem)">
+                    v-on:update:model-value="(useSystem) => saveWithToast(setSystemAsTheme(useSystem))">
                     {{ t('settings.personalization.theme.usesystem') }}
 
                     <Icon icon="ai-desktop-device" />
                 </Toggle>
 
                 <div class="personalization-settings-theme-picker">
-                    <ThemePreview theme="light" @click="setTheme((mode = 'light'))" :disabled="useSystemTheme">
+                    <ThemePreview theme="light" @click="saveWithToast(setTheme((mode = 'light')))" :disabled="useSystemTheme">
                         {{ t('settings.personalization.theme.light') }}
                     </ThemePreview>
 
-                    <ThemePreview theme="dark" @click="setTheme((mode = 'dark'))" :disabled="useSystemTheme">
+                    <ThemePreview theme="dark" @click="saveWithToast(setTheme((mode = 'dark')))" :disabled="useSystemTheme">
                         {{ t('settings.personalization.theme.dark') }}
                     </ThemePreview>
                 </div>
@@ -89,7 +100,7 @@ async function setLanguage(language: string) {
             <template #input>
                 <LanguagePicker
                     v-model="currentLanguage"
-                    @update:modelValue="setLanguage"
+                    @update:modelValue="(language) => saveWithToast(setLanguage(language))"
                 />
             </template>
         </SettingsViewField>

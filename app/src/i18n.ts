@@ -23,6 +23,13 @@ const en = {
         accountsettings: "Account Preferences",
         notfound: "Not Found",
     },
+    toasts: {
+        saving: {
+            loading: "Saving...",
+            success: "Saved successfully!",
+            error: "Encountered an error saving. 🫥",
+        }
+    },
     notfound: {
         message: "Oops, looks like this page does not exist! 🥺",
         home: "Better to go back to the homepage...",
@@ -61,11 +68,6 @@ const en = {
             email: "E-mail",
             emaildesc: "Your e-mail address is only used for contacting you. Changing it does not have an effect on how you authenticate yourself in the app.",
             displayname: "Display name",
-            toast: {
-                loading: "Saving...",
-                success: "Saved successfully!",
-                error: "Failed to save.",
-            }
         },
         account: {
             menuitem: "Account",
@@ -132,6 +134,13 @@ const de = {
         accountsettings: "Kontoeinstellungen",
         notfound: "Nicht gefunden",
     },
+    toasts: {
+        saving: {
+            loading: "Speichere...",
+            success: "Erfolgreich gespeichert!",
+            error: "Fehler beim Speichern. 🫥",
+        }
+    },
     notfound: {
         message: "Oops, sieht so aus als würde die Seite nicht existieren! 🥺",
         home: "Geh' besser wieder zur Startseite zurück...",
@@ -170,11 +179,6 @@ const de = {
             email: "E-Mail",
             emaildesc: "Deine E-Mail-Adresse wird ausschließlich verwendet um dich zu erreichen. Sie zu ändern sorgt nicht dafür, dass du dich in der App anders authentifizieren müsstest.",
             displayname: "Anzeigename",
-            toast: {
-                loading: "Speichere...",
-                success: "Erfolgreich gespeichert!",
-                error: "Fehler beim Speichern.",
-            }
         },
         account: {
             menuitem: "Konto",

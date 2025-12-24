@@ -32,11 +32,28 @@ watchEffect(() => {
     const language = preferenceStore.getCachedPreference("language")
     locale.value = language ?? "en"
 })
+
+function getToasterTheme(): 'light' | 'dark' | 'system' {
+    const theme = colorMode.store.value
+    if (theme === "light") {
+        return theme
+    }
+
+    if (theme === "auto") {
+        return "system"
+    }
+
+    return "dark"
+}
 </script>
 
 <template>
     <RouterView v-if="initializationStore.initialized" />
     <LoaderView v-else />
 
-    <Toaster position="top-center" richColors />
+    <Toaster
+        position="top-center"
+        richColors
+        closeButton
+        :theme="getToasterTheme()" />
 </template>
