@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SettingsViewField from '../SettingsViewField.vue';
-import SettingsViewHeader from '../SettingsViewHeader.vue';
+import SettingsViewField from '../PreferencesViewField.vue';
+import SettingsViewHeader from '../PreferencesViewHeader.vue';
 import { Input } from '@/components/ui/input'
 import { useI18n } from "vue-i18n"
 import { useProfileStore } from '@/persistence/stores/profile.store';
@@ -65,22 +65,22 @@ watch(profile, (p) => {
 </script>
 
 <template>
-    <div class="profile-settings">
-        <div class="profile-settings-header">
+    <div class="profile-preferences">
+        <div class="profile-preferences-header">
             <SettingsViewHeader>
-                <template #settings-header>
-                    {{ t('settings.profile.header') }}
+                <template #preferences-header>
+                    {{ t('preferences.profile.header') }}
                 </template>
 
-                <template #settings-description>
-                    {{ t('settings.profile.description') }}
+                <template #preferences-description>
+                    {{ t('preferences.profile.description') }}
                 </template>
             </SettingsViewHeader>
         </div>
 
         <SettingsViewField :disabled="profileStore.busy" :changed="emailChanged" @reset="resetField('email')" @save="saveEmail()" :grouped="true">
             <template #name>
-                {{ t('settings.profile.email') }}
+                {{ t('preferences.profile.email') }}
             </template>
 
             <template #input>
@@ -93,13 +93,13 @@ watch(profile, (p) => {
             </template>
 
             <template #desc>
-                    {{ t('settings.profile.emaildesc') }}
+                    {{ t('preferences.profile.emaildesc') }}
             </template>
         </SettingsViewField>
 
         <SettingsViewField :disabled="profileStore.busy" :changed="displayNameChanged" @reset="resetField('displayName')" @save="saveDisplayName()" :grouped="true">
             <template #name>
-                {{ t('settings.profile.displayname') }}
+                {{ t('preferences.profile.displayname') }}
             </template>
 
             <template #input>
@@ -115,7 +115,7 @@ watch(profile, (p) => {
 </template>
 
 <style>
-.profile-settings {
+.profile-preferences {
     display: flex;
     flex-direction: column;
     gap: 2rem;

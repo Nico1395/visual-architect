@@ -5,8 +5,8 @@ const en = {
         header: {
             appname: "Visual Architect",
             usermenu: {
-                settings: "Settings",
-                settingsdesc: "Account management and settings",
+                preferences: "Preferences",
+                preferencesdesc: "Account management and preferences",
                 logout: "Log Out",
                 logoutdesc: "Sad to see you leave already! 🙁",
                 signedinas: "Signed in as",
@@ -17,10 +17,10 @@ const en = {
         app: "Visual Architect",
         login: "Login",
         home: "Home",
-        settings: "Preferences",
-        profilesettings: "Profile Preferences",
-        personalizationsettings: "Personalization Preferences",
-        accountsettings: "Account Preferences",
+        preferences: "Preferences",
+        profilepreferences: "Profile Preferences",
+        personalizationpreferences: "Personalization Preferences",
+        accountpreferences: "Account Preferences",
         notfound: "Not Found",
     },
     toasts: {
@@ -56,7 +56,7 @@ const en = {
             }
         },
     },
-    settings: {
+    preferences: {
         header: {
             save: "Save",
             reset: "Reset",
@@ -116,8 +116,8 @@ const de = {
         header: {
             appname: "Visual Architect",
             usermenu: {
-                settings: "Einstellungen",
-                settingsdesc: "Kontoverwaltung und Einstellungen",
+                preferences: "Einstellungen",
+                preferencesdesc: "Kontoverwaltung und Einstellungen",
                 logout: "Abmelden",
                 logoutdesc: "Schade, dass du schon gehst! 🙁",
                 signedinas: "Angemeldet als",
@@ -128,10 +128,10 @@ const de = {
         app: "Visual Architect",
         login: "Einloggen",
         home: "Startseite",
-        settings: "Einstellungen",
-        profilesettings: "Profileinstellungen",
-        personalizationsettings: "Personalisierung",
-        accountsettings: "Kontoeinstellungen",
+        preferences: "Einstellungen",
+        profilepreferences: "Profileinstellungen",
+        personalizationpreferences: "Personalisierung",
+        accountpreferences: "Kontoeinstellungen",
         notfound: "Nicht gefunden",
     },
     toasts: {
@@ -167,7 +167,7 @@ const de = {
             }
         },
     },
-    settings: {
+    preferences: {
         header: {
             save: "Speichern",
             reset: "Zurücksetzen",

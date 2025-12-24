@@ -29,25 +29,25 @@ const router = createRouter({
             component: () => import("./routes/app/home/HomeView.vue"),
         },
         {
-            path: "settings",
-            redirect: "/app/settings/profile",
-            name: "settings",
-            component: () => import("./routes/app/settings/SettingsLayout.vue"),
+            path: "preferences",
+            redirect: "/app/preferences/profile",
+            name: "preferences",
+            component: () => import("./routes/app/preferences/PreferencesLayout.vue"),
             children: [
                 {
                     path: "profile",
-                    name: "profilesettings",
-                    component: () => import("./routes/app/settings/profile/ProfileSettingsView.vue"),
+                    name: "profilepreferences",
+                    component: () => import("./routes/app/preferences/profile/ProfilePreferencesView.vue"),
                 },
                 {
                     path: "personalization",
-                    name: "personalizationsettings",
-                    component: () => import("./routes/app/settings/personalization/PersonalizationSettingsView.vue"),
+                    name: "personalizationpreferences",
+                    component: () => import("./routes/app/preferences/personalization/PersonalizationPreferencesView.vue"),
                 },
                 {
                     path: "account",
-                    name: "accountsettings",
-                    component: () => import("./routes/app/settings/account/AccountSettingsView.vue"),
+                    name: "accountpreferences",
+                    component: () => import("./routes/app/preferences/account/AccountPreferencesView.vue"),
                 },
             ]
         }

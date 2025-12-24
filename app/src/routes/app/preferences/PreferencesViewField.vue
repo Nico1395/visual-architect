@@ -27,7 +27,7 @@ function reset() {
 </script>
 
 <template>
-    <div :class="`settings-view-field ${props.class ?? ''}`.trim()">
+    <div :class="`preferences-view-field ${props.class ?? ''}`.trim()">
         <h2>
             <slot name="name" />
         </h2>
@@ -64,7 +64,7 @@ function reset() {
 </template>
 
 <style>
-.settings-view-field {
+.preferences-view-field {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;

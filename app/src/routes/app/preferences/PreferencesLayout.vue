@@ -4,8 +4,8 @@ import Avatar from '@/components/ui/avatar/Avatar.vue';
 import AvatarImage from '@/components/ui/avatar/AvatarImage.vue';
 import { useProfileStore } from '@/persistence/stores/profile.store';
 import avatarFallback from '@/assets/img/avatar-fallback.png'
-import SettingsMenuItem from './SettingsMenuItem.vue';
-import SettingsMenuSeparator from './SettingsMenuSeparator.vue';
+import PreferencesMenuItem from './PreferencesMenuItem.vue';
+import PreferencesMenuSeparator from './PreferencesMenuSeparator.vue';
 import Icon from '@/components/Icon.vue';
 import { useI18n } from "vue-i18n"
 import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue';
@@ -15,17 +15,17 @@ const { t } = useI18n();
 </script>
 
 <template>
-    <ViewMargin class="settings-layout">
-        <div class="settings-header">
-            <div class="settings-user-card">
-                <Avatar class="settings-user-avatar">
+    <ViewMargin class="preferences-layout">
+        <div class="preferences-header">
+            <div class="preferences-user-card">
+                <Avatar class="preferences-user-avatar">
                     <AvatarImage :src="profileStore.$state.profile?.avatarUrl || ''" />
-                    <AvatarFallback class="settings-user-avatar-fallback">
+                    <AvatarFallback class="preferences-user-avatar-fallback">
                         <img :src="avatarFallback" />
                     </AvatarFallback>
                 </Avatar>
 
-                <div class="settings-user-info">
+                <div class="preferences-user-info">
                     <div class="display-name">
                         {{ profileStore.$state.profile?.displayName }}
                     </div>
@@ -37,36 +37,36 @@ const { t } = useI18n();
             </div>
         </div>
 
-        <div class="settings-body">
-            <div class="settings-menu">
-                <SettingsMenuItem to="/app/settings/profile">
+        <div class="preferences-body">
+            <div class="preferences-menu">
+                <PreferencesMenuItem to="/app/preferences/profile">
                     <Icon icon="ai-person" />
 
                     <span>
-                        {{ t('settings.profile.menuitem') }}
+                        {{ t('preferences.profile.menuitem') }}
                     </span>
-                </SettingsMenuItem>
+                </PreferencesMenuItem>
 
-                <SettingsMenuItem to="/app/settings/personalization">
+                <PreferencesMenuItem to="/app/preferences/personalization">
                     <Icon icon="ai-pencil" />
 
                     <span>
-                        {{ t('settings.personalization.menuitem') }}
+                        {{ t('preferences.personalization.menuitem') }}
                     </span>
-                </SettingsMenuItem>
+                </PreferencesMenuItem>
 
-                <SettingsMenuSeparator />
+                <PreferencesMenuSeparator />
 
-                <SettingsMenuItem to="/app/settings/account">
+                <PreferencesMenuItem to="/app/preferences/account">
                     <Icon icon="ai-gear" />
 
                     <span>
-                        {{ t('settings.account.menuitem') }}
+                        {{ t('preferences.account.menuitem') }}
                     </span>
-                </SettingsMenuItem>
+                </PreferencesMenuItem>
             </div>
 
-            <div class="settings-view">
+            <div class="preferences-view">
                 <RouterView />
             </div>
         </div>
@@ -74,27 +74,26 @@ const { t } = useI18n();
 </template>
 
 <style>
-
-.settings-layout {
+.preferences-layout {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 
-    .settings-header {
+    .preferences-header {
         flex: non;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
 
-        .settings-user-card {
+        .preferences-user-card {
             flex: none;
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 0.7rem;
 
-            .settings-user-avatar {
+            .preferences-user-avatar {
                 border: 1px solid var(--border);
                 height: 60px;
                 width: 60px;
@@ -104,14 +103,14 @@ const { t } = useI18n();
                     animation: wiggle 0.5s ease-in-out;
                 }
 
-                .settings-user-avatar-fallback {
+                .preferences-user-avatar-fallback {
                     > img {
                         scale: 0.5;
                     }
                 }
             }
 
-            .settings-user-info {
+            .preferences-user-info {
                 height: min-content;
                 line-height: 1;
 
@@ -129,13 +128,13 @@ const { t } = useI18n();
         }
     }
 
-    .settings-body {
+    .preferences-body {
         flex: 1;
         display: flex;
         flex-direction: row;
         gap: 3rem;
 
-        .settings-menu {
+        .preferences-menu {
             width: 250px;
             flex: none;
             display: flex;
@@ -143,7 +142,7 @@ const { t } = useI18n();
             gap: 0.2rem;
         }
 
-        .settings-view {
+        .preferences-view {
             flex: 1;
         }
     }
