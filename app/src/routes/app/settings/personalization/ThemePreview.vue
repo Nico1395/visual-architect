@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
+import Card from '@/components/ui/card/Card.vue';
 
 const props = defineProps<{
     theme?: string | null
@@ -16,7 +17,7 @@ function onClick() {
 
 <template>
     <Button class="theme-preview" variant="outline" @click="onClick()" :disabled>
-        <div :class="`theme-example ${props.theme ?? ''}`.trim()">
+        <Card :class="`theme-example ${props.theme ?? ''}`.trim()">
             <div class="header">
                 <div class="logo-skeletton"></div>
 
@@ -36,7 +37,7 @@ function onClick() {
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
 
         <div class="theme-name">
             <slot />
@@ -56,6 +57,8 @@ function onClick() {
     overflow: hidden;
 
     .theme-example {
+        padding: 0;
+        gap: 0;
         overflow: hidden;
         display: flex;
         flex-direction: column;
