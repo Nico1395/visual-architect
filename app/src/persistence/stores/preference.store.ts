@@ -32,7 +32,7 @@ export const usePreferenceStore = defineStore("preference", {
         },
         async setPreference(key: string, value: string | null, resetToDefault: boolean = false) {
             const preference = this.preferences.find(p => p.key == key)
-            if (!preference || this.busy)
+            if (!preference || preference.value == value || this.busy)
                 return
 
             this.busy = true;

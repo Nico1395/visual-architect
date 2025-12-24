@@ -87,6 +87,9 @@ const en = {
             },
             language: {
                 title: "Language",
+                prompt: "Select a language",
+                search: "Search language...",
+                notfound: "Not available 🙁",
             },
         },
     }
@@ -101,6 +104,7 @@ const de = {
                 settingsdesc: "Kontoverwaltung und Einstellungen",
                 logout: "Abmelden",
                 logoutdesc: "Schade, dass du schon gehst! 🙁",
+                signedinas: "Angemeldet als",
             },
         },
     },
@@ -136,7 +140,7 @@ const de = {
             header: "Profileinstellungen",
             description: "Aktualisieren und verwalten Sie Ihre persönlichen Informationen. Ändern Sie Ihren Anzeigenamen, Ihre E-Mail-Adresse oder Ihr Avatar und steuern Sie, wer Ihr Profil sehen kann. Halten Sie Ihre Präsenz in der App genau so, wie Sie es möchten.",
             email: "E-Mail",
-            emaildesc: "Deine E-Mailadresse wird ausschließlich verwendet um dich zu erreichen. Sie zu ändern sorgt nicht dafür, dass du dich in der App anders authentifizieren müsstest.",
+            emaildesc: "Deine E-Mail-Adresse wird ausschließlich verwendet um dich zu erreichen. Sie zu ändern sorgt nicht dafür, dass du dich in der App anders authentifizieren müsstest.",
             displayname: "Anzeigename",
             toast: {
                 loading: "Speichere...",
@@ -178,6 +182,9 @@ const de = {
             },
             language: {
                 title: "Language",
+                prompt: "Sprache auswählen",
+                search: "Sprache suchen...",
+                notfound: "Nicht verfügbar 🙁",
             },
         },
     }
