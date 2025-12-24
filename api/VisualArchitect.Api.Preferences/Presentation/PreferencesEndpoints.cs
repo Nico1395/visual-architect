@@ -27,7 +27,7 @@ internal static class PreferencesEndpoints
 
             return response
                 .Map(preferences => preferences
-                    .Select(IdentitySettingDto.From).ToList())
+                    .Select(IdentityPreferenceDto.From).ToList())
                 .ToResult();
         }).RequireAuthorization();
     }

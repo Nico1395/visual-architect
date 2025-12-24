@@ -1,6 +1,6 @@
 namespace VisualArchitect.Api.Orchestration.Abstractions.Domain.Constants;
 
-public static class PreferencesConstants
+public static class PreferenceConstants
 {
     public static class Theme
     {

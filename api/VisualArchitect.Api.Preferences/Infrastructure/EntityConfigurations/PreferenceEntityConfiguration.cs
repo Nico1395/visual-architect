@@ -5,11 +5,11 @@ using VisualArchitect.Api.Preferences.Domain;
 
 namespace VisualArchitect.Api.Preferences.Infrastructure.EntityConfigurations;
 
-internal sealed class SettingEntityConfiguration : IEntityTypeConfiguration<Setting>
+internal sealed class SettingEntityConfiguration : IEntityTypeConfiguration<Preference>
 {
-    public void Configure(EntityTypeBuilder<Setting> builder)
+    public void Configure(EntityTypeBuilder<Preference> builder)
     {
-        builder.ToTable(name: "setting", schema: "preferences");
+        builder.ToTable(name: "preference", schema: "preferences");
         builder.HasKey(s => s.Id);
 
         builder.Property(s => s.Id).HasColumnName("id").UseIdentityColumn().IsRequired();
@@ -17,8 +17,8 @@ internal sealed class SettingEntityConfiguration : IEntityTypeConfiguration<Sett
         builder.Property(s => s.DefaultValue).HasColumnName("default_value").HasMaxLength(2048);
 
         builder.HasData([
-            new Setting() { Id = 1, Key = PreferencesConstants.Theme.Key, DefaultValue = PreferencesConstants.Theme.DefaultValue },
-            new Setting() { Id = 2, Key = PreferencesConstants.Language.Key, DefaultValue = PreferencesConstants.Language.DefaultValue },
+            new Preference() { Id = 1, Key = PreferenceConstants.Theme.Key, DefaultValue = PreferenceConstants.Theme.DefaultValue },
+            new Preference() { Id = 2, Key = PreferenceConstants.Language.Key, DefaultValue = PreferenceConstants.Language.DefaultValue },
         ]);
     }
 }

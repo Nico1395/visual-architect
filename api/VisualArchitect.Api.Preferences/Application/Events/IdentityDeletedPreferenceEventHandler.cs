@@ -6,15 +6,15 @@ using VisualArchitect.Api.Preferences.Domain.Repositories;
 namespace VisualArchitect.Api.Preferences.Application.Events;
 
 internal sealed class IdentityDeletedPreferenceEventHandler(
-    IIdentitySettingReadRepository _identitySettingReadRepository,
-    IIdentitySettingWriteRepository _identitySettingWriteRepository,
+    IIdentityPreferenceReadRepository _identityPreferenceReadRepository,
+    IIdentityPreferenceWriteRepository _identityPreferenceWriteRepository,
     IPreferencesUnitOfWork _preferencesUnitOfWork) : INotificationHandler<IdentityDeletedEvent>
 {
     public async Task HandleAsync(IdentityDeletedEvent notification, CancellationToken cancellationToken)
     {
-        var preferences = await _identitySettingReadRepository.GetByKeysOrAllAsync(notification.IdentityId, [], cancellationToken);
+        var preferences = await _identityPreferenceReadRepository.GetByKeysOrAllAsync(notification.IdentityId, [], cancellationToken);
 
-        await _identitySettingWriteRepository.DeleteRangeAsync(preferences, cancellationToken);
+        await _identityPreferenceWriteRepository.DeleteRangeAsync(preferences, cancellationToken);
         await _preferencesUnitOfWork.CommitAsync(cancellationToken);
     }
 }
