@@ -76,6 +76,10 @@ async function setSystemAsTheme(useSystem: boolean | undefined) {
 async function setTheme(theme: string) {
     await preferenceStore.setPreference("theme", theme)
 }
+
+async function setLanguage(language: string) {
+    await preferenceStore.setPreference("language", language)
+}
 </script>
 
 <template>

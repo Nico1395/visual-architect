@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Events\" />
     <Folder Include="Application\Persistence\" />
     <Folder Include="Domain\Repositories\" />
     <Folder Include="Presentation\Filter\" />

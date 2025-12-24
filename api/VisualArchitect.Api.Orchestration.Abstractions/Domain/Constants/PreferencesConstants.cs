@@ -9,6 +9,7 @@ public static class PreferencesConstants
 
         public static class Values
         {
+            public const string System = "auto";
             public const string Light = "light";
             public const string Dark = "Dark";
         }

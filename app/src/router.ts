@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router"
 import AppLayout from "./routes/app/AppLayout.vue"
 import AuthLayout from "./routes/auth/AuthLayout.vue"
 import { isAuthenticated } from "./auth"
+import { useInitializationStore } from "./persistence/stores/initialization.store"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +67,10 @@ const router = createRouter({
 
 const publicNames = ["login"];
 router.beforeEach(async (to, _, next) => {
+    const initializationStore = useInitializationStore()
+    if (!initializationStore.initialized)
+        await initializationStore.initialize()
+
     const nextName = to.name?.toString();
     if (nextName && publicNames.includes(nextName)) {
         return next();

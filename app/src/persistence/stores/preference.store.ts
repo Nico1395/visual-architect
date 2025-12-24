@@ -22,6 +22,14 @@ export const usePreferenceStore = defineStore("preference", {
                 this.busy = false
             }
         },
+        getCachedPreference(key: string): string | null {
+            const preference = this.preferences.find(p => p.key == key)
+            if (!preference)
+                return null
+
+            // If updatedAt is null that means that the user has not actually ever set the preference, so return the default value
+            return preference.updatedAt ? preference.value as string | null : preference.defaultValue as string | null
+        },
         async setPreference(key: string, value: string | null, resetToDefault: boolean = false) {
             const preference = this.preferences.find(p => p.key == key)
             if (!preference || this.busy)

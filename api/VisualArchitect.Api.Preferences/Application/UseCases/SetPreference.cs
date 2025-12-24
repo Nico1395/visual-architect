@@ -49,8 +49,16 @@ public static class SetPreference
             }
             else
             {
-                identitySetting.Value = request.ResetToDefault ? setting.DefaultValue : request.Value;
-                await _identitySettingWriteRepository.UpdateAsync(identitySetting, cancellationToken);
+                if (request.ResetToDefault)
+                {
+                    // Delete the identity preference to fallback to the default value on the next query
+                    await _identitySettingWriteRepository.DeleteAsync(identitySetting, cancellationToken);
+                }
+                else
+                {
+                    identitySetting.Value = request.Value;
+                    await _identitySettingWriteRepository.UpdateAsync(identitySetting, cancellationToken);
+                }
             }
             
             await _preferencesUnitOfWork.CommitAsync(cancellationToken);

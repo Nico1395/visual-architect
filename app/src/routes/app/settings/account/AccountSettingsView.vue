@@ -40,10 +40,11 @@ async function confirmDelete() {
 }
 
 async function logoutAndDelete() {
-    await profileStore.deleteProfile()
-    await http.post("/api/auth/logout");
     localStorage.clear();
     sessionStorage.clear();
+
+    await profileStore.deleteProfile()
+    await http.post("/api/auth/logout");
 }
 </script>
 

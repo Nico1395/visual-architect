@@ -23,4 +23,25 @@ public sealed class IdentitySettingWriteRepository(DbContext _context) : IIdenti
 
         return Task.CompletedTask;
     }
+    
+    public Task DeleteAsync(IdentitySetting preference, CancellationToken cancellationToken)
+    {
+        _context.Remove(preference);
+        if (preference.Setting != null)
+            _context.Entry(preference.Setting).State = EntityState.Unchanged;
+
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteRangeAsync(IEnumerable<IdentitySetting> preferences, CancellationToken cancellationToken)
+    {
+        foreach (var preference in preferences)
+        {
+            _context.Remove(preference);
+            if (preference.Setting != null)
+                _context.Entry(preference.Setting).State = EntityState.Unchanged;
+        }
+
+        return Task.CompletedTask;
+    }
 }
