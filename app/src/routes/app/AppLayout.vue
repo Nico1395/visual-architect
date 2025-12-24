@@ -27,6 +27,10 @@ const { t } = useI18n()
     <div class="content">
         <router-view />
     </div>
+
+    <div class="footer">
+
+    </div>
 </template>
 
 <style>
@@ -77,5 +81,12 @@ const { t } = useI18n()
 
 .content {
     flex: 1;
+    margin: 2.5rem 0 10rem 0;
+}
+
+.footer {
+    background-color: var(--muted);
+    flex: none;
+    height: 100px
 }
 </style>

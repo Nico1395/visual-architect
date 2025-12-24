@@ -102,7 +102,6 @@ const projects: Array<ProjectDto> = [
 
 <style>
 .home-view {
-    padding-top: 3rem;
     display: flex;
     flex-direction: column;
     gap: 5rem;
