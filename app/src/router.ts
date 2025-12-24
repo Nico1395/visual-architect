@@ -3,6 +3,7 @@ import AppLayout from "./routes/app/AppLayout.vue"
 import AuthLayout from "./routes/auth/AuthLayout.vue"
 import { isAuthenticated } from "./auth"
 import { useInitializationStore } from "./persistence/stores/initialization.store"
+import i18n from "./i18n"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,15 +12,10 @@ const router = createRouter({
         redirect: "/auth/login",
         component: AuthLayout,
         children: [{
-            path: "login",
-            name: "login",
-            component: () => import("./routes/auth/login/LoginView.vue"),
-        },
-        {
-            path: "register",
-            name: "register",
-            component: () => import("./routes/auth/register/RegisterView.vue"),
-        },
+                path: "login",
+                name: "login",
+                component: () => import("./routes/auth/login/LoginView.vue"),
+            },
         ],
     },
     {
@@ -40,17 +36,17 @@ const router = createRouter({
             children: [
                 {
                     path: "profile",
-                    name: "profile-settings",
+                    name: "profilesettings",
                     component: () => import("./routes/app/settings/profile/ProfileSettingsView.vue"),
                 },
                 {
                     path: "personalization",
-                    name: "personalization-settings",
+                    name: "personalizationsettings",
                     component: () => import("./routes/app/settings/personalization/PersonalizationSettingsView.vue"),
                 },
                 {
                     path: "account",
-                    name: "account-settings",
+                    name: "accountsettings",
                     component: () => import("./routes/app/settings/account/AccountSettingsView.vue"),
                 },
             ]
@@ -59,20 +55,21 @@ const router = createRouter({
         },
         {
             path: "/:pathMatch(.*)*",
-            name: "not-found",
+            name: "notfound",
             component: () => import("./routes/NotFoundView.vue"),
         },
     ],
 })
 
-const publicNames = ["login"];
+const publicRouteNames = ["login"];
+
 router.beforeEach(async (to, _, next) => {
     const initializationStore = useInitializationStore()
     if (!initializationStore.initialized)
         await initializationStore.initialize()
 
     const nextName = to.name?.toString();
-    if (nextName && publicNames.includes(nextName)) {
+    if (nextName && publicRouteNames.includes(nextName)) {
         return next();
     }
 
@@ -81,6 +78,10 @@ router.beforeEach(async (to, _, next) => {
     }
 
     next({ path: "/auth/login", query: { returnUrl: to.fullPath } });
+});
+
+router.afterEach((to) => {
+  document.title = to.name ? i18n.global.t(`pages.${to.name.toString()}`) : i18n.global.t('pages.app');
 });
 
 export default router

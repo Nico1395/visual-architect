@@ -13,6 +13,16 @@ const en = {
             },
         },
     },
+    pages: {
+        app: "Visual Architect",
+        login: "Login",
+        home: "Home",
+        settings: "Preferences",
+        profilesettings: "Profile Preferences",
+        personalizationsettings: "Personalization Preferences",
+        accountsettings: "Account Preferences",
+        notfound: "Not Found",
+    },
     auth: {
         login: {
             appname: "Visual Architect",
@@ -42,7 +52,7 @@ const en = {
         },
         profile: {
             menuitem: "Profile",
-            header: "Profile settings",
+            header: "Profile preferences",
             description: "Update and manage your personal information. Change your display name, email address, or avatar, and control who can see your profile. Keep your presence in the app exactly how you want it.",
             email: "E-mail",
             emaildesc: "Your e-mail address is only used for contacting you. Changing it does not have an effect on how you authenticate yourself in the app.",
@@ -55,8 +65,8 @@ const en = {
         },
         account: {
             menuitem: "Account",
-            header: "Account settings",
-            description: "Access key account settings and management options. Here you can review your account details, adjust security settings, and delete your account if needed. Everything related to your account’s status and control is in one place.",
+            header: "Account preferences",
+            description: "Access key account preferences and management options. Here you can review your account details, adjust security settings, and delete your account if needed. Everything related to your account’s status and control is in one place.",
             delete: {
                 title: "Delete Account",
                 description: "Deleting your account removes your identity and all data associated with it from our databases. This action is non-reversable.",
@@ -76,7 +86,7 @@ const en = {
         },
         personalization: {
             menuitem: "Personalization",
-            header: "Personalization settings",
+            header: "Personalization preferences",
             description: "Tailor the app to fit your style and preferences. Adjust the theme, switch between light and dark modes, change colors, and set your preferred language to create the experience that works best for you.",
             theme: {
                 title: "Theme",
@@ -107,6 +117,16 @@ const de = {
                 signedinas: "Angemeldet als",
             },
         },
+    },
+    pages: {
+        app: "Visual Architect",
+        login: "Einloggen",
+        home: "Startseite",
+        settings: "Einstellungen",
+        profilesettings: "Profileinstellungen",
+        personalizationsettings: "Personalisierung",
+        accountsettings: "Kontoeinstellungen",
+        notfound: "Nicht gefunden",
     },
     auth: {
         login: {
