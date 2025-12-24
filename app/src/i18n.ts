@@ -23,6 +23,10 @@ const en = {
         accountsettings: "Account Preferences",
         notfound: "Not Found",
     },
+    notfound: {
+        message: "Oops, looks like this page does not exist! 🥺",
+        home: "Better to go back to the homepage...",
+    },
     auth: {
         login: {
             appname: "Visual Architect",
@@ -127,6 +131,10 @@ const de = {
         personalizationsettings: "Personalisierung",
         accountsettings: "Kontoeinstellungen",
         notfound: "Nicht gefunden",
+    },
+    notfound: {
+        message: "Oops, sieht so aus als würde die Seite nicht existieren! 🥺",
+        home: "Geh' besser wieder zur Startseite zurück...",
     },
     auth: {
         login: {

@@ -74,6 +74,10 @@ router.beforeEach(async (to, _, next) => {
     }
 
     if (await isAuthenticated()) {
+        if (to.name === "notfound") {
+            return next({ name: "home" });
+        }
+
         return next();
     }
 
