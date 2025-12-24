@@ -17,7 +17,7 @@ export const buttonVariants = cva(
         github: "bg-black text-white shadow-xs hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/90",
         google: "bg-white text-gray-700 shadow-xs border border-gray-300 hover:bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600",
         microsoft: "bg-blue-600 text-white shadow-xs hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800",
-
+        successful: "bg-successful text-black hover:bg-successful/90 focus-visible:ring-successful/20 dark:focus-visible:ring-successful/40",
       },
       size: {
         "default": "h-9 px-4 py-2 has-[>svg]:px-3",

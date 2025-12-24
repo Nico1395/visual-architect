@@ -5,7 +5,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Configuration.Options;
 
 namespace VisualArchitect.Api.Orchestration.Configuration;
 
-internal sealed class ClientUrlBuilder(IOptions<ClientsOptions> _clients) : IClientUrlBuilder
+public sealed class ClientUrlBuilder(IOptions<ClientsOptions> _clients) : IClientUrlBuilder
 {
     public string? CreateUrl(string uri, IDictionary<string, object>? queryParameters = null)
     {

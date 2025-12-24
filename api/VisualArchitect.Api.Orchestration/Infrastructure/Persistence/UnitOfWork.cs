@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using VisualArchitect.Api.Orchestration.Abstractions.Application.Persistence;
-using VisualArchitect.Api.Orchestration.Infrastructure.Context;
 
 namespace VisualArchitect.Api.Orchestration.Infrastructure.Persistence;
 
-internal sealed class UnitOfWork(OrchestrationDbContext _context) : IUnitOfWork
+public sealed class UnitOfWork(DbContext _context) : IUnitOfWork
 {
     public Task CommitAsync(CancellationToken cancellationToken)
     {

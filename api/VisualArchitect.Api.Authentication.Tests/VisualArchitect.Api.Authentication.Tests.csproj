@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
@@ -16,6 +17,11 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VisualArchitect.Api.Orchestration\VisualArchitect.Api.Orchestration.csproj" />
+    <ProjectReference Include="..\VisualArchitect.Api.Tests.Lib\VisualArchitect.Api.Tests.Lib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -17,5 +17,7 @@ public static class Endpoints
         builder.MapOAuthCallback();
 
         builder.MapGetProfile();
+        builder.MapSaveProfile();
+        builder.MapDeleteProfile();
     }
 }

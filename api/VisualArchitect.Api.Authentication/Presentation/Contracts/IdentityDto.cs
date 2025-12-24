@@ -23,4 +23,17 @@ internal sealed class IdentityDto
             UpdatedAt = identity.UpdatedAt,
         };
     }
+    
+    public Identity To()
+    {
+        return new()
+        {
+            Id = Id,
+            Email = Email,
+            DisplayName = DisplayName,
+            AvatarUrl = AvatarUrl,
+            CreatedAt = CreatedAt,
+            UpdatedAt = UpdatedAt,
+        };
+    }
 }

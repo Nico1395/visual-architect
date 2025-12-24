@@ -17,7 +17,7 @@ internal sealed class OAuthIdentityEntityConfiguration : IEntityTypeConfiguratio
         builder.Property(i => i.IdentityId).HasColumnName("identity_id").IsRequired();
         builder.Property(i => i.CreatedAt).HasColumnName("created_at").IsRequired();
 
-        builder.HasOne(i => i.Provider).WithMany().HasForeignKey(i => i.ProviderId).IsRequired();
-        builder.HasOne(i => i.Identity).WithOne().HasForeignKey<OAuthIdentity>(i => i.IdentityId).IsRequired();
+        builder.HasOne(i => i.Provider).WithMany().HasForeignKey(i => i.ProviderId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(i => i.Identity).WithOne().HasForeignKey<OAuthIdentity>(i => i.IdentityId).IsRequired().OnDelete(DeleteBehavior.Cascade);
     }
 }

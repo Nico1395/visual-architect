@@ -2,7 +2,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Domain;
 
 namespace VisualArchitect.Api.Authentication.Domain;
 
-internal sealed class Identity : ICreated, IUpdated
+public sealed class Identity : ICreated, IUpdated
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     public required string Email { get; init; }

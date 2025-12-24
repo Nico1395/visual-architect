@@ -5,3 +5,18 @@ export async function getProfile() {
     const { data } = await http.get<ProfileDto>(`/api/profile`)
     return data
 }
+
+export async function saveProfile(profile: ProfileDto) {
+    await http.patch(`/api/profile/save`, {
+        id: profile.id,
+        email: profile.email,
+        displayName: profile.displayName,
+        avatarUrl: profile.avatarUrl ?? null,
+        createdAt: profile.createdAt,
+        updatedAt: profile.updatedAt,
+    });
+}
+
+export async function deleteProfile() {
+    await http.delete(`/api/profile/delete`);
+}

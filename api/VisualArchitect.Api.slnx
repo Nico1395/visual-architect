@@ -18,5 +18,8 @@
     <Project Path="VisualArchitect.Api.Orchestration.Tests/VisualArchitect.Api.Orchestration.Tests.csproj" />
     <Project Path="VisualArchitect.Api.Orchestration/VisualArchitect.Api.Orchestration.csproj" />
   </Folder>
+  <Folder Name="/Other/">
+    <Project Path="VisualArchitect.Api.Tests.Lib/VisualArchitect.Api.Tests.Lib.csproj" />
+  </Folder>
   <Project Path="VisualArchitect.Api/VisualArchitect.Api.csproj" />
 </Solution>

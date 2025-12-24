@@ -37,7 +37,7 @@ async function logout() {
     <DropdownMenu>
         <DropdownMenuTrigger as-child>
             <div class="user-menu">
-                <Avatar class="user-avatar">
+                <Avatar>
                     <AvatarImage :src="profileStore.$state.profile?.avatarUrl || ''" />
                     <AvatarFallback class="user-avatar-fallback">
                         <img :src="avatarFallback" />
@@ -59,7 +59,7 @@ async function logout() {
                 <Separator />
 
                 <UserMenuItemLink
-                    href="/app/profile"
+                    href="/app/settings/profile"
                     icon="ai-gear"
                     :title="t('layout.header.usermenu.settings')"
                     :description="t('layout.header.usermenu.settingsdesc')"
@@ -90,9 +90,12 @@ async function logout() {
     .user-avatar-fallback {
         background-color: transparent;
 
+        &:hover {
+            animation: wiggle 0.5s ease-in-out;
+        }
+
         > img {
-            height: 20px;
-            width: 20px;
+            scale: 0.5;
         }
     }
 }

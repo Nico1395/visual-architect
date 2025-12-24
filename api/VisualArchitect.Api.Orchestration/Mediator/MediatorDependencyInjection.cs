@@ -11,9 +11,13 @@ public static class MediatorDependencyInjection
     private static readonly IReadOnlyList<Type> _requestHandlerInterfaceTypes =
     [
         typeof(IRequestHandler<>),
+        typeof(IRequestExceptionHandler<>),
         typeof(IRequestHandler<,>),
+        typeof(IRequestExceptionHandler<,>),
         typeof(IQueryHandler<,>),
         typeof(ICommandHandler<>),
+        typeof(INotificationHandler<>),
+        typeof(INotificationExceptionHandler<>),
     ];
 
     public static IServiceCollection AddMediator(this IServiceCollection services, IReadOnlyList<Assembly> assemblies)

@@ -59,30 +59,6 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.ToTable("identity", "authentication");
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.IdentitySetting", b =>
-                {
-                    b.Property<Guid>("IdentityId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("identity_id");
-
-                    b.Property<int>("SettingId")
-                        .HasColumnType("integer")
-                        .HasColumnName("setting_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("Value")
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
-                        .HasColumnName("value");
-
-                    b.HasKey("IdentityId", "SettingId");
-
-                    b.ToTable("identity_setting", "preferences");
-                });
-
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.OAuthIdentity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -158,7 +134,33 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         });
                 });
 
-            modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.Setting", b =>
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentitySetting", b =>
+                {
+                    b.Property<Guid>("IdentityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("identity_id");
+
+                    b.Property<int>("SettingId")
+                        .HasColumnType("integer")
+                        .HasColumnName("setting_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("value");
+
+                    b.HasKey("IdentityId", "SettingId");
+
+                    b.HasIndex("SettingId");
+
+                    b.ToTable("identity_setting", "preferences");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.Setting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,6 +183,20 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("setting", "preferences");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DefaultValue = "light",
+                            Key = "theme"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DefaultValue = "en",
+                            Key = "language"
+                        });
                 });
 
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.OAuthIdentity", b =>
@@ -200,6 +216,17 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                     b.Navigation("Identity");
 
                     b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.Preferences.Domain.IdentitySetting", b =>
+                {
+                    b.HasOne("VisualArchitect.Api.Preferences.Domain.Setting", "Setting")
+                        .WithMany()
+                        .HasForeignKey("SettingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Setting");
                 });
 #pragma warning restore 612, 618
         }

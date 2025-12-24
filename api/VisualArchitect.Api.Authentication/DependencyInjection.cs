@@ -14,6 +14,19 @@ namespace VisualArchitect.Api.Authentication;
 
 public static class DependencyInjection
 {
+    public static IServiceCollection AddVisualArchitectAuthenticationPersistence(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthenticationUnitOfWork, AuthenticationUnitOfWork>();
+
+        services.AddScoped<IIdentityReadRepository, IdentityReadRepository>();
+        services.AddScoped<IIdentityWriteRepository, IdentityWriteRepository>();
+        services.AddScoped<IOAuthIdentityReadRepository, OAuthIdentityReadRepository>();
+        services.AddScoped<IOAuthIdentityWriteRepository, OAuthIdentityWriteRepository>();
+        services.AddScoped<IOAuthProviderReadRepository, OAuthProviderReadRepository>();
+
+        return services;
+    }
+
     public static IServiceCollection AddVisualArchitectAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         var clientBaseUrl = configuration[AuthenticationConstants.Configuration.ClientBaseUrl] ?? throw new MissingConfigurationException(AuthenticationConstants.Configuration.ClientBaseUrl);
@@ -46,13 +59,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddScoped<IAuthenticationUnitOfWork, AuthenticationUnitOfWork>();
-
-        services.AddScoped<IIdentityReadRepository, IdentityReadRepository>();
-        services.AddScoped<IIdentityWriteRepository, IdentityWriteRepository>();
-        services.AddScoped<IOAuthIdentityReadRepository, OAuthIdentityReadRepository>();
-        services.AddScoped<IOAuthIdentityWriteRepository, OAuthIdentityWriteRepository>();
-        services.AddScoped<IOAuthProviderReadRepository, OAuthProviderReadRepository>();
+        services.AddVisualArchitectAuthenticationPersistence();
 
         return services;
     }

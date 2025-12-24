@@ -9,6 +9,9 @@ import {
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n"
 import logo_64x64 from "@/assets/img/logo/visual-architect-logo_64x64.png"
+import google_logo from "@/assets/img/logo/google-logo.svg"
+import microsoft_logo from "@/assets/img/logo/microsoft-logo.svg"
+import Icon from '@/components/Icon.vue';
 
 const { t } = useI18n()
 const splashTextKey = ref("")
@@ -58,14 +61,20 @@ toggleSplashText();
 
         <CardFooter class="login-footer">
             <Button variant="github" @click="login">
+                <Icon icon="ai-github-fill" />
+
                 {{ t("auth.login.oauth.github") }}
             </Button>
 
             <Button variant="google">
+                <img class="google-logo" :src="google_logo" />
+
                 {{ t("auth.login.oauth.google") }}
             </Button>
 
             <Button variant="microsoft">
+                <img class="microsoft-logo" :src="microsoft_logo" />
+
                 {{ t("auth.login.oauth.microsoft") }}
             </Button>
         </CardFooter>
@@ -121,6 +130,14 @@ toggleSplashText();
 
         > * {
             width: 100%;
+
+            .ai-github-fill {
+                font-size: 14pt;
+            }
+
+            .microsoft-logo {
+                height: 20px;
+            }
         }
     }
 

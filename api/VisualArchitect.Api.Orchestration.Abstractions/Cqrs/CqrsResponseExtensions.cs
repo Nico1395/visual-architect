@@ -25,6 +25,22 @@ public static class CqrsResponseExtensions
     public static bool IsNotImplemented_501(this ICqrsResponse response) => response.IsStatus(CqrsResponseStatus.NotImplemented_501);
     public static bool IsServiceUnavailable_503(this ICqrsResponse response) => response.IsStatus(CqrsResponseStatus.ServiceUnavailable_503);
 
+    public static bool ResultedIn(this ICqrsResponse<bool> response, bool expected)
+    {
+        return response.IsSuccess_2xx() && response.Data == expected;
+    }
+
+    public static bool ResultedInTrue(this ICqrsResponse<bool> response)
+    {
+        return response.ResultedIn(true);
+    }
+
+    public static bool ResultedInFalse(this ICqrsResponse<bool> response)
+    {
+        return response.ResultedIn(false);
+    }
+
+
     public static IResult ToResult(this ICqrsResponse response)
     {
         if (response.Status == CqrsResponseStatus.NoContent_204)
