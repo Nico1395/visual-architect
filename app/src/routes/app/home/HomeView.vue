@@ -15,10 +15,12 @@ import {
   DialogDescription,
   DialogFooter
 } from '@/components/ui/dialog';
-import Textarea from "@/components/ui/textarea/Textarea.vue";
 import Input from "@/components/ui/input/Input.vue";
 import Label from "@/components/ui/label/Label.vue";
+import MarkdownEditor from "@/components/MarkdownEditor.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n()
 const projectDialogOpened = ref(false);
 const projects: Array<ProjectDto> = [
   {
@@ -128,7 +130,7 @@ function saveProject() {
     <ViewMargin class="home-view">
         <HomeSection contentClass="home-project-overview">
             <template #title>
-                Your projects
+                {{ t('home.proj.title') }}
             </template>
 
             <template #actions>
@@ -136,7 +138,7 @@ function saveProject() {
                     <Button variant="default" @click="openProjectDialog">
                         <Icon icon="ai-plus" />
 
-                        New
+                        {{ t('home.proj.new') }}
                     </Button>
                 </ButtonGroup>
             </template>
@@ -157,21 +159,21 @@ function saveProject() {
 
     <Dialog v-model:open="projectDialogOpened">
         <form @submit.prevent="saveProject">
-            <DialogContent>
+            <DialogContent class="project-dialog">
                 <DialogHeader>
                     <DialogTitle>
-                        New project
+                        {{ t('home.newprojdg.title') }}
                     </DialogTitle>
 
                     <DialogDescription>
-                        Create a new home for your designs. A project can be whatever you need it to be, an actual project or an entire application you want to design.
+                        {{ t('home.newprojdg.description') }}
                     </DialogDescription>
                 </DialogHeader>
 
                 <div class="project-dialog-fields">
                     <div class="project-dialog-field">
                         <Label for="project-name">
-                            Name
+                            {{ t('home.newprojdg.namelabel') }}
                         </Label>
 
                         <Input id="project-name" v-model="projectForm.name" />
@@ -179,10 +181,10 @@ function saveProject() {
 
                     <div class="project-dialog-field">
                         <Label for="project-description">
-                            Description
+                            {{ t('home.newprojdg.descriptionlabel') }}
                         </Label>
 
-                        <Textarea class="project-description" id="project-description" v-model="projectForm.description" />
+                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" />
                     </div>
                 </div>
 
@@ -190,13 +192,13 @@ function saveProject() {
                     <Button variant="outline" type="button" @click="closeProjectDialog">
                         <Icon icon="ai-cross" />
 
-                        Cancel
+                        {{ t('home.newprojdg.cancel') }}
                     </Button>
 
                     <Button variant="default" type="submit">
                         <Icon icon="ai-check" />
 
-                        Create
+                        {{ t('home.newprojdg.create') }}
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -217,18 +219,16 @@ function saveProject() {
     }
 }
 
-.project-dialog-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .project-dialog-field {
+.project-dialog {
+    .project-dialog-fields {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
 
-        .project-description {
-            height: 150px;
+        .project-dialog-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
     }
 }

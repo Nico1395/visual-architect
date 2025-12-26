@@ -1,6 +1,13 @@
 import { createI18n } from "vue-i18n"
 
 const en = {
+    components: {
+        mdeditor: {
+            write: "Write",
+            preview: "Preview",
+            placeholder: "Write some Markdown...",
+        }
+    },
     layout: {
         header: {
             appname: "Visual Architect",
@@ -108,10 +115,31 @@ const en = {
                 notfound: "Not available 🙁",
             },
         },
+    },
+    home: {
+        proj: {
+            title: "Your design projects",
+            new: "New",
+        },
+        newprojdg: {
+            title: "New design project",
+            description: "Create a new home for designs youre organizing for a project or an entire application. We recommend to keep your conventions of how youre organizing your tasks and designs consinstent across design projects.",
+            namelabel: "Name of the design project",
+            descriptionlabel: "Describe the design project",
+            cancel: "Cancel",
+            create: "Create",
+        }
     }
 }
 
 const de = {
+    components: {
+        mdeditor: {
+            write: "Bearbeiten",
+            preview: "Vorschau",
+            placeholder: "Schreib' etwas Markdown...",
+        }
+    },
     layout: {
         header: {
             appname: "Visual Architect",
@@ -219,6 +247,20 @@ const de = {
                 notfound: "Nicht verfügbar 🙁",
             },
         },
+    },
+    home: {
+        proj: {
+            title: "Deine Designprojekte",
+            new: "Neu",
+        },
+        newprojdg: {
+            title: "Neues Designprojekt",
+            description: "Erstelle ein neues Zuhause für Designs von einem deiner Projekte, oder einer ganzen Anwendung. Wir empfehlen, sich an eine einzige, über Designprojekte-konsistente Konvention für die Organisation von Aufgaben und Designs zu halten.",
+            namelabel: "Name des Designprojekts",
+            descriptionlabel: "Beschreibe das Designprojekt",
+            cancel: "Abbrechen",
+            create: "Erstellen",
+        }
     }
 }
 
