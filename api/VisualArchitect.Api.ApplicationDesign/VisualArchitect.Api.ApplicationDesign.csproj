@@ -11,4 +11,9 @@
     <ProjectReference Include="../VisualArchitect.Api.Orchestration.Abstractions/VisualArchitect.Api.Orchestration.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\EntityConfigurations\" />
+  </ItemGroup>
+
 </Project>
