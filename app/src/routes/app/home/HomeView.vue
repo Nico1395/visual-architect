@@ -2,7 +2,7 @@
 import ViewMargin from "@/components/layout/ViewMargin.vue";
 import HomeSection from "./HomeSection.vue";
 import HomeProjectWidget from "./HomeProjectWidget.vue";
-import type { ProjectDto } from "@/persistence/dtos/projects.dtos";
+import type { DesignProjectDto } from "@/persistence/dtos/designProjects.dtos";
 import ButtonGroup from "@/components/ui/button-group/ButtonGroup.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/ui/button/Button.vue";
@@ -22,7 +22,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n()
 const projectDialogOpened = ref(false);
-const projects: Array<ProjectDto> = [
+const projects: Array<DesignProjectDto> = [
   {
     id: "proj_001",
     identityId: "user_123",

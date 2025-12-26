@@ -1,4 +1,4 @@
-export interface ProjectDto {
+export interface DesignProjectDto {
     id: string
     identityId: string
     name: string
