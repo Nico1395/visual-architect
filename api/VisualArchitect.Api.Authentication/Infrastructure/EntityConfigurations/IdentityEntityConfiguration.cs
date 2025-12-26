@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using VisualArchitect.Api.Authentication.Domain;
+using VisualArchitect.Api.Orchestration.Abstractions.Infrastructure.EntityConfigurations;
 
 namespace VisualArchitect.Api.Authentication.Infrastructure.EntityConfigurations;
 
@@ -15,7 +16,7 @@ internal sealed class IdentityEntityConfiguration : IEntityTypeConfiguration<Ide
         builder.Property(i => i.Email).HasColumnName("email").HasMaxLength(254).IsRequired();
         builder.Property(i => i.DisplayName).HasColumnName("display_name").HasMaxLength(100).IsRequired();
         builder.Property(i => i.AvatarUrl).HasColumnName("avatar_url").HasMaxLength(2048);
-        builder.Property(i => i.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(i => i.UpdatedAt).HasColumnName("updated_at").IsRequired();
+        builder.CreatedAtProperty();
+        builder.UpdatedAtProperty();
     }
 }
