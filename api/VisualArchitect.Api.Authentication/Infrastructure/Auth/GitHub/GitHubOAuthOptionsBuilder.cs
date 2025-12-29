@@ -17,7 +17,12 @@ public static class GitHubOAuthOptionsBuilder
 
         options.ClientId = gitHubClientId;
         options.ClientSecret = gitHubClientSecret;
-        options.CallbackPath = new PathString("/api/auth/callback/github");
+
+        // This is not my own callback endpoint, this in an OAuth protocol internal callback endpoint that the framework
+        // middleware uses to handle the OAuth flows. This also has to match the callback URL configured with GitHub!
+        // Meaning this can be something arbitrary, because its not going to be used outside of the automatically handled
+        // OAuth flow.
+        options.CallbackPath = new PathString("/api/auth/cb/github");
 
         options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
         options.TokenEndpoint = "https://github.com/login/oauth/access_token";

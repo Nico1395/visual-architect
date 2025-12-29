@@ -32,7 +32,7 @@ function login() {
     const returnUrl = encodeURIComponent(
         new URLSearchParams(window.location.search).get("returnUrl") || "/app/home"
     );
-    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/api/auth/login?p=github&r=${returnUrl}`;
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login?p=github&r=${returnUrl}`;
 }
 
 toggleSplashText();

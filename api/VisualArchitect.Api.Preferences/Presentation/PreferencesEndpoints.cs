@@ -15,9 +15,9 @@ namespace VisualArchitect.Api.Preferences.Presentation;
 
 internal static class PreferencesEndpoints
 {
-    public static void MapGetPreferences(this IEndpointRouteBuilder builder)
+    public static void MapGetPreferencesV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/preferences", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromQuery(Name = "key")] string[]? keys) =>
+        builder.MapGet("/api/v1/preferences", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromQuery(Name = "key")] string[]? keys) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
@@ -32,9 +32,9 @@ internal static class PreferencesEndpoints
         }).RequireAuthorization();
     }
 
-    public static void MapSetPreference(this IEndpointRouteBuilder builder)
+    public static void MapSetPreferenceV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceDto request) =>
+        builder.MapPost("/api/v1/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceDto request) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();

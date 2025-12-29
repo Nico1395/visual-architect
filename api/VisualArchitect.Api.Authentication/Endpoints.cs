@@ -7,17 +7,14 @@ public static class Endpoints
 {
     public static void MapVisualArchitectAuthentication(this IEndpointRouteBuilder builder)
     {
-        builder.MapPublicTest();
-        builder.MapSecureTest();
+        builder.MapLoginV1();
+        builder.MapLogoutV1();
+        builder.MapMeV1();
+        builder.MapCsrfV1();
+        builder.MapOAuthCallbackV1();
 
-        builder.MapLogin();
-        builder.MapLogout();
-        builder.MapMe();
-        builder.MapCsrf();
-        builder.MapOAuthCallback();
-
-        builder.MapGetProfile();
-        builder.MapSaveProfile();
-        builder.MapDeleteProfile();
+        builder.MapGetProfileV1();
+        builder.MapSaveProfileV1();
+        builder.MapDeleteProfileV1();
     }
 }

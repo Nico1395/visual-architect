@@ -7,7 +7,7 @@ export const msKey = "microsoft";
 
 export async function isAuthenticated(): Promise<boolean> {
     try {
-        await http.get("/api/auth/me");
+        await http.get("/api/v1/auth/me");
         return true;
     } catch {
         return false;
