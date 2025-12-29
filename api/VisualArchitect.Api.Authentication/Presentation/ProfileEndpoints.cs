@@ -10,6 +10,7 @@ using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
+using VisualArchitect.Api.Orchestration.Abstractions.Presentation.Http;
 
 namespace VisualArchitect.Api.Authentication.Presentation;
 
@@ -19,8 +20,7 @@ internal static class ProfileEndpoints
     {
         builder.MapGet("/api/v1/profile", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
         {
-            var idClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrWhiteSpace(idClaim) || !Guid.TryParse(idClaim, out var identityId))
+            if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
             var query = new GetIdentity.GetIdentityQuery(identityId);
@@ -45,8 +45,7 @@ internal static class ProfileEndpoints
     {
         builder.MapDelete("/api/v1/profile/delete", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
         {
-            var idClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrWhiteSpace(idClaim) || !Guid.TryParse(idClaim, out var identityId))
+            if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
             var command = new DeleteIdentity.DeleteIdentityCommand(identityId);
