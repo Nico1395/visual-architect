@@ -220,6 +220,11 @@ function saveProject() {
 }
 
 .project-dialog {
+    width: 95vw;
+    max-width: 64rem;
+    height: 80vw;
+    max-height: 39rem;
+
     .project-dialog-fields {
         display: flex;
         flex-direction: column;
