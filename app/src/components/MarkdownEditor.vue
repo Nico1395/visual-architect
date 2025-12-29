@@ -32,13 +32,13 @@ function togglePreview(preview: boolean) {
 <template>
     <div :class="`markdown-editor ${props.class}`.trim()">
         <ButtonGroup class="actions">
-            <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'">
+            <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" >
                 <Icon icon="bi bi-markdown" size="16px" />
 
                 {{ t('components.mdeditor.write') }}
             </Button>
 
-            <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'">
+            <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button" >
                 <Icon icon="bi bi-justify-left" size="16px" />
 
                 {{ t('components.mdeditor.preview') }}

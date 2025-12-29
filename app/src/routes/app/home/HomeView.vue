@@ -2,7 +2,7 @@
 import ViewMargin from "@/components/layout/ViewMargin.vue";
 import HomeSection from "./HomeSection.vue";
 import HomeProjectWidget from "./HomeProjectWidget.vue";
-import type { DesignProjectDto } from "@/persistence/dtos/designProjects.dtos";
+import type { DesignProjectDto } from "@/persistence/dtos/design-project.dtos";
 import ButtonGroup from "@/components/ui/button-group/ButtonGroup.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/ui/button/Button.vue";
@@ -19,15 +19,19 @@ import Input from "@/components/ui/input/Input.vue";
 import Label from "@/components/ui/label/Label.vue";
 import MarkdownEditor from "@/components/MarkdownEditor.vue";
 import { useI18n } from "vue-i18n";
+import { useDesignProjectStore } from "@/persistence/stores/design-project.store";
+import { toast } from 'vue-sonner'
 
 const { t } = useI18n()
+const designProjectStore = useDesignProjectStore();
+
 const projectDialogOpened = ref(false);
 const projects: Array<DesignProjectDto> = [
   {
     id: "proj_001",
     identityId: "user_123",
     name: "Personal Portfolio Website",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-01-12T10:15:30.000Z",
     updatedAt: "2024-02-01T08:42:10.000Z",
   },
@@ -35,7 +39,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_002",
     identityId: "user_123",
     name: "Task Management App",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-02-05T14:22:00.000Z",
     updatedAt: "2024-02-20T16:10:45.000Z",
   },
@@ -43,7 +47,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_003",
     identityId: "user_123",
     name: "E-commerce Storefront",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-03-01T09:00:00.000Z",
     updatedAt: "2024-03-18T11:30:12.000Z",
   },
@@ -51,7 +55,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_004",
     identityId: "user_123",
     name: "Internal Admin Dashboard",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-03-22T17:45:10.000Z",
     updatedAt: "2024-04-02T13:05:55.000Z",
   },
@@ -59,7 +63,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_005",
     identityId: "user_123",
     name: "Mobile Fitness Tracker",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-04-10T07:30:00.000Z",
     updatedAt: "2024-04-25T18:20:40.000Z",
   },
@@ -67,7 +71,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_006",
     identityId: "user_123",
     name: "Real-time Chat Application",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-05-03T12:00:00.000Z",
     updatedAt: "2024-05-10T15:45:00.000Z",
   },
@@ -75,7 +79,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_007",
     identityId: "user_123",
     name: "Analytics & Reporting Tool",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-05-20T09:18:22.000Z",
     updatedAt: "2024-06-01T10:55:33.000Z",
   },
@@ -83,7 +87,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_008",
     identityId: "user_123",
     name: "Marketing Landing Pages",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-06-12T11:11:11.000Z",
     updatedAt: "2024-06-20T14:40:00.000Z",
   },
@@ -91,7 +95,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_009",
     identityId: "user_123",
     name: "API Gateway Service",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-07-01T08:00:00.000Z",
     updatedAt: "2024-07-09T09:35:50.000Z",
   },
@@ -99,7 +103,7 @@ const projects: Array<DesignProjectDto> = [
     id: "proj_010",
     identityId: "user_123",
     name: "Experimental AI Playground",
-    description: "",
+    descriptionPayload: "",
     createdAt: "2024-07-15T16:45:00.000Z",
     updatedAt: "2024-07-21T19:10:05.000Z",
   },
@@ -120,9 +124,18 @@ function closeProjectDialog() {
     projectForm.name = ""
 }
 
-function saveProject() {
+async function saveProject() {
+    const promise = designProjectStore.addProject(projectForm.name, projectForm.description)
+    toast.promise(promise, {
+        loading: t('toasts.saving.loading'),
+        success: t('toasts.saving.success'),
+        error: t('toasts.saving.error'),
+    })
+
     closeProjectDialog()
-    // Implementing saving later
+    await promise
+
+    // TODO -> Redirect to the project page
 }
 </script>
 
@@ -158,8 +171,8 @@ function saveProject() {
     </ViewMargin>
 
     <Dialog v-model:open="projectDialogOpened">
-        <form @submit.prevent="saveProject">
-            <DialogContent class="project-dialog">
+        <DialogContent class="project-dialog">
+            <form @submit.prevent="saveProject">
                 <DialogHeader>
                     <DialogTitle>
                         {{ t('home.newprojdg.title') }}
@@ -176,7 +189,7 @@ function saveProject() {
                             {{ t('home.newprojdg.namelabel') }}
                         </Label>
 
-                        <Input id="project-name" v-model="projectForm.name" />
+                        <Input id="project-name" v-model="projectForm.name" :disabled="designProjectStore.busy" />
                     </div>
 
                     <div class="project-dialog-field">
@@ -184,25 +197,27 @@ function saveProject() {
                             {{ t('home.newprojdg.descriptionlabel') }}
                         </Label>
 
-                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" />
+                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" :disabled="designProjectStore.busy" />
                     </div>
                 </div>
 
                 <DialogFooter class="flex justify-end gap-2">
-                    <Button variant="outline" type="button" @click="closeProjectDialog">
+                    <Button variant="outline" type="button" @click="closeProjectDialog" :disabled="designProjectStore.busy">
                         <Icon icon="ai-cross" />
 
                         {{ t('home.newprojdg.cancel') }}
                     </Button>
 
-                    <Button variant="default" type="submit">
-                        <Icon icon="ai-check" />
+                    <Button as-child variant="default" type="submit" :disabled="designProjectStore.busy">
+                        <button type="submit">
+                            <Icon icon="ai-check" />
 
-                        {{ t('home.newprojdg.create') }}
+                            {{ t('home.newprojdg.create') }}
+                        </button>
                     </Button>
                 </DialogFooter>
-            </DialogContent>
-        </form>
+            </form>
+        </DialogContent>
     </Dialog>
 </template>
 
@@ -225,15 +240,21 @@ function saveProject() {
     height: 80vw;
     max-height: 39rem;
 
-    .project-dialog-fields {
+    > form {
         display: flex;
         flex-direction: column;
         gap: 1rem;
 
-        .project-dialog-field {
+        .project-dialog-fields {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
+
+            .project-dialog-field {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     }
 }

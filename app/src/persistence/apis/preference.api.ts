@@ -6,10 +6,10 @@ export async function getPreferences() {
     return data
 }
 
-export async function setPreference(setPreference: SetPreferenceDto) {
+export async function setPreference(contract: SetPreferenceDto) {
     await http.post("/api/v1/preferences/set", {
-        key: setPreference.key,
-        value: setPreference.value,
-        resetToDefault: setPreference.resetToDefault
+        key: contract.key,
+        value: contract.value,
+        resetToDefault: contract.resetToDefault
     })
 }

@@ -2,7 +2,7 @@
 import Icon from '@/components/Icon.vue';
 import Card from '@/components/ui/card/Card.vue';
 import { cn } from '@/lib/utils';
-import type { DesignProjectDto } from '@/persistence/dtos/designProjects.dtos';
+import type { DesignProjectDto } from '@/persistence/dtos/design-project.dtos';
 
 const props = defineProps<{
     project: DesignProjectDto
