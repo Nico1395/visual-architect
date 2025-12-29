@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Routing;
+using VisualArchitect.Api.ApplicationDesign;
 using VisualArchitect.Api.Authentication;
 using VisualArchitect.Api.Preferences;
 
@@ -10,5 +11,6 @@ public static class Endpoints
     {
         builder.MapVisualArchitectAuthentication();
         builder.MapVisualArchitectPreferences();
+        builder.MapVisualArchitectApplicationDesign();
     }
 }

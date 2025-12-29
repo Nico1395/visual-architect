@@ -12,8 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Application\Persistence\" />
+    <Folder Include="Application\UseCases\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\EntityConfigurations\" />
+    <Folder Include="Infrastructure\Persistence\" />
+    <Folder Include="Presentation\" />
+    <Folder Include="Presentation\Contracts\" />
   </ItemGroup>
 
 </Project>
