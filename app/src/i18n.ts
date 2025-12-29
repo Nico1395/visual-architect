@@ -241,7 +241,7 @@ const de = {
                 description: "Dein gewähltes Farbschema wird über deine Geräte hinaus gespeichert.",
             },
             language: {
-                title: "Language",
+                title: "Sprache",
                 prompt: "Sprache auswählen",
                 search: "Sprache suchen...",
                 notfound: "Nicht verfügbar 🙁",
