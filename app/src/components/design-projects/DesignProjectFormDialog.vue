@@ -14,6 +14,8 @@ import { useI18n } from "vue-i18n";
 import { useDesignProjectStore } from "@/persistence/stores/design-project.store";
 import { reactive, ref, watch } from 'vue';
 import { toast } from 'vue-sonner';
+import Button from '../ui/button/Button.vue';
+import Icon from '../Icon.vue';
 
 const props = defineProps<{
     opened: boolean,
@@ -21,7 +23,7 @@ const props = defineProps<{
 }>();
 const emits = defineEmits<{
   (e: 'update:opened', value: boolean): void
-  (e: 'submitted', payload: { name: string; description: string }): void
+  (e: 'submitted', payload: { projectId: string | null | undefined }): void
 }>();
 
 const { t } = useI18n()
@@ -51,11 +53,10 @@ async function saveProject() {
         error: t('toasts.saving.error'),
     })
 
-    await promise
+    const result = await promise
 
     emits('submitted', {
-        name: projectForm.name,
-        description: projectForm.description,
+        projectId: result?.projectId,
     });
 
     closeProjectDialog()

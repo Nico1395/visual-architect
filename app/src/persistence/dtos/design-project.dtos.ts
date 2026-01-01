@@ -11,3 +11,7 @@ export interface AddDesignProjectDto {
     name: string
     descriptionPayload: string | null
 }
+
+export interface AddDesignProjectResultDto {
+    projectId: string
+}

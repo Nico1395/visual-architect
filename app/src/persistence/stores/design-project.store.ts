@@ -25,12 +25,12 @@ export const useDesignProjectStore = defineStore("design-project", {
         },
         async addProject(name: string, description: string | null) {
             if (this.busy)
-                return;
+                return null;
 
             this.busy = true
 
             try {
-                await addProject({
+                return await addProject({
                     name: name,
                     descriptionPayload: description,
                 })

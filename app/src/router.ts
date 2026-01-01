@@ -50,15 +50,18 @@ const router = createRouter({
                     component: () => import("./routes/app/preferences/account/AccountPreferencesView.vue"),
                 },
             ]
-        }
-        ],
         },
         {
-            path: "/:pathMatch(.*)*",
-            name: "notfound",
-            component: () => import("./routes/NotFoundView.vue"),
-        },
-    ],
+            path: "design-projects/:projectId",
+            name: "design-projects",
+            component: () => import("./routes/app/design-projects/DesignProjectView.vue"),
+        }],
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: "notfound",
+        component: () => import("./routes/NotFoundView.vue"),
+    }],
 })
 
 const publicRouteNames = ["login"];

@@ -102,9 +102,12 @@ function openProjectFormDialog() {
     projectFormDialogOpened.value = true
 }
 
-function onProjectFormDialogSubmitted(event: { id: string }) {
+function onProjectFormDialogSubmitted(result: { projectId: string | null | undefined }) {
+    if (!result.projectId)
+        return
+
     router.push({
-        path: `/app/design-projects/${event.id}`
+        path: `/app/design-projects/${result.projectId}`
     })
 }
 </script>
