@@ -6,26 +6,15 @@ import type { DesignProjectDto } from "@/persistence/dtos/design-project.dtos";
 import ButtonGroup from "@/components/ui/button-group/ButtonGroup.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/ui/button/Button.vue";
-import { reactive, ref } from "vue";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter
-} from '@/components/ui/dialog';
-import Input from "@/components/ui/input/Input.vue";
-import Label from "@/components/ui/label/Label.vue";
-import MarkdownEditor from "@/components/MarkdownEditor.vue";
 import { useI18n } from "vue-i18n";
-import { useDesignProjectStore } from "@/persistence/stores/design-project.store";
-import { toast } from 'vue-sonner'
+import DesignProjectFormDialog from "@/components/design-projects/DesignProjectFormDialog.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n()
-const designProjectStore = useDesignProjectStore();
+const router = useRouter()
+const projectFormDialogOpened = ref(false)
 
-const projectDialogOpened = ref(false);
 const projects: Array<DesignProjectDto> = [
   {
     id: "proj_001",
@@ -108,34 +97,15 @@ const projects: Array<DesignProjectDto> = [
     updatedAt: "2024-07-21T19:10:05.000Z",
   },
 ];
-const projectForm = reactive({
-    name: "",
-    description: "",
-})
 
-function openProjectDialog () {
-    projectDialogOpened.value = true;
+function openProjectFormDialog() {
+    projectFormDialogOpened.value = true
 }
 
-function closeProjectDialog() {
-    projectDialogOpened.value = false
-
-    projectForm.description = ""
-    projectForm.name = ""
-}
-
-async function saveProject() {
-    const promise = designProjectStore.addProject(projectForm.name, projectForm.description)
-    toast.promise(promise, {
-        loading: t('toasts.saving.loading'),
-        success: t('toasts.saving.success'),
-        error: t('toasts.saving.error'),
+function onProjectFormDialogSubmitted(event: { id: string }) {
+    router.push({
+        path: `/app/design-projects/${event.id}`
     })
-
-    closeProjectDialog()
-    await promise
-
-    // TODO -> Redirect to the project page
 }
 </script>
 
@@ -148,7 +118,7 @@ async function saveProject() {
 
             <template #actions>
                 <ButtonGroup>
-                    <Button variant="default" @click="openProjectDialog">
+                    <Button variant="default" @click="openProjectFormDialog">
                         <Icon icon="ai-plus" />
 
                         {{ t('home.proj.new') }}
@@ -170,55 +140,10 @@ async function saveProject() {
         </HomeSection>
     </ViewMargin>
 
-    <Dialog v-model:open="projectDialogOpened">
-        <DialogContent class="project-dialog">
-            <form @submit.prevent="saveProject">
-                <DialogHeader>
-                    <DialogTitle>
-                        {{ t('home.newprojdg.title') }}
-                    </DialogTitle>
-
-                    <DialogDescription>
-                        {{ t('home.newprojdg.description') }}
-                    </DialogDescription>
-                </DialogHeader>
-
-                <div class="project-dialog-fields">
-                    <div class="project-dialog-field">
-                        <Label for="project-name">
-                            {{ t('home.newprojdg.namelabel') }}
-                        </Label>
-
-                        <Input id="project-name" v-model="projectForm.name" :disabled="designProjectStore.busy" />
-                    </div>
-
-                    <div class="project-dialog-field">
-                        <Label for="project-description">
-                            {{ t('home.newprojdg.descriptionlabel') }}
-                        </Label>
-
-                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" :disabled="designProjectStore.busy" />
-                    </div>
-                </div>
-
-                <DialogFooter class="flex justify-end gap-2">
-                    <Button variant="outline" type="button" @click="closeProjectDialog" :disabled="designProjectStore.busy">
-                        <Icon icon="ai-cross" />
-
-                        {{ t('home.newprojdg.cancel') }}
-                    </Button>
-
-                    <Button as-child variant="default" type="submit" :disabled="designProjectStore.busy">
-                        <button type="submit">
-                            <Icon icon="ai-check" />
-
-                            {{ t('home.newprojdg.create') }}
-                        </button>
-                    </Button>
-                </DialogFooter>
-            </form>
-        </DialogContent>
-    </Dialog>
+    <DesignProjectFormDialog
+        v-model:opened="projectFormDialogOpened"
+        @submitted="onProjectFormDialogSubmitted"
+    />
 </template>
 
 <style>
@@ -231,31 +156,6 @@ async function saveProject() {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 0.5rem;
-    }
-}
-
-.project-dialog {
-    width: 95vw;
-    max-width: 64rem;
-    height: 80vw;
-    max-height: 39rem;
-
-    > form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        .project-dialog-fields {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            .project-dialog-field {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
     }
 }
 </style>
