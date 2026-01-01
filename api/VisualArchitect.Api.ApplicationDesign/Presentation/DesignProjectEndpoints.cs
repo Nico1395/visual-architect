@@ -22,9 +22,9 @@ internal static class DesignProjectEndpoints
                 return Results.Unauthorized();
 
             var command = new AddDesignProject.AddDesignProjectCommand(identityId, contract.Name, contract.DescriptionPayload);
-            var response = await mediator.SendAsync(command, cancellationToken);
+            var response = await mediator.SendAsync<AddDesignProject.AddDesignProjectCommand, AddDesignProject.AddDesignProjectCommandResult>(command, cancellationToken);
 
-            return response.ToResult();
+            return response.Map(r => new AddDesignProjectResultDto(r.ProjectId)).ToResult();
         }).RequireAuthorization();
     }
 }
