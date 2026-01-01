@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,25 @@ public static class CqrsResponseExtensions
         return response.ResultedIn(false);
     }
 
+    public static bool TryGetMetadata(this ICqrsResponse response, string key, [MaybeNullWhen(false)] out object? value)
+    {
+        return response.Metadata.TryGetValue(key, out value);
+    }
+
+    public static bool HasMetadataKey(this ICqrsResponse response, string key)
+    {
+        return response.Metadata.ContainsKey(key);
+    }
+
+    public static object? GetMetadataValueOrDefault(this ICqrsResponse response, string key)
+    {
+        return response.Metadata.GetValueOrDefault(key);
+    }
+
+    public static object? GetMetadataValueOrDefault(this ICqrsResponse response, string key, object? defaultValue)
+    {
+        return response.GetMetadataValueOrDefault(key) ?? defaultValue;
+    }
 
     public static IResult ToResult(this ICqrsResponse response)
     {

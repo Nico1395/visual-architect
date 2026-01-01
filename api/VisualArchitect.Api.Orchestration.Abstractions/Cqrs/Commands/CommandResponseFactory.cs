@@ -15,4 +15,22 @@ public static class CommandResponseFactory
     public static ICommandResponseBuilder InternalServerError_500() => new CommandResponseBuilder(CqrsResponseStatus.InternalServerError_500);
     public static ICommandResponseBuilder NotImplemented_501() => new CommandResponseBuilder(CqrsResponseStatus.NotImplemented_501);
     public static ICommandResponseBuilder ServiceUnavailable_503() => new CommandResponseBuilder(CqrsResponseStatus.ServiceUnavailable_503);
+
+    public static ICommandResponseBuilder<TData> OK_200<TData>(TData? data) => new CommandResponseBuilder<TData>(CqrsResponseStatus.OK_200, data);
+    public static ICommandResponseBuilder<TData> OK_200<TData>() => OK_200<TData>(data: default);
+    public static ICommandResponseBuilder<TData> Created_201<TData>(TData? data) => new CommandResponseBuilder<TData>(CqrsResponseStatus.Created_201, data);
+    public static ICommandResponseBuilder<TData> Created_201<TData>() => Created_201<TData>(data: default);
+    public static ICommandResponseBuilder<TData> Accepted_202<TData>(TData? data) => new CommandResponseBuilder<TData>(CqrsResponseStatus.Accepted_202, data);
+    public static ICommandResponseBuilder<TData> Accepted_202<TData>() => Accepted_202<TData>(data: default);
+    public static ICommandResponseBuilder<TData> NoContent_204<TData>(TData? data) => new CommandResponseBuilder<TData>(CqrsResponseStatus.NoContent_204, data);
+    public static ICommandResponseBuilder<TData> NoContent_204<TData>() => NoContent_204<TData>(data: default);
+    public static ICommandResponseBuilder<TData> BadRequest_400<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.BadRequest_400, data: default);
+    public static ICommandResponseBuilder<TData> Unauthorized_401<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.Unauthorized_401, data: default);
+    public static ICommandResponseBuilder<TData> Forbidden_403<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.Forbidden_403, data: default);
+    public static ICommandResponseBuilder<TData> NotFound_404<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.NotFound_404, data: default);
+    public static ICommandResponseBuilder<TData> NotAcceptable_406<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.NotAcceptable_406, data: default);
+    public static ICommandResponseBuilder<TData> Conflict_409<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.Conflict_409, data: default);
+    public static ICommandResponseBuilder<TData> InternalServerError_500<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.InternalServerError_500, data: default);
+    public static ICommandResponseBuilder<TData> NotImplemented_501<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.NotImplemented_501, data: default);
+    public static ICommandResponseBuilder<TData> ServiceUnavailable_503<TData>() => new CommandResponseBuilder<TData>(CqrsResponseStatus.ServiceUnavailable_503, data: default);
 }

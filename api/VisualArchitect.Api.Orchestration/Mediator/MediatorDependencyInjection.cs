@@ -16,6 +16,7 @@ public static class MediatorDependencyInjection
         typeof(IRequestExceptionHandler<,>),
         typeof(IQueryHandler<,>),
         typeof(ICommandHandler<>),
+        typeof(ICommandHandler<,>),
         typeof(INotificationHandler<>),
         typeof(INotificationExceptionHandler<>),
     ];

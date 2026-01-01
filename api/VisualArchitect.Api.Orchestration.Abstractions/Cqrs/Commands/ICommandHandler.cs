@@ -6,3 +6,8 @@ public interface ICommandHandler<TCommand> : IRequestHandler<TCommand, ICommandR
     where TCommand : ICommand
 {
 }
+
+public interface ICommandHandler<TCommand, TData> : IRequestHandler<TCommand, ICommandResponse<TData>>
+    where TCommand : ICommand<TData>
+{
+}
