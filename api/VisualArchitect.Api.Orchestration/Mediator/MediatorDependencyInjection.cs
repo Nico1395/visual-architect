@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
+using VisualArchitect.Api.Orchestration.Mediator.Middleware;
 
 namespace VisualArchitect.Api.Orchestration.Mediator;
 
@@ -12,18 +13,24 @@ public static class MediatorDependencyInjection
     [
         typeof(IRequestHandler<>),
         typeof(IRequestExceptionHandler<>),
+        typeof(IRequestMiddleware<>),
         typeof(IRequestHandler<,>),
         typeof(IRequestExceptionHandler<,>),
+        typeof(IRequestMiddleware<,>),
+        typeof(IGlobalRequestExceptionHandler),
         typeof(IQueryHandler<,>),
         typeof(ICommandHandler<>),
         typeof(ICommandHandler<,>),
         typeof(INotificationHandler<>),
         typeof(INotificationExceptionHandler<>),
+        
     ];
 
     public static IServiceCollection AddMediator(this IServiceCollection services, IReadOnlyList<Assembly> assemblies)
     {
         services.AddTransient<IMediator, Mediator>();
+        services.AddTransient(typeof(IRequestMiddleware<,>), typeof(CqrsRequestValidationMiddleware<,>));
+
         AddRequestHandlersFromAssemblies(services, assemblies);
 
         return services;

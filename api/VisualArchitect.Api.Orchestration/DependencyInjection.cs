@@ -39,7 +39,7 @@ public static class DependencyInjection
         services.AddTransient<IInterceptor, DomainInterfaceSaveChangesInterceptor>();
         services.AddSingleton(new DbContextConfiguration() { AssembliesToScan = assemblies });
         services.AddDbContext<OrchestrationDbContext>();
-        services.AddScoped<DbContext>(sp => sp.GetRequiredService<OrchestrationDbContext>());       // For as long as we only use one DbContext, which will probably be sufficient for a long time!
+        services.AddScoped<DbContext>(sp => sp.GetRequiredService<OrchestrationDbContext>());               // For as long as we only use one DbContext, which will probably be sufficient for a long time!
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSingleton<ITransactionFactory, TransactionFactory>();
