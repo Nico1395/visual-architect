@@ -11,6 +11,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IApplicationDesignUnitOfWork, ApplicationDesignUnitOfWork>();
         services.AddScoped<IDesignProjectWriteRepository, DesignProjectWriteRepository>();
+        services.AddScoped<IDesignProjectReadRepository, DesignProjectReadRepository>();
 
         return services;
     }
