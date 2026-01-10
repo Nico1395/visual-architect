@@ -17,12 +17,17 @@ internal static class DesignProjectEndpoints
 {
     public static void MapGetDesignProjectsV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/v1/app-design/projects/owned", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator) =>
+        builder.MapGet("/api/v1/app-design/projects/owned", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromQuery(Name = "incltsk")] bool includeDesignTasks = false,
+            [FromQuery(Name = "incldsg")] bool includeDesigns = false) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
-            var query = new GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery(identityId);
+            var query = new GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery(identityId, includeDesignTasks, includeDesigns);
             var response = await mediator.SendAsync<GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery, List<DesignProject>>(query, cancellationToken);
 
             return response.Map(DesignProjectDto.From).ToResult();

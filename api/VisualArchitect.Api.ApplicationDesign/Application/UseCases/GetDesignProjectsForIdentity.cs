@@ -6,14 +6,14 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 
 public static class GetDesignProjectsForIdentity
 {
-    public sealed record GetDesignProjectsForIdentityQuery(Guid IdentityId) : IQuery<List<DesignProject>>;
+    public sealed record GetDesignProjectsForIdentityQuery(Guid IdentityId, bool IncludeDesignTasks, bool IncludeDesigns) : IQuery<List<DesignProject>>;
 
     private sealed class GetDesignProjectsForIdentityQueryHandler(
         IDesignProjectReadRepository _designProjectReadRepository) : IQueryHandler<GetDesignProjectsForIdentityQuery, List<DesignProject>>
     {
         public async Task<IQueryResponse<List<DesignProject>>> HandleAsync(GetDesignProjectsForIdentityQuery request, CancellationToken cancellationToken)
         {
-            var projects = await _designProjectReadRepository.GetForIdentityAsync(request.IdentityId, cancellationToken);
+            var projects = await _designProjectReadRepository.GetForIdentityAsync(request.IdentityId, request.IncludeDesignTasks, request.IncludeDesigns, cancellationToken);
             return QueryResponseFactory.OK_200(projects).Build();
         }
     }
