@@ -19,9 +19,8 @@ internal sealed class QueryResponseBuilder<TData>(CqrsResponseStatus status, TDa
     
     public IQueryResponse<TData> Build()
     {
-        return new QueryResponse<TData>()
+        return new QueryResponse<TData>(status)
         {
-            Status = status,
             Data = data,
             Message = _message,
             Metadata = _metadata

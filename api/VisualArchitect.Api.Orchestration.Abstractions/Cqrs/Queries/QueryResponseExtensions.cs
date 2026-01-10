@@ -13,9 +13,8 @@ public static class QueryResponseExtensions
         else if (response.IsOK_200() && response.Data == null)
             status = CqrsResponseStatus.BadRequest_400;
 
-        return new QueryResponse<TDestination>()
+        return new QueryResponse<TDestination>(status)
         {
-            Status = status,
             Data = data,
             Metadata = response.Metadata,
             Message = response.Message,

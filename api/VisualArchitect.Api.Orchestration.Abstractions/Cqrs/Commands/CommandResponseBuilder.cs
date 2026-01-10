@@ -19,9 +19,8 @@ internal sealed class CommandResponseBuilder(CqrsResponseStatus status) : IComma
 
     public ICommandResponse Build()
     {
-        return new CommandResponse()
+        return new CommandResponse(status)
         {
-            Status = status,
             Message = _message,
             Metadata = _metadata
         };
@@ -47,9 +46,8 @@ internal sealed class CommandResponseBuilder<TData>(CqrsResponseStatus status, T
 
     public ICommandResponse<TData> Build()
     {
-        return new CommandResponse<TData>()
+        return new CommandResponse<TData>(status)
         {
-            Status = status,
             Data = data,
             Message = _message,
             Metadata = _metadata

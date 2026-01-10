@@ -11,9 +11,8 @@ public static class CommandResponseExtensions
         if (response.IsSuccess_2xx() && response.Data != null)
             data = map(response.Data);
 
-        return new CommandResponse<TDestination>()
+        return new CommandResponse<TDestination>(status)
         {
-            Status = status,
             Data = data,
             Metadata = response.Metadata,
             Message = response.Message,
