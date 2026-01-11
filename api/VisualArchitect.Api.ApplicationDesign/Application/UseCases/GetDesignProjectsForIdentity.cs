@@ -13,7 +13,7 @@ public static class GetDesignProjectsForIdentity
     {
         public async Task<IQueryResponse<List<DesignProject>>> HandleAsync(GetDesignProjectsForIdentityQuery request, CancellationToken cancellationToken)
         {
-            var projects = await _designProjectReadRepository.GetForIdentityAsync(request.IdentityId, request.IncludeDesignTasks, request.IncludeDesigns, cancellationToken);
+            var projects = await _designProjectReadRepository.GetAllForIdentityAsync(request.IdentityId, request.IncludeDesignTasks, request.IncludeDesigns, cancellationToken);
             return QueryResponseFactory.OK_200(projects).Build();
         }
     }

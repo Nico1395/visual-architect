@@ -7,6 +7,8 @@ public static class Endpoints
 {
     public static void MapVisualArchitectApplicationDesign(this IEndpointRouteBuilder builder)
     {
+        builder.MapGetDesignProjectV1();
+        builder.MapGetOwnedDesignProjectsV1();
         builder.MapAddDesignProjectV1();
     }
 }

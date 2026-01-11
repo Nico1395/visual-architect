@@ -15,7 +15,7 @@ namespace VisualArchitect.Api.ApplicationDesign.Presentation;
 
 internal static class DesignProjectEndpoints
 {
-    public static void MapGetDesignProjectsV1(this IEndpointRouteBuilder builder)
+    public static void MapGetOwnedDesignProjectsV1(this IEndpointRouteBuilder builder)
     {
         builder.MapGet("/api/v1/app-design/projects/owned", async (
             HttpContext httpContext,
@@ -29,6 +29,26 @@ internal static class DesignProjectEndpoints
 
             var query = new GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery(identityId, includeDesignTasks, includeDesigns);
             var response = await mediator.SendAsync<GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery, List<DesignProject>>(query, cancellationToken);
+
+            return response.Map(DesignProjectDto.From).ToResult();
+        }).RequireAuthorization();
+    }
+
+    public static void MapGetDesignProjectV1(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGet("/api/v1/app-design/projects/{identityId}", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromRoute(Name = "identityId")] Guid projectId,
+            [FromQuery(Name = "incltsk")] bool includeDesignTasks = false,
+            [FromQuery(Name = "incldsg")] bool includeDesigns = false) =>
+        {
+            if (!httpContext.TryGetIdentityId(out var identityId))
+                return Results.Unauthorized();
+
+            var query = new GetDesignProjectForIdentityById.GetDesignProjectForIdentityByIdQuery(identityId, projectId, includeDesignTasks, includeDesigns);
+            var response = await mediator.SendAsync<GetDesignProjectForIdentityById.GetDesignProjectForIdentityByIdQuery, DesignProject>(query, cancellationToken);
 
             return response.Map(DesignProjectDto.From).ToResult();
         }).RequireAuthorization();
