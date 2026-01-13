@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import DesignProjectSettingsViewField from './DesignProjectSettingsViewField.vue';
-import { computed, inject, reactive, type ComputedRef } from 'vue';
+import { computed, inject, reactive, watch, type ComputedRef } from 'vue';
 import { useDesignProjectStore } from '@/persistence/stores/design-project.store';
 import type { DesignProjectDto } from '@/persistence/dtos/design-project.dtos';
 import Input from '@/components/ui/input/Input.vue';
@@ -15,16 +15,15 @@ if (!project) {
 }
 
 const form = reactive({
-    id: project.value?.id,
+    id: "",
     name: "",
-    descriptionPayload: project.value?.descriptionPayload
+    descriptionPayload: "",
 })
 const originalForm = reactive({
-    id: project.value?.id,
+    id: "",
     name: "",
-    descriptionPayload: project.value?.descriptionPayload
+    descriptionPayload: "",
 })
-
 const nameChanged = computed(() => form.name !== originalForm.name)
 
 function resetField<K extends keyof typeof form>(key: K) {
@@ -32,7 +31,7 @@ function resetField<K extends keyof typeof form>(key: K) {
 }
 
 async function updateName() {
-    await saveChanges(designProjectStore.updateProject({ name: form.name }))
+    await saveChanges(designProjectStore.updateProject({ id: form.id, name: form.name }))
     originalForm.name = form.name
 }
 
@@ -45,6 +44,25 @@ async function saveChanges(promise: Promise<void>) {
 
     await promise;
 }
+
+watch(project, (p) => {
+    if (!p)
+        return
+
+    Object.assign(originalForm, {
+        id: project.value?.id,
+        name: project.value?.name,
+        descriptionPayload: project.value?.descriptionPayload
+    })
+
+    Object.assign(form, {
+        id: project.value?.id,
+        name: project.value?.name,
+        descriptionPayload: project.value?.descriptionPayload
+    })
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

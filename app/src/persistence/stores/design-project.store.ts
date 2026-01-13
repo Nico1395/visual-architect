@@ -58,6 +58,7 @@ export const useDesignProjectStore = defineStore("design-project", {
                 })
             } catch (error) {
                 console.error(error)
+                throw error
             } finally {
                 this.busy = false
             }
@@ -71,12 +72,13 @@ export const useDesignProjectStore = defineStore("design-project", {
             try {
                 const cached = this.projects.find(p => p.id == project?.id);
                 if (!cached)
-                    return;
+                    throw new Error("The project to update should be cached")
 
                 Object.assign(cached, project)
                 await updateProject(cached)
             } catch (error) {
                 console.error(error)
+                throw error
             } finally {
                 this.busy = false
             }
