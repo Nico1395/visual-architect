@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { DesignProjectDto } from "../dtos/design-project.dtos";
-import { addProject, getProjects } from "../apis/design-project.api";
+import { addProject, getOwnedProjects, getProjectById } from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
@@ -9,14 +9,36 @@ export const useDesignProjectStore = defineStore("design-project", {
         projects: [] as Array<DesignProjectDto>,
     }),
     actions: {
-        async getProjects() {
+        async getOwnedProjects() {
             if (this.busy)
                 return;
 
             this.busy = true
 
             try {
-                this.projects = await getProjects()
+                return this.projects = await getOwnedProjects()
+            } catch (error) {
+                console.error(error)
+            } finally {
+                this.busy = false
+            }
+        },
+        async getProjectById(projectId: string) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                let project = this.projects.find(p => p.id === projectId);
+                if (!project) {
+                    project = await getProjectById(projectId)
+                    if (project) {
+                        this.projects.push(project)
+                    }
+                }
+
+                return project
             } catch (error) {
                 console.error(error)
             } finally {

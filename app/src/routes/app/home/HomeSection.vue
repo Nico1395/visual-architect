@@ -45,9 +45,8 @@
             font-size: 26pt;
         }
 
-        .actions {
-
-        }
+        /* .actions {
+        } */
     }
 
     .home-section-description {
