@@ -36,11 +36,11 @@ internal static class DesignProjectEndpoints
 
     public static void MapGetDesignProjectV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/v1/app-design/projects/{identityId}", async (
+        builder.MapGet("/api/v1/app-design/projects/{projectId}", async (
             HttpContext httpContext,
             CancellationToken cancellationToken,
             [FromServices] IMediator mediator,
-            [FromRoute(Name = "identityId")] Guid projectId,
+            [FromRoute(Name = "projectId")] Guid projectId,
             [FromQuery(Name = "incltsk")] bool includeDesignTasks = false,
             [FromQuery(Name = "incldsg")] bool includeDesigns = false) =>
         {

@@ -17,7 +17,7 @@ internal sealed class DesignProjectReadRepository(DbContext _context) : IDesignP
         return HandleIncludes(query, includeDesignTasks, includeDesigns).ToListAsync(cancellationToken);
     }
 
-    private IQueryable<DesignProject> HandleIncludes(IQueryable<DesignProject> query, bool includeDesignTasks, bool includeDesigns)
+    private static IQueryable<DesignProject> HandleIncludes(IQueryable<DesignProject> query, bool includeDesignTasks, bool includeDesigns)
     {
         if (includeDesignTasks)
         {
