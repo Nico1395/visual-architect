@@ -120,6 +120,8 @@ const en = {
         proj: {
             title: "Your design projects",
             new: "New",
+            loading: "Loading your design projects...",
+            noproj: "You don't have any design projects yet. Hit 'New' to create your first design project!",
         },
         newprojdg: {
             title: "New design project",
@@ -129,7 +131,41 @@ const en = {
             cancel: "Cancel",
             create: "Create",
         }
-    }
+    },
+    designprojects: {
+        overview: {
+            title: "Overview",
+            description: {
+                title: "Description",
+                none: "There is no description yet, provide one!",
+            },
+            taskStats: {
+                title: "Task Statistics"
+            },
+        },
+        tasks: {
+            title: "Tasks",
+            new: "New",
+            filters: {
+                search: "Search for tasks..."
+            },
+            list: {
+                notasks: "No tasks yet, create some by hitting 'New'!",
+                task: {
+                    status: {
+                        todo: "Todo",
+                        progress: "In progress",
+                        completed: "Completed",
+                    },
+                    createdat: "Created at",
+                    updatedat: "Updated at",
+                },
+            },
+        },
+        settings: {
+            title: "Settings"
+        },
+    },
 }
 
 const de = {
@@ -252,6 +288,8 @@ const de = {
         proj: {
             title: "Deine Designprojekte",
             new: "Neu",
+            loading: "Lade deine Designprojekte...",
+            noproj: "Du hast noch keine Designprojekte. Klick auf 'Neu' um dein erstes Designprojekt zu erstellen!",
         },
         newprojdg: {
             title: "Neues Designprojekt",
