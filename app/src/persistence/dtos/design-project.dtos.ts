@@ -39,3 +39,9 @@ export interface AddDesignProjectDto {
 export interface AddDesignProjectResultDto {
     projectId: string
 }
+
+export interface UpdateDesignProjectDto {
+    id: string
+    name: string
+    descriptionPayload: string | null
+}

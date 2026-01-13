@@ -163,7 +163,11 @@ const en = {
             },
         },
         settings: {
-            title: "Settings"
+            title: "Settings",
+            name: {
+                label: "Name",
+                description: "Changing the name of the design project does not affect any links, references or other features involving design projects. Project names are not unique on the platform or your account."
+            },
         },
     },
 }
@@ -299,7 +303,45 @@ const de = {
             cancel: "Abbrechen",
             create: "Erstellen",
         }
-    }
+    },
+    designprojects: {
+        overview: {
+            title: "Übersicht",
+            description: {
+                title: "Beschreibung",
+                none: "Bisher gibt es noch keine Beschreibung. Warum schreibst du nicht eine?",
+            },
+            taskStats: {
+                title: "Statistik Designaufgaben"
+            },
+        },
+        tasks: {
+            title: "Designaufgaben",
+            new: "Neu",
+            filters: {
+                search: "Suche nach Designaufgaben..."
+            },
+            list: {
+                notasks: "Noch keine Designaufgaben. Klick auf 'Neu' und erstell doch mal ein paar neue!",
+                task: {
+                    status: {
+                        todo: "Neu",
+                        progress: "In Bearbeitung",
+                        completed: "Abgeschlossen",
+                    },
+                    createdat: "Erstellt am",
+                    updatedat: "Geändert am",
+                },
+            },
+        },
+        settings: {
+            title: "Einstellungen",
+            name: {
+                label: "Name",
+                description: "Das Ändern des Namens hat keinen Einfluss auf Links, Querverweise oder Funktionen die das Designprojekt beinhalten. Namen von Designprojekten sind nicht auf der Platform or deinem Profil einzigartig."
+            },
+        },
+    },
 }
 
 const i18n = createI18n({
