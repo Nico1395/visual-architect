@@ -1,4 +1,4 @@
-export interface ProfileDto {
+export interface ProfileDtoV1 {
     id: string,
     email: string,
     displayName: string,

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Icon from '@/components/Icon.vue';
 import { cn } from '@/lib/utils';
-import type { DesignProjectDto } from '@/persistence/dtos/design-project.dtos';
+import type { DesignProjectDtoV1 } from '@/persistence/dtos/design-project.dtos';
 
 const props = defineProps<{
-    project: DesignProjectDto
+    project: DesignProjectDtoV1
 }>();
 </script>
 

@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import type { DesignProjectDto } from "../dtos/design-project.dtos";
+import type { DesignProjectDtoV1 } from "../dtos/design-project.dtos";
 import { addProject, addTask, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
         initialized: false,
         busy: false,
-        projects: [] as Array<DesignProjectDto>,
+        projects: [] as Array<DesignProjectDtoV1>,
     }),
     actions: {
         async getOwnedProjects() {
@@ -63,7 +63,7 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
-        async updateProject(project: Partial<DesignProjectDto>) {
+        async updateProject(project: Partial<DesignProjectDtoV1>) {
             if (this.busy)
                 return;
 

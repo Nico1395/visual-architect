@@ -1,26 +1,26 @@
-export interface DesignProjectDto {
+export interface DesignProjectDtoV1 {
     id: string
     identityId: string
     name: string
     descriptionPayload: string | null
-    designTasks?: Array<DesignTaskDto> | null
+    designTasks?: Array<DesignTaskDtoV1> | null
     createdAt: string
     updatedAt: string
 }
 
-export interface DesignTaskDto {
+export interface DesignTaskDtoV1 {
     id: string
     projectId: string
     number: number
     name: string
     descriptionPayload: string
     status: number
-    designs?: Array<DesignDto> | null
+    designs?: Array<DesignDtoV1> | null
     createdAt: string
     updatedAt: string
 }
 
-export interface DesignDto {
+export interface DesignDtoV1 {
     id: string
     taskId: string
     name: string
@@ -31,16 +31,16 @@ export interface DesignDto {
     updatedAt: string
 }
 
-export interface AddDesignProjectDto {
+export interface AddDesignProjectDtoV1 {
     name: string
     descriptionPayload: string | null
 }
 
-export interface AddDesignProjectResultDto {
+export interface AddDesignProjectResultDtoV1 {
     projectId: string
 }
 
-export interface UpdateDesignProjectDto {
+export interface UpdateDesignProjectDtoV1 {
     id: string
     name: string
     descriptionPayload: string | null

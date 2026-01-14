@@ -3,13 +3,13 @@ import { useI18n } from 'vue-i18n';
 import DesignProjectSettingsViewField from './DesignProjectSettingsViewField.vue';
 import { computed, inject, reactive, watch, type ComputedRef } from 'vue';
 import { useDesignProjectStore } from '@/persistence/stores/design-project.store';
-import type { DesignProjectDto } from '@/persistence/dtos/design-project.dtos';
+import type { DesignProjectDtoV1 } from '@/persistence/dtos/design-project.dtos';
 import Input from '@/components/ui/input/Input.vue';
 import { toast } from 'vue-sonner';
 
 const { t } = useI18n();
 const designProjectStore = useDesignProjectStore()
-const project = inject<ComputedRef<DesignProjectDto | undefined>>('design-project')
+const project = inject<ComputedRef<DesignProjectDtoV1 | undefined>>('design-project')
 if (!project) {
   throw new Error('DesignProject not provided')
 }

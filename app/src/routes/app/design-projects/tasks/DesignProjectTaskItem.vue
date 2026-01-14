@@ -4,12 +4,12 @@ import {
   Item,
   ItemContent,
 } from '@/components/ui/item'
-import type { DesignTaskDto } from '@/persistence/dtos/design-project.dtos';
+import type { DesignTaskDtoV1 } from '@/persistence/dtos/design-project.dtos';
 import { useI18n } from 'vue-i18n';
 
 const { t, d } = useI18n();
 const props = defineProps<{
-    task: DesignTaskDto
+    task: DesignTaskDtoV1
 }>()
 
 function getStatusClass() {
