@@ -182,6 +182,22 @@ const en = {
                 label: "Name",
                 description: "Changing the name of the design project does not affect any links, references or other features involving design projects. Project names are not unique on the platform or your account."
             },
+            delete: {
+                title: "Delete project",
+                description: "Deleting a project also deletes all data associated with it, like its tasks and their designs. This action is not reversable.",
+                callToAction: "Delete",
+                modal: {
+                    title: "Deleting the project",
+                    description: "You are about to the project and all tasks and designs associated with it. Do you really want to do that?",
+                    cancel: "No I dont",
+                    confirm: "Yes I do",
+                },
+                toast: {
+                    loading: "Deleting your the design project...",
+                    success: "Design project deleted successfully",
+                    error: "Error deleting the design project 🫥",
+                }
+            },
         },
     },
 }
@@ -225,7 +241,7 @@ const de = {
         saving: {
             loading: "Speichere...",
             success: "Erfolgreich gespeichert!",
-            error: "Fehler beim Speichern. 🫥",
+            error: "Fehler beim Speichern 🫥",
         }
     },
     notfound: {
@@ -367,6 +383,22 @@ const de = {
             name: {
                 label: "Name",
                 description: "Das Ändern des Namens hat keinen Einfluss auf Links, Querverweise oder Funktionen die das Designprojekt beinhalten. Namen von Designprojekten sind nicht auf der Platform or deinem Profil einzigartig."
+            },
+            delete: {
+                title: "Designprojekt löschen",
+                description: "Das Löschen eines Designprojektes, löscht auch zugehörige Daten, wie Designaufgaben und dessen Designs. Diese Aktion kann nicht rückgängig gemacht werden.",
+                callToAction: "Löschen",
+                modal: {
+                    title: "Das Designprojekt löschen",
+                    description: "Du löscht gerade das Designprojekt und alle seine zugehörigen Daten, wie Designaufgaben und dessen Designs. Möchtest du das wirklich tun?",
+                    cancel: "Nein, möchte ich nicht",
+                    confirm: "Ja, möchte ich",
+                },
+                toast: {
+                    loading: "Lösche das Designprojekt...",
+                    success: "Designprojekt erfolgreich gelöscht",
+                    error: "Fehler beim Löschen des Designprojekts 🫥",
+                }
             },
         },
     },

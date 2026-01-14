@@ -15,9 +15,14 @@ internal static class DesignTaskEndpoints
 {
     public static void MapAddDesignTaskV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/v1/app-design/tasks/add", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] AddDesignTaskDtoV1 contract) =>
+        builder.MapPost("/api/v1/app-design/projects/{projectId}/tasks/add", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromRoute(Name = "projectId")] Guid projectId,
+            [FromBody] AddDesignTaskDtoV1 contract) =>
         {
-            var command = new AddDesignTask.AddDesignTaskCommand(contract.ProjectId, contract.Name, contract.DescriptionPayload);
+            var command = new AddDesignTask.AddDesignTaskCommand(projectId, contract.Name, contract.DescriptionPayload);
             var response = await mediator.SendAsync<AddDesignTask.AddDesignTaskCommand, AddDesignTask.AddDesignTaskCommandResult>(command, cancellationToken);
 
             return response.Map(r => new AddDesignTaskResultDtoV1(r.TaskNumber)).ToResult();

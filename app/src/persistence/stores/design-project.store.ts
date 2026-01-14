@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { DesignProjectDtoV1 } from "../dtos/design-project.dtos";
-import { addProject, addTask, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
+import { addProject, addTask, deleteProject, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
@@ -83,6 +83,25 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
+        async deleteProject(projectId: string) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                const cached = this.projects.find(p => p.id == projectId);
+                if (cached)
+                    this.projects = this.projects.filter(p => p != cached)      // Remove the project from cache
+
+                await deleteProject(projectId)
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
         async addTask(projectId: string, name: string, description: string) {
             if (this.busy)
                 return null;
@@ -90,8 +109,7 @@ export const useDesignProjectStore = defineStore("design-project", {
             this.busy = true
 
             try {
-                return await addTask({
-                    projectId: projectId,
+                return await addTask(projectId, {
                     name: name,
                     descriptionPayload: description,
                 })

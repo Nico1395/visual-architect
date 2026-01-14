@@ -56,7 +56,11 @@ internal static class DesignProjectEndpoints
 
     public static void MapAddDesignProjectV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/v1/app-design/projects/add", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] AddDesignProjectDtoV1 contract) =>
+        builder.MapPost("/api/v1/app-design/projects/add", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromBody] AddDesignProjectDtoV1 contract) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
@@ -70,12 +74,28 @@ internal static class DesignProjectEndpoints
 
     public static void MapUpdateDesignProjectV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPatch("/api/v1/app-design/projects/update", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] UpdateDesignProjectDtoV1 contract) =>
+        builder.MapPatch("/api/v1/app-design/projects/update", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromBody] UpdateDesignProjectDtoV1 contract) =>
         {
-            if (!httpContext.TryGetIdentityId(out var identityId))
-                return Results.Unauthorized();
-
             var command = new UpdateDesignProject.UpdateDesignProjectCommand(contract.Id, contract.Name, contract.DescriptionPayload);
+            var response = await mediator.SendAsync(command, cancellationToken);
+
+            return response.ToResult();
+        }).RequireAuthorization();
+    }
+
+    public static void MapDeleteDesignProjectV1(this IEndpointRouteBuilder builder)
+    {
+        builder.MapDelete("/api/v1/app-design/projects/{projectId}/delete", async (
+            HttpContext httpContext,
+            CancellationToken cancellationToken,
+            [FromServices] IMediator mediator,
+            [FromRoute(Name = "projectId")] Guid projectId) =>
+        {
+            var command = new DeleteDesignProject.DeleteDesignProjectCommand(projectId);
             var response = await mediator.SendAsync(command, cancellationToken);
 
             return response.ToResult();

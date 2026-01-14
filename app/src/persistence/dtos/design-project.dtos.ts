@@ -47,7 +47,6 @@ export interface UpdateDesignProjectDtoV1 {
 }
 
 export interface AddDesignTaskDtoV1 {
-    projectId: string
     name: string
     descriptionPayload: string
 }
