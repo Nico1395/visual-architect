@@ -46,12 +46,12 @@ export interface UpdateDesignProjectDto {
     descriptionPayload: string | null
 }
 
-export interface AddDesignTaskDto {
+export interface AddDesignTaskDtoV1 {
     projectId: string
     name: string
-    descriptionPayload: string | null
+    descriptionPayload: string
 }
 
-export interface AddDesignTaskResultDto {
+export interface AddDesignTaskResultDtoV1 {
     taskNumber: number
 }

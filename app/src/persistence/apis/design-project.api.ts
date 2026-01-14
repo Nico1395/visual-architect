@@ -2,8 +2,8 @@ import http from "@/http"
 import type {
     AddDesignProjectDto,
     AddDesignProjectResultDto,
-    AddDesignTaskDto,
-    AddDesignTaskResultDto,
+    AddDesignTaskDtoV1,
+    AddDesignTaskResultDtoV1,
     DesignProjectDto,
     UpdateDesignProjectDto
 } from "../dtos/design-project.dtos";
@@ -35,8 +35,8 @@ export async function updateProject(contract: UpdateDesignProjectDto) {
     })
 }
 
-export async function addTask(contract: AddDesignTaskDto) {
-    const { data } = await http.post<AddDesignTaskResultDto>("/api/v1/app-design/tasks/add", {
+export async function addTask(contract: AddDesignTaskDtoV1) {
+    const { data } = await http.post<AddDesignTaskResultDtoV1>("/api/v1/app-design/tasks/add", {
         projectId: contract.projectId,
         name: contract.name,
         descriptionPayload: contract.descriptionPayload,

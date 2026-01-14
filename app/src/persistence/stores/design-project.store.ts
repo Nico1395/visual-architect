@@ -83,7 +83,7 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
-        async addTask(projectId: string, name: string, description: string | null) {
+        async addTask(projectId: string, name: string, description: string) {
             if (this.busy)
                 return null;
 
