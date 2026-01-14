@@ -13,7 +13,7 @@ const props = defineProps<{
     isPreviewing?: boolean,
     disabled?: boolean,
     id?: string,
-    class?: string
+    class?: string,
 }>()
 const emits = defineEmits<{
     (e: "update:modelValue", payload: string): void
@@ -35,18 +35,18 @@ function togglePreview(preview: boolean) {
             <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" >
                 <Icon icon="bi bi-markdown" size="16px" />
 
-                {{ t('components.mdeditor.write') }}
+                {{ t('components.markdownEditor.write') }}
             </Button>
 
             <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button" >
                 <Icon icon="bi bi-justify-left" size="16px" />
 
-                {{ t('components.mdeditor.preview') }}
+                {{ t('components.markdownEditor.preview') }}
             </Button>
         </ButtonGroup>
 
         <div v-if="!isPreviewing" class="markdown-editor-body">
-            <Textarea :disabled :id v-model="value" :placeholder="t('components.mdeditor.placeholder')" />
+            <Textarea :disabled :id v-model="value" :placeholder="t('components.markdownEditor.placeholder')" />
         </div>
 
         <div v-else class="markdown-editor-body preview">

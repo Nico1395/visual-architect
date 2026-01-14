@@ -6,6 +6,11 @@ const en = {
             write: "Write",
             preview: "Preview",
             placeholder: "Write some Markdown...",
+        },
+        markdownArea: {
+            save: "Save",
+            cancel: "Cancel",
+            placeholder: "No content yet.",
         }
     },
     layout: {
@@ -137,7 +142,8 @@ const en = {
             title: "Overview",
             description: {
                 title: "Description",
-                none: "There is no description yet, provide one!",
+                none: "There is no description yet. Why don't you provide one?",
+                editTitle: "Editing",
             },
             taskStats: {
                 title: "Task Statistics"
@@ -174,10 +180,15 @@ const en = {
 
 const de = {
     components: {
-        mdeditor: {
+        markdownEditor: {
             write: "Bearbeiten",
             preview: "Vorschau",
             placeholder: "Schreib' etwas Markdown...",
+        },
+        markdownArea: {
+            save: "Speichern",
+            cancel: "Abbrechen",
+            placeholder: "Bisher gibt es noch keine Inhalte.",
         }
     },
     layout: {
@@ -310,6 +321,7 @@ const de = {
             description: {
                 title: "Beschreibung",
                 none: "Bisher gibt es noch keine Beschreibung. Warum schreibst du nicht eine?",
+                editTitle: "Bearbeiten",
             },
             taskStats: {
                 title: "Statistik Designaufgaben"

@@ -1,14 +1,49 @@
 <script setup lang="ts">
+import MarkdownArea from '@/components/MarkdownArea.vue';
 import type { DesignProjectDto } from '@/persistence/dtos/design-project.dtos';
-import { inject, type ComputedRef } from 'vue';
+import { useDesignProjectStore } from '@/persistence/stores/design-project.store';
+import { inject, reactive, watch, type ComputedRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-import VueMarkdown from 'vue-markdown-render'
+import { toast } from 'vue-sonner';
 
 const { t } = useI18n();
+const designProjectStore = useDesignProjectStore()
 const project = inject<ComputedRef<DesignProjectDto | undefined>>('design-project')
 if (!project) {
   throw new Error('DesignProject not provided')
 }
+
+const form = reactive({
+    id: "",
+    descriptionPayload: "",
+})
+
+async function saveDescriptionPayload() {
+    await saveChanges(designProjectStore.updateProject({ id: form.id, descriptionPayload: form.descriptionPayload }))
+}
+
+async function saveChanges(promise: Promise<void>) {
+    toast.promise(promise, {
+        loading: t('toasts.saving.loading'),
+        success: t('toasts.saving.success'),
+        error: t('toasts.saving.error'),
+    });
+
+    await promise;
+}
+
+watch(project, (p) => {
+        if (!p)
+            return
+
+        Object.assign(form, {
+            id: project.value?.id,
+            name: project.value?.name,
+            descriptionPayload: project.value?.descriptionPayload
+        })
+    },
+    { immediate: true }
+)
 </script>
 
 <template>
@@ -23,22 +58,14 @@ if (!project) {
                     <div class="design-project-overview-description-title">
                         {{ t('designprojects.overview.description.title') }}
                     </div>
-
-                    <!-- <ButtonGroup>
-                        <Button variant="outline" size="sm">
-                            {{ t('designprojects.overview.descriptionEdit') }}
-
-                            <Icon icon="ai-pencil" />
-                        </Button>
-                    </ButtonGroup> -->
                 </div>
 
                 <div class="design-project-overview-description-body">
-                    <div v-if="!project?.descriptionPayload" class="design-project-overview-description-nodesc">
-                        {{ t('designprojects.overview.description.none') }}
-                    </div>
-
-                    <VueMarkdown class="markdown" v-else :source="project?.descriptionPayload ?? ''" />
+                    <MarkdownArea v-model="form.descriptionPayload" @save="saveDescriptionPayload" :placeholder="t('designprojects.overview.description.none')">
+                        <template #title>
+                            {{ t('designprojects.overview.description.editTitle') }}
+                        </template>
+                    </MarkdownArea>
                 </div>
             </div>
 
@@ -104,19 +131,8 @@ if (!project) {
                 }
             }
 
-            .design-project-overview-description-body {
-                padding: 1.5rem;
-                background-color: var(--muted-background);
-                border-radius: var(--radius-xl);
-
-                .design-project-overview-description-nodesc {
-                    font-weight: 500;
-                    font-size: 10pt;
-                    color: var(--muted-foreground);
-                    text-align: center;
-                    margin: 1rem auto;
-                }
-            }
+            /* .design-project-overview-description-body {
+            } */
         }
 
         .design-project-overview-task-stats {
