@@ -29,4 +29,10 @@ internal sealed class DesignProjectWriteRepository(DbContext _context) : IDesign
 
         return Task.CompletedTask;
     }
+
+    public Task DeleteAsync(DesignProject project, CancellationToken cancellationToken)
+    {
+        _context.Remove(project);
+        return Task.CompletedTask;
+    }
 }
