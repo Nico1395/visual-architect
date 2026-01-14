@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { DesignProjectDto } from "../dtos/design-project.dtos";
-import { addProject, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
+import { addProject, addTask, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
@@ -76,6 +76,24 @@ export const useDesignProjectStore = defineStore("design-project", {
 
                 Object.assign(cached, project)
                 await updateProject(cached)
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async addTask(name: string, description: string | null) {
+            if (this.busy)
+                return null;
+
+            this.busy = true
+
+            try {
+                return await addTask({
+                    name: name,
+                    descriptionPayload: description,
+                })
             } catch (error) {
                 console.error(error)
                 throw error

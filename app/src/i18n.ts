@@ -167,6 +167,14 @@ const en = {
                     updatedat: "Updated at",
                 },
             },
+            formDialog: {
+                title: "New design task",
+                description: "Eine Designaufgabe stellt eine Arbeitseinheit innerhalb eines Designprojekts dar. In einer Designaufgabe kannst du mehrere Designs anlegen um mehrere Lösungsansätze für das zu lösende Problem entwerfen zu können.",
+                nameLabel: "Name of the design task",
+                descriptionLabel: "Description of the design task",
+                discard: "Discard",
+                create: "Create",
+            }
         },
         settings: {
             title: "Settings",
@@ -345,6 +353,14 @@ const de = {
                     updatedat: "Geändert am",
                 },
             },
+            formDialog: {
+                title: "Neue Designaufgabe",
+                description: "Eine Designaufgabe stellt eine Arbeitseinheit innerhalb eines Designprojekts dar. In einer Designaufgabe kannst du mehrere Designs anlegen um mehrere Lösungsansätze für das zu lösende Problem entwerfen zu können.",
+                nameLabel: "Name der Designaufgabe",
+                descriptionLabel: "Name der Designaufgabe",
+                discard: "Verwerfen",
+                create: "Erstellen",
+            }
         },
         settings: {
             title: "Einstellungen",

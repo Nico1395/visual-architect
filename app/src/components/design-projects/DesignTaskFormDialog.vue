@@ -23,30 +23,30 @@ const props = defineProps<{
 }>();
 const emits = defineEmits<{
   (e: 'update:opened', value: boolean): void
-  (e: 'submitted', payload: { projectId: string | null | undefined }): void
+  (e: 'submitted', payload: { taskNumber: number | null | undefined }): void
 }>();
 
 const { t } = useI18n()
 const designProjectStore = useDesignProjectStore();
-const projectDialogOpened = ref(false);
-const projectForm = reactive({
+const taskDialogOpened = ref(false);
+const taskForm = reactive({
     name: "",
     description: "",
 })
 
 function resetForm() {
-    projectForm.description = "";
-    projectForm.name = "";
+    taskForm.description = "";
+    taskForm.name = "";
 }
 
-function closeProjectDialog() {
+function closeTaskDialog() {
     resetForm();
-    projectDialogOpened.value = false
+    taskDialogOpened.value = false
     emits('update:opened', false);
 }
 
-async function saveProject() {
-    const promise = designProjectStore.addProject(projectForm.name, projectForm.description)
+async function saveTask() {
+    const promise = designProjectStore.addTask(taskForm.name, taskForm.description)
     toast.promise(promise, {
         loading: t('toasts.saving.loading'),
         success: t('toasts.saving.success'),
@@ -56,16 +56,16 @@ async function saveProject() {
     const result = await promise
 
     emits('submitted', {
-        projectId: result,
+        taskNumber: result
     });
 
-    closeProjectDialog()
+    closeTaskDialog()
 }
 
 watch(
     () => props.opened,
     (isOpen) => {
-        projectDialogOpened.value = isOpen;
+        taskDialogOpened.value = isOpen;
         resetForm();
     },
     { immediate: true }
@@ -73,49 +73,49 @@ watch(
 </script>
 
 <template>
-    <Dialog v-model:open="projectDialogOpened">
-        <DialogContent class="project-dialog">
-            <form @submit.prevent="saveProject">
+    <Dialog v-model:open="taskDialogOpened">
+        <DialogContent class="task-dialog">
+            <form @submit.prevent="saveTask">
                 <DialogHeader>
                     <DialogTitle>
-                        {{ t('home.newprojdg.title') }}
+                        {{ t('designprojects.tasks.formDialog.title') }}
                     </DialogTitle>
 
                     <DialogDescription>
-                        {{ t('home.newprojdg.description') }}
+                        {{ t('designprojects.tasks.formDialog.description') }}
                     </DialogDescription>
                 </DialogHeader>
 
-                <div class="project-dialog-fields">
-                    <div class="project-dialog-field">
-                        <Label for="project-name">
-                            {{ t('home.newprojdg.namelabel') }}
+                <div class="task-dialog-fields">
+                    <div class="task-dialog-field">
+                        <Label for="task-name">
+                            {{ t('designprojects.tasks.formDialog.nameLabel') }}
                         </Label>
 
-                        <Input id="project-name" v-model="projectForm.name" :disabled="designProjectStore.busy" />
+                        <Input id="task-name" v-model="taskForm.name" :disabled="designProjectStore.busy" />
                     </div>
 
-                    <div class="project-dialog-field">
-                        <Label for="project-description">
-                            {{ t('home.newprojdg.descriptionlabel') }}
+                    <div class="task-dialog-field">
+                        <Label for="task-description">
+                            {{ t('designprojects.tasks.formDialog.descriptionLabel') }}
                         </Label>
 
-                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" :disabled="designProjectStore.busy" />
+                        <MarkdownEditor id="task-description" class="task-description-editor" v-model="taskForm.description" :disabled="designProjectStore.busy" />
                     </div>
                 </div>
 
                 <DialogFooter class="flex justify-end gap-2">
-                    <Button variant="outline" type="button" @click="closeProjectDialog" :disabled="designProjectStore.busy">
+                    <Button variant="outline" type="button" @click="closeTaskDialog" :disabled="designProjectStore.busy">
                         <Icon icon="ai-cross" />
 
-                        {{ t('home.newprojdg.cancel') }}
+                        {{ t('designprojects.tasks.formDialog.discard') }}
                     </Button>
 
                     <Button as-child variant="default" type="submit" :disabled="designProjectStore.busy">
                         <button type="submit">
                             <Icon icon="ai-check" />
 
-                            {{ t('home.newprojdg.create') }}
+                            {{ t('designprojects.tasks.formDialog.create') }}
                         </button>
                     </Button>
                 </DialogFooter>
@@ -125,7 +125,7 @@ watch(
 </template>
 
 <style>
-.project-dialog {
+.task-dialog {
     width: 95vw;
     max-width: 64rem;
     height: 80vw;
@@ -136,12 +136,12 @@ watch(
         flex-direction: column;
         gap: 1rem;
 
-        .project-dialog-fields {
+        .task-dialog-fields {
             display: flex;
             flex-direction: column;
             gap: 1rem;
 
-            .project-dialog-field {
+            .task-dialog-field {
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;

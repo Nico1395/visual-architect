@@ -32,7 +32,7 @@ function getDescription() {
     <Item variant="outline">
         <ItemContent class="design-project-task-item">
             <div class="design-project-task-item-header">
-                <RouterLink class="design-project-task-item-link" :to="`/app/design-tasks/${props.task.projectId}/${props.task.number}`">
+                <RouterLink class="design-project-task-item-link" :to="`/app/design-projects/${props.task.projectId}/${props.task.number}`">
                     {{ props.task.name }}
                 </RouterLink>
 

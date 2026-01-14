@@ -3,15 +3,35 @@ import Icon from '@/components/Icon.vue';
 import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { useI18n } from "vue-i18n"
-import { inject, type ComputedRef } from 'vue'
+import { inject, ref, type ComputedRef } from 'vue'
 import type { DesignProjectDto, DesignTaskDto } from '@/persistence/dtos/design-project.dtos';
 import DesignProjectTaskFilter from './DesignProjectTaskFilter.vue';
 import DesignProjectTaskItem from './DesignProjectTaskItem.vue';
+import { useDesignProjectStore } from '@/persistence/stores/design-project.store';
+import { useRouter } from 'vue-router';
+import DesignTaskFormDialog from '@/components/design-projects/DesignTaskFormDialog.vue';
 
 const { t } = useI18n();
+const router = useRouter()
+const designProjectStore = useDesignProjectStore()
+const taskFormDialogOpened = ref(false)
+
 const project = inject<ComputedRef<DesignProjectDto | undefined>>('design-project')
 if (!project) {
   throw new Error('DesignProject not provided')
+}
+
+function openTaskFormDialog() {
+    taskFormDialogOpened.value = true
+}
+
+function onTaskFormDialogSubmitted(result: { taskNumber: number |null | undefined }) {
+    if (!result.taskNumber ||!project || !project.value)
+        return
+
+    router.push({
+        path: `/app/design-projects/${project.value.id}/${result.taskNumber}`
+    })
 }
 
 const dummyDesignTasks: DesignTaskDto[] = [
@@ -141,7 +161,7 @@ const dummyDesignTasks: DesignTaskDto[] = [
                 <DesignProjectTaskFilter />
 
                 <ButtonGroup>
-                    <Button>
+                    <Button :disabled="designProjectStore.busy" @click="openTaskFormDialog">
                         <Icon icon="ai-plus" />
 
                         {{ t('designprojects.tasks.new') }}
@@ -164,6 +184,11 @@ const dummyDesignTasks: DesignTaskDto[] = [
             </div>
         </div>
     </div>
+
+    <DesignTaskFormDialog
+        v-model:opened="taskFormDialogOpened"
+        @submitted="onTaskFormDialogSubmitted"
+     />
 </template>
 
 <style>
