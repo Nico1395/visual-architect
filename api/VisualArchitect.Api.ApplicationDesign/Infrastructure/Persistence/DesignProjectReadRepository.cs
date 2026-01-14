@@ -32,4 +32,9 @@ internal sealed class DesignProjectReadRepository(DbContext _context) : IDesignP
 
         return query;
     }
+
+    public Task<bool> ExistsByIdAsync(Guid projectId, CancellationToken cancellationToken)
+    {
+        return _context.Set<DesignProject>().AnyAsync(p => p.Id == projectId, cancellationToken);
+    }
 }
