@@ -4,7 +4,7 @@ import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { useI18n } from "vue-i18n"
 import { inject, ref, type ComputedRef } from 'vue'
-import type { DesignProjectDtoV1, DesignTaskDtoV1 } from '@/persistence/dtos/design-project.dtos';
+import type { DesignProjectDtoV1 } from '@/persistence/dtos/design-project.dtos';
 import DesignProjectTaskFilter from './DesignProjectTaskFilter.vue';
 import DesignProjectTaskItem from './DesignProjectTaskItem.vue';
 import { useDesignProjectStore } from '@/persistence/stores/design-project.store';
@@ -33,8 +33,6 @@ function onTaskFormDialogSubmitted(result: { taskNumber: number |null | undefine
         path: `/app/design-projects/${project.value.id}/${result.taskNumber}`
     })
 }
-
-const dummyDesignTasks: DesignTaskDtoV1[] = []
 </script>
 
 <template>
@@ -60,13 +58,13 @@ const dummyDesignTasks: DesignTaskDtoV1[] = []
         </div>
 
         <div class="design-project-tasks-body">
-            <div v-if="dummyDesignTasks.length == 0" class="design-project-tasks-none">
+            <div v-if="!project || project.designTasks?.length == 0" class="design-project-tasks-none">
                 {{ t('designprojects.tasks.list.notasks') }}
             </div>
 
             <div v-else class="design-project-tasks-items">
                 <DesignProjectTaskItem
-                    v-for="task in dummyDesignTasks"
+                    v-for="task in project.designTasks"
                     :key="task.id"
                     :value="task"
                     :task="task" />
