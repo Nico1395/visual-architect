@@ -19,6 +19,7 @@ import Icon from '../Icon.vue';
 
 const props = defineProps<{
     opened: boolean,
+    projectId: string,
     form?: { name: string, description?: string | null }
 }>();
 const emits = defineEmits<{
@@ -46,7 +47,7 @@ function closeTaskDialog() {
 }
 
 async function saveTask() {
-    const promise = designProjectStore.addTask(taskForm.name, taskForm.description)
+    const promise = designProjectStore.addTask(props.projectId, taskForm.name, taskForm.description)
     toast.promise(promise, {
         loading: t('toasts.saving.loading'),
         success: t('toasts.saving.success'),

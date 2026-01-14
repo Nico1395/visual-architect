@@ -83,7 +83,7 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
-        async addTask(name: string, description: string | null) {
+        async addTask(projectId: string, name: string, description: string | null) {
             if (this.busy)
                 return null;
 
@@ -91,6 +91,7 @@ export const useDesignProjectStore = defineStore("design-project", {
 
             try {
                 return await addTask({
+                    projectId: projectId,
                     name: name,
                     descriptionPayload: description,
                 })

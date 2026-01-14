@@ -30,6 +30,7 @@ export async function updateProject(contract: UpdateDesignProjectDto) {
 
 export async function addTask(contract: AddDesignTaskDto) {
     const { data } = await http.post<number>("/api/v1/app-design/tasks/add", {
+        projectId: contract.projectId,
         name: contract.name,
         descriptionPayload: contract.descriptionPayload,
     })

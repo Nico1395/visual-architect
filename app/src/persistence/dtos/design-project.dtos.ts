@@ -47,6 +47,7 @@ export interface UpdateDesignProjectDto {
 }
 
 export interface AddDesignTaskDto {
+    projectId: string
     name: string
     descriptionPayload: string | null
 }

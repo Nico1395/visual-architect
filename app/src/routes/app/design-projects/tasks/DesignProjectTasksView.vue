@@ -34,118 +34,7 @@ function onTaskFormDialogSubmitted(result: { taskNumber: number |null | undefine
     })
 }
 
-const dummyDesignTasks: DesignTaskDto[] = [
-  {
-    id: "task-001",
-    projectId: "project-123",
-    number: 1,
-    name: "Wireframe Landing Page",
-    descriptionPayload: "Create low-fidelity wireframes for the main landing page.",
-    status: 0,
-    designs: null,
-    createdAt: "2026-01-01T09:00:00Z",
-    updatedAt: "2026-01-01T09:00:00Z"
-  },
-  {
-    id: "task-002",
-    projectId: "project-123",
-    number: 2,
-    name: "Homepage Visual Design",
-    descriptionPayload: "Design high-fidelity visuals for the homepage based on approved wireframes.",
-    status: 1,
-    designs: null,
-    createdAt: "2026-01-02T09:00:00Z",
-    updatedAt: "2026-01-03T10:30:00Z"
-  },
-  {
-    id: "task-003",
-    projectId: "project-123",
-    number: 3,
-    name: "Design System Setup",
-    descriptionPayload: "Define color palette, typography, spacing, and core UI components.",
-    status: 2,
-    designs: null,
-    createdAt: "2026-01-03T09:00:00Z",
-    updatedAt: "2026-01-05T14:15:00Z"
-  },
-  {
-    id: "task-004",
-    projectId: "project-123",
-    number: 4,
-    name: "Mobile Navigation Design",
-    descriptionPayload: "Design responsive mobile navigation patterns and interactions.",
-    status: 1,
-    designs: null,
-    createdAt: "2026-01-04T09:00:00Z",
-    updatedAt: "2026-01-06T11:45:00Z"
-  },
-  {
-    id: "task-005",
-    projectId: "project-123",
-    number: 5,
-    name: "Dashboard Layout",
-    descriptionPayload: "Create layout options for the main user dashboard.",
-    status: 0,
-    designs: null,
-    createdAt: "2026-01-05T09:00:00Z",
-    updatedAt: "2026-01-05T09:00:00Z"
-  },
-  {
-    id: "task-006",
-    projectId: "project-123",
-    number: 6,
-    name: "User Profile Screen",
-    descriptionPayload: "Design user profile and account settings screens.",
-    status: 1,
-    designs: null,
-    createdAt: "2026-01-06T09:00:00Z",
-    updatedAt: "2026-01-07T13:20:00Z"
-  },
-  {
-    id: "task-007",
-    projectId: "project-123",
-    number: 7,
-    name: "Empty States & Error Screens",
-    descriptionPayload: "Design empty, loading, and error states for key flows.",
-    status: 0,
-    designs: null,
-    createdAt: "2026-01-07T09:00:00Z",
-    updatedAt: "2026-01-07T09:00:00Z"
-  },
-  {
-    id: "task-008",
-    projectId: "project-123",
-    number: 8,
-    name: "Icon Set Creation",
-    descriptionPayload: "Create a custom icon set aligned with the brand style.",
-    status: 2,
-    designs: null,
-    createdAt: "2026-01-08T09:00:00Z",
-    updatedAt: "2026-01-09T16:40:00Z"
-  },
-  {
-    id: "task-009",
-    projectId: "project-123",
-    number: 9,
-    name: "Prototype Interactions",
-    descriptionPayload: "Build interactive prototypes for key user journeys.",
-    status: 1,
-    designs: null,
-    createdAt: "2026-01-09T09:00:00Z",
-    updatedAt: "2026-01-10T12:10:00Z"
-  },
-  {
-    id: "task-010",
-    projectId: "project-123",
-    number: 10,
-    name: "Design Handoff Preparation",
-    descriptionPayload: "Prepare final design files and specs for developer handoff.",
-    status: 0,
-    designs: null,
-    createdAt: "2026-01-10T09:00:00Z",
-    updatedAt: "2026-01-10T09:00:00Z"
-  }
-]
+const dummyDesignTasks: DesignTaskDto[] = []
 </script>
 
 <template>
@@ -161,7 +50,7 @@ const dummyDesignTasks: DesignTaskDto[] = [
                 <DesignProjectTaskFilter />
 
                 <ButtonGroup>
-                    <Button :disabled="designProjectStore.busy" @click="openTaskFormDialog">
+                    <Button :disabled="designProjectStore.busy && project" @click="openTaskFormDialog">
                         <Icon icon="ai-plus" />
 
                         {{ t('designprojects.tasks.new') }}
@@ -186,6 +75,8 @@ const dummyDesignTasks: DesignTaskDto[] = [
     </div>
 
     <DesignTaskFormDialog
+        v-if="project"
+        :projectId="project.id"
         v-model:opened="taskFormDialogOpened"
         @submitted="onTaskFormDialogSubmitted"
      />
