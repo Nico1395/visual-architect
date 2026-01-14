@@ -19,6 +19,8 @@ function getClasses() {
     width: 70%;
     min-width: 1000px;
     margin: 1rem auto;
+    box-sizing: border-box;
+    padding: 0 1rem;
 }
 
 @media (max-width: calc(1000px)) {

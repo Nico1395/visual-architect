@@ -25,7 +25,7 @@ onMounted(async () => {
 
 async function logout() {
   try {
-    await http.post("/api/auth/logout");
+    await http.post("/api/v1/auth/logout");
   } finally {
     sessionStorage.removeItem("vat");
     router.replace("/auth/login");

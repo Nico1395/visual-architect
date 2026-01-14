@@ -1,6 +1,18 @@
 import { createI18n } from "vue-i18n"
 
 const en = {
+    components: {
+        mdeditor: {
+            write: "Write",
+            preview: "Preview",
+            placeholder: "Write some Markdown...",
+        },
+        markdownArea: {
+            save: "Save",
+            cancel: "Cancel",
+            placeholder: "No content yet.",
+        }
+    },
     layout: {
         header: {
             appname: "Visual Architect",
@@ -108,10 +120,85 @@ const en = {
                 notfound: "Not available 🙁",
             },
         },
-    }
+    },
+    home: {
+        proj: {
+            title: "Your design projects",
+            new: "New",
+            loading: "Loading your design projects...",
+            noproj: "You don't have any design projects yet. Hit 'New' to create your first design project!",
+        },
+        newprojdg: {
+            title: "New design project",
+            description: "Create a new home for designs youre organizing for a project or an entire application. We recommend to keep your conventions of how youre organizing your tasks and designs consinstent across design projects.",
+            namelabel: "Name of the design project",
+            descriptionlabel: "Describe the design project",
+            cancel: "Cancel",
+            create: "Create",
+        }
+    },
+    designprojects: {
+        overview: {
+            title: "Overview",
+            description: {
+                title: "Description",
+                none: "There is no description yet. Why don't you provide one?",
+                editTitle: "Editing",
+            },
+            taskStats: {
+                title: "Task Statistics"
+            },
+        },
+        tasks: {
+            title: "Tasks",
+            new: "New",
+            filters: {
+                search: "Search for tasks..."
+            },
+            list: {
+                notasks: "No tasks yet, create some by hitting 'New'!",
+                task: {
+                    status: {
+                        todo: "Todo",
+                        progress: "In progress",
+                        completed: "Completed",
+                    },
+                    createdat: "Created at",
+                    updatedat: "Updated at",
+                },
+            },
+            formDialog: {
+                title: "New design task",
+                description: "Eine Designaufgabe stellt eine Arbeitseinheit innerhalb eines Designprojekts dar. In einer Designaufgabe kannst du mehrere Designs anlegen um mehrere Lösungsansätze für das zu lösende Problem entwerfen zu können.",
+                nameLabel: "Name of the design task",
+                descriptionLabel: "Description of the design task",
+                discard: "Discard",
+                create: "Create",
+            }
+        },
+        settings: {
+            title: "Settings",
+            name: {
+                label: "Name",
+                description: "Changing the name of the design project does not affect any links, references or other features involving design projects. Project names are not unique on the platform or your account."
+            },
+        },
+    },
 }
 
 const de = {
+    components: {
+        markdownEditor: {
+            write: "Bearbeiten",
+            preview: "Vorschau",
+            placeholder: "Schreib' etwas Markdown...",
+        },
+        markdownArea: {
+            save: "Speichern",
+            cancel: "Abbrechen",
+            placeholder: "Bisher gibt es noch keine Inhalte.",
+        }
+    },
     layout: {
         header: {
             appname: "Visual Architect",
@@ -213,13 +300,76 @@ const de = {
                 description: "Dein gewähltes Farbschema wird über deine Geräte hinaus gespeichert.",
             },
             language: {
-                title: "Language",
+                title: "Sprache",
                 prompt: "Sprache auswählen",
                 search: "Sprache suchen...",
                 notfound: "Nicht verfügbar 🙁",
             },
         },
-    }
+    },
+    home: {
+        proj: {
+            title: "Deine Designprojekte",
+            new: "Neu",
+            loading: "Lade deine Designprojekte...",
+            noproj: "Du hast noch keine Designprojekte. Klick auf 'Neu' um dein erstes Designprojekt zu erstellen!",
+        },
+        newprojdg: {
+            title: "Neues Designprojekt",
+            description: "Erstelle ein neues Zuhause für Designs von einem deiner Projekte, oder einer ganzen Anwendung. Wir empfehlen, sich an eine einzige, über Designprojekte-konsistente Konvention für die Organisation von Aufgaben und Designs zu halten.",
+            namelabel: "Name des Designprojekts",
+            descriptionlabel: "Beschreibe das Designprojekt",
+            cancel: "Abbrechen",
+            create: "Erstellen",
+        }
+    },
+    designprojects: {
+        overview: {
+            title: "Übersicht",
+            description: {
+                title: "Beschreibung",
+                none: "Bisher gibt es noch keine Beschreibung. Warum schreibst du nicht eine?",
+                editTitle: "Bearbeiten",
+            },
+            taskStats: {
+                title: "Statistik Designaufgaben"
+            },
+        },
+        tasks: {
+            title: "Designaufgaben",
+            new: "Neu",
+            filters: {
+                search: "Suche nach Designaufgaben..."
+            },
+            list: {
+                notasks: "Noch keine Designaufgaben. Klick auf 'Neu' und erstell doch mal ein paar neue!",
+                task: {
+                    status: {
+                        todo: "Neu",
+                        progress: "In Bearbeitung",
+                        completed: "Abgeschlossen",
+                    },
+                    createdat: "Erstellt am",
+                    updatedat: "Geändert am",
+                },
+            },
+            formDialog: {
+                title: "Neue Designaufgabe",
+                description: "Eine Designaufgabe stellt eine Arbeitseinheit innerhalb eines Designprojekts dar. In einer Designaufgabe kannst du mehrere Designs anlegen um mehrere Lösungsansätze für das zu lösende Problem entwerfen zu können.",
+                nameLabel: "Name der Designaufgabe",
+                descriptionLabel: "Name der Designaufgabe",
+                discard: "Verwerfen",
+                create: "Erstellen",
+            }
+        },
+        settings: {
+            title: "Einstellungen",
+            name: {
+                label: "Name",
+                description: "Das Ändern des Namens hat keinen Einfluss auf Links, Querverweise oder Funktionen die das Designprojekt beinhalten. Namen von Designprojekten sind nicht auf der Platform or deinem Profil einzigartig."
+            },
+        },
+    },
 }
 
 const i18n = createI18n({

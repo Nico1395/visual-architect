@@ -27,10 +27,11 @@ const { t } = useI18n()
     <div class="content">
         <router-view />
     </div>
-</template>
 
-<style scoped>
-</style>
+    <div class="footer">
+
+    </div>
+</template>
 
 <style>
 .header {
@@ -39,8 +40,7 @@ const { t } = useI18n()
     .navbar {
         background-color: var(--sidebar);
         color: var(--sidebar-foreground);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
+        border-bottom: 1px solid var(--border);
         height: 60px;
         padding: 1rem;
         display: flex;
@@ -81,5 +81,12 @@ const { t } = useI18n()
 
 .content {
     flex: 1;
+    margin: 2.5rem 0 10rem 0;
+}
+
+.footer {
+    background-color: var(--muted);
+    flex: none;
+    height: 100px
 }
 </style>

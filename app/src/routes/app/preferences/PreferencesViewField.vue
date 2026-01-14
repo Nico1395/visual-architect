@@ -49,7 +49,7 @@ function reset() {
 
   <Button
     v-if="props.changed"
-    variant="successful"
+    variant="default"
     @click="save()"
     :disabled="props.disabled"
   >

@@ -18,19 +18,9 @@ namespace VisualArchitect.Api.Authentication.Presentation;
 
 internal static class AuthenticationEndpoints
 {
-    internal static void MapPublicTest(this IEndpointRouteBuilder builder)
+    internal static void MapLoginV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/auth/public", () => "Hello anon!").AllowAnonymous();
-    }
-
-    internal static void MapSecureTest(this IEndpointRouteBuilder builder)
-    {
-        builder.MapGet("/api/auth/secure", (HttpContext httpContext) => $"Hello {httpContext.User.Identity?.Name ?? "Anonymous"}").RequireAuthorization();
-    }
-
-    internal static void MapLogin(this IEndpointRouteBuilder builder)
-    {
-        builder.MapGet("/api/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string? returnUri) =>
+        builder.MapGet("/api/v1/auth/login", (HttpContext ctx, [FromQuery(Name = "p")] string? providerKey, [FromQuery(Name = "r")] string? returnUri) =>
         {
             if (string.IsNullOrWhiteSpace(providerKey) || string.IsNullOrWhiteSpace(returnUri))
                 return Results.BadRequest("Both 'p' and 'r' are mandatory query parameters!");
@@ -38,15 +28,15 @@ internal static class AuthenticationEndpoints
             var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);
             return Results.Challenge(new AuthenticationProperties
             {
-                RedirectUri = $"/auth/callback/{providerKey}",
+                RedirectUri = $"/api/v1/auth/callback/{providerKey}",
                 Items = { ["returnUri"] = returnUri, }
             }, authenticationSchemes: [scheme]);
         });
     }
 
-    internal static void MapLogout(this IEndpointRouteBuilder builder)
+    internal static void MapLogoutV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/auth/logout", async (HttpContext httpContext) =>
+        builder.MapPost("/api/v1/auth/logout", async (HttpContext httpContext) =>
         {
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             httpContext.Response.Cookies.Delete("vac_csrf");
@@ -56,9 +46,9 @@ internal static class AuthenticationEndpoints
         .RequireAuthorization();
     }
 
-    internal static void MapCsrf(this IEndpointRouteBuilder builder)
+    internal static void MapCsrfV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/auth/csrf", (HttpContext httpContext, IAntiforgery antiforgery) =>
+        builder.MapGet("/api/v1/auth/csrf", (HttpContext httpContext, IAntiforgery antiforgery) =>
         {
             var tokens = antiforgery.GetAndStoreTokens(httpContext);
             return Results.Ok(new { token = tokens.RequestToken });
@@ -66,9 +56,9 @@ internal static class AuthenticationEndpoints
         .RequireAuthorization();
     }
 
-    internal static void MapMe(this IEndpointRouteBuilder builder)
+    internal static void MapMeV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/auth/me", (HttpContext ctx) =>
+        builder.MapGet("/api/v1/auth/me", (HttpContext ctx) =>
         {
             if (!ctx.User.Identity?.IsAuthenticated ?? true)
                 return Results.Unauthorized();
@@ -88,9 +78,9 @@ internal static class AuthenticationEndpoints
         });
     }
 
-    internal static void MapOAuthCallback(this IEndpointRouteBuilder builder)
+    internal static void MapOAuthCallbackV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/auth/callback/{providerKey}", async (HttpContext httpContext, [FromServices] IClientUrlBuilder clientUrlBuilder, [FromServices] IMediator mediator, [FromRoute(Name = "providerKey")] string providerKey) =>
+        builder.MapGet("/api/v1/auth/callback/{providerKey}", async (HttpContext httpContext, [FromServices] IClientUrlBuilder clientUrlBuilder, [FromServices] IMediator mediator, [FromRoute(Name = "providerKey")] string providerKey) =>
         {
             // Exchange auth code with tokens and fetch user infos
             var scheme = AuthenticationConstants.Schemes.ToScheme(providerKey);

@@ -14,7 +14,7 @@ http.interceptors.request.use(async (config) => {
 });
 
 async function fetchCsrfToken() {
-  const { data } = await http.get("/api/auth/csrf");
+  const { data } = await http.get("/api/v1/auth/csrf");
   sessionStorage.setItem("vat", data.token);
   return data.token;
 }

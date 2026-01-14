@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using VisualArchitect.Api.Authentication.Domain;
+using VisualArchitect.Api.Orchestration.Abstractions.Infrastructure.EntityConfigurations;
 
 namespace VisualArchitect.Api.Authentication.Infrastructure.EntityConfigurations;
 
@@ -15,7 +16,7 @@ internal sealed class OAuthIdentityEntityConfiguration : IEntityTypeConfiguratio
         builder.Property(i => i.ExternalId).HasColumnName("external_id").HasMaxLength(255).IsRequired();
         builder.Property(i => i.ProviderId).HasColumnName("provider_id").IsRequired();
         builder.Property(i => i.IdentityId).HasColumnName("identity_id").IsRequired();
-        builder.Property(i => i.CreatedAt).HasColumnName("created_at").IsRequired();
+        builder.CreatedAtProperty();
 
         builder.HasOne(i => i.Provider).WithMany().HasForeignKey(i => i.ProviderId).IsRequired().OnDelete(DeleteBehavior.Cascade);
         builder.HasOne(i => i.Identity).WithOne().HasForeignKey<OAuthIdentity>(i => i.IdentityId).IsRequired().OnDelete(DeleteBehavior.Cascade);

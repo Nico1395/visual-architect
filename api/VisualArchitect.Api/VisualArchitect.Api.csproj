@@ -10,4 +10,9 @@
     <ProjectReference Include="../VisualArchitect.Api.Orchestration/VisualArchitect.Api.Orchestration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+
 </Project>

@@ -50,15 +50,39 @@ const router = createRouter({
                     component: () => import("./routes/app/preferences/account/AccountPreferencesView.vue"),
                 },
             ]
-        }
-        ],
         },
         {
-            path: "/:pathMatch(.*)*",
-            name: "notfound",
-            component: () => import("./routes/NotFoundView.vue"),
-        },
-    ],
+            path: "design-projects/:projectId",
+            redirect: to => ({
+                name: "design-projects-overview",
+                params: { projectId: to.params.projectId },
+            }),
+            name: "design-projects",
+            component: () => import("./routes/app/design-projects/DesignProjectLayout.vue"),
+            children: [
+                {
+                    path: "overview",
+                    name: "design-projects-overview",
+                    component: () => import("./routes/app/design-projects/overview/DesignProjectOverviewView.vue"),
+                },
+                {
+                    path: "tasks",
+                    name: "design-projects-tasks",
+                    component: () => import("./routes/app/design-projects/tasks/DesignProjectTasksView.vue"),
+                },
+                {
+                    path: "settings",
+                    name: "design-projects-settings",
+                    component: () => import("./routes/app/design-projects/settings/DesignProjectSettingsView.vue"),
+                },
+            ]
+        }],
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: "notfound",
+        component: () => import("./routes/NotFoundView.vue"),
+    }],
 })
 
 const publicRouteNames = ["login"];

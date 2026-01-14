@@ -10,29 +10,29 @@ using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
 using VisualArchitect.Api.Orchestration.Abstractions.Mediator;
+using VisualArchitect.Api.Orchestration.Abstractions.Presentation.Http;
 
 namespace VisualArchitect.Api.Authentication.Presentation;
 
 internal static class ProfileEndpoints
 {
-    internal static void MapGetProfile(this IEndpointRouteBuilder builder)
+    internal static void MapGetProfileV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/api/profile", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
+        builder.MapGet("/api/v1/profile", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
         {
-            var idClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrWhiteSpace(idClaim) || !Guid.TryParse(idClaim, out var identityId))
+            if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
             var query = new GetIdentity.GetIdentityQuery(identityId);
             var response = await mediator.SendAsync<GetIdentity.GetIdentityQuery, Identity>(query, httpContext.RequestAborted);
 
-            return response.Map(IdentityDto.From).ToResult();
+            return response.Map(IdentityDtoV1.From).ToResult();
         }).RequireAuthorization();
     }
 
-    internal static void MapSaveProfile(this IEndpointRouteBuilder builder)
+    internal static void MapSaveProfileV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPatch("/api/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDto identity) =>
+        builder.MapPatch("/api/v1/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDtoV1 identity) =>
         {
             var command = new SaveIdentity.SaveIdentityCommand(identity.To());
             var response = await mediator.SendAsync(command, httpContext.RequestAborted);
@@ -41,12 +41,11 @@ internal static class ProfileEndpoints
         }).RequireAuthorization();
     }
 
-    internal static void MapDeleteProfile(this IEndpointRouteBuilder builder)
+    internal static void MapDeleteProfileV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapDelete("/api/profile/delete", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
+        builder.MapDelete("/api/v1/profile/delete", async (HttpContext httpContext, [FromServices] IMediator mediator) =>
         {
-            var idClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrWhiteSpace(idClaim) || !Guid.TryParse(idClaim, out var identityId))
+            if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
 
             var command = new DeleteIdentity.DeleteIdentityCommand(identityId);

@@ -1,13 +1,13 @@
 import http from "@/http";
-import type { ProfileDto } from "../dtos/profile.dtos";
+import type { ProfileDtoV1 } from "../dtos/profile.dtos";
 
 export async function getProfile() {
-    const { data } = await http.get<ProfileDto>(`/api/profile`)
+    const { data } = await http.get<ProfileDtoV1>(`/api/v1/profile`)
     return data
 }
 
-export async function saveProfile(profile: ProfileDto) {
-    await http.patch(`/api/profile/save`, {
+export async function saveProfile(profile: ProfileDtoV1) {
+    await http.patch(`/api/v1/profile/save`, {
         id: profile.id,
         email: profile.email,
         displayName: profile.displayName,
@@ -18,5 +18,5 @@ export async function saveProfile(profile: ProfileDto) {
 }
 
 export async function deleteProfile() {
-    await http.delete(`/api/profile/delete`);
+    await http.delete(`/api/v1/profile/delete`);
 }

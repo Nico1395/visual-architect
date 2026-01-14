@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import type { ProfileDto } from "../dtos/profile.dtos";
+import type { ProfileDtoV1 } from "../dtos/profile.dtos";
 import { deleteProfile, getProfile, saveProfile } from "../apis/profile.api";
 
 export const useProfileStore = defineStore("profile", {
     state: () => ({
-        profile: null as ProfileDto | null,
+        profile: null as ProfileDtoV1 | null,
         busy: false,
     }),
     actions: {
@@ -23,7 +23,7 @@ export const useProfileStore = defineStore("profile", {
                 return this.profile;
             }
         },
-        async saveProfile(profile: Partial<ProfileDto>) {
+        async saveProfile(profile: Partial<ProfileDtoV1>) {
             if (this.busy || !this.profile)
                 return;
 
@@ -34,6 +34,7 @@ export const useProfileStore = defineStore("profile", {
                 await saveProfile(this.profile)
             } catch (error) {
                 console.error(error)
+                throw error
             } finally {
                 this.busy = false
             }
@@ -49,6 +50,7 @@ export const useProfileStore = defineStore("profile", {
                 this.profile = null
             } catch (error) {
                 console.error(error)
+                throw error
             } finally {
                 this.busy = false
             }

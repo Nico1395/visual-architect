@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using VisualArchitect.Api.Orchestration.Abstractions.Infrastructure.EntityConfigurations;
 using VisualArchitect.Api.Preferences.Domain;
 
 namespace VisualArchitect.Api.Preferences.Infrastructure.EntityConfigurations;
@@ -14,7 +15,7 @@ internal sealed class IdentityPreferenceEntityConfiguration : IEntityTypeConfigu
         builder.Property(i => i.IdentityId).HasColumnName("identity_id").IsRequired();
         builder.Property(i => i.PreferenceId).HasColumnName("preference_id").IsRequired();
         builder.Property(i => i.Value).HasColumnName("value").HasMaxLength(2048);
-        builder.Property(i => i.UpdatedAt).HasColumnName("updated_at").IsRequired();
+        builder.UpdatedAtProperty();
 
         builder.HasOne(i => i.Preference).WithMany().HasForeignKey(i => i.PreferenceId).IsRequired().OnDelete(DeleteBehavior.Cascade);
     }

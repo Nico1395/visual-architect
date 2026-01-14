@@ -13,8 +13,8 @@ public static class CookieOptionsBuilder
         options.Cookie.HttpOnly = true;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.Cookie.SameSite = SameSiteMode.None;
-        options.LoginPath = "/api/auth/login";
-        options.LogoutPath = "/api/auth/logout";
+        options.LoginPath = "/api/v1/auth/login";
+        options.LogoutPath = "/api/v1/auth/logout";
 
         options.Events = new CookieAuthenticationEvents
         {

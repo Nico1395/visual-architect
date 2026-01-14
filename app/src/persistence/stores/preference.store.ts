@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import type { PreferenceDto } from "../dtos/preference.dtos";
+import type { PreferenceDtoV1 } from "../dtos/preference.dtos";
 import { getPreferences, setPreference } from "../apis/preference.api";
 
 export const usePreferenceStore = defineStore("preference", {
     state: () => ({
-        preferences: [] as Array<PreferenceDto>,
+        preferences: [] as Array<PreferenceDtoV1>,
         busy: false,
     }),
     actions: {

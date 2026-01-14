@@ -22,6 +22,136 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.Design", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("DescriptionPayload")
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("description_payload");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasMaxLength(2147483647)
+                        .HasColumnType("text")
+                        .HasColumnName("payload");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("task_id");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("design", "application_design");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.DesignProject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("DescriptionPayload")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("description_payload");
+
+                    b.Property<Guid>("IdentityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("identity_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("design_project", "application_design");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.DesignTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("DescriptionPayload")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("description_payload");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint")
+                        .HasColumnName("number");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("project_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId", "Number")
+                        .IsUnique();
+
+                    b.ToTable("design_task", "application_design");
+                });
+
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.Identity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -199,6 +329,24 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         });
                 });
 
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.Design", b =>
+                {
+                    b.HasOne("VisualArchitect.Api.ApplicationDesign.Domain.DesignTask", null)
+                        .WithMany("Designs")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.DesignTask", b =>
+                {
+                    b.HasOne("VisualArchitect.Api.ApplicationDesign.Domain.DesignProject", null)
+                        .WithMany("DesignTasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("VisualArchitect.Api.Authentication.Domain.OAuthIdentity", b =>
                 {
                     b.HasOne("VisualArchitect.Api.Authentication.Domain.Identity", "Identity")
@@ -227,6 +375,16 @@ namespace VisualArchitect.Api.Orchestration.Infrastructure.Context.Migrations
                         .IsRequired();
 
                     b.Navigation("Preference");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.DesignProject", b =>
+                {
+                    b.Navigation("DesignTasks");
+                });
+
+            modelBuilder.Entity("VisualArchitect.Api.ApplicationDesign.Domain.DesignTask", b =>
+                {
+                    b.Navigation("Designs");
                 });
 #pragma warning restore 612, 618
         }

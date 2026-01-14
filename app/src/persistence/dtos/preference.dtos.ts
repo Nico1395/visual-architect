@@ -1,4 +1,4 @@
-export interface PreferenceDto {
+export interface PreferenceDtoV1 {
     identityId: string
     key: string,
     value?: string | null
@@ -6,7 +6,7 @@ export interface PreferenceDto {
     updatedAt?: string | null
 }
 
-export interface SetPreferenceDto {
+export interface SetPreferenceDtoV1 {
     key: string
     value?: string | null
     resetToDefault: boolean
