@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Card from '@/components/ui/card/Card.vue';
 import DesignProjectMenuItem from './DesignProjectMenuItem.vue';
 import { useI18n } from "vue-i18n"
 import Icon from '@/components/Icon.vue';
@@ -36,7 +35,7 @@ provide('design-project', project)
         </div>
 
         <div class="design-project-body">
-            <Card class="design-project-menu">
+            <div class="design-project-menu">
                 <DesignProjectMenuItem :to="`/app/design-projects/${project?.id}/overview`">
                     <Icon icon="ai-map" />
 
@@ -56,7 +55,7 @@ provide('design-project', project)
 
                     {{ t('designprojects.settings.title') }}
                 </DesignProjectMenuItem>
-            </Card>
+            </div>
 
             <div class="design-project-view">
                 <RouterView />
@@ -98,6 +97,8 @@ provide('design-project', project)
             gap: 0.2rem;
             padding: 1rem;
             height: fit-content;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
         }
 
         .design-project-view {

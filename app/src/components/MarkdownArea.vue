@@ -157,7 +157,7 @@ watch(
 
         > .markdown {
             font-size: 10pt;
-            padding: 0 0.5rem;
+            padding: 0.5rem 0.7rem;
             overflow-y: auto;
         }
 
@@ -215,13 +215,13 @@ watch(
 
 .markdown code {
   font-family: "JetBrains Mono", monospace;
-  background: #f4f4f5;
+  background-color: var(--muted-background);
   padding: 0.15rem 0.35rem;
   border-radius: 4px;
 }
 
 .markdown pre {
-  background: #f4f4f5;
+  background-color: var(--muted-background);
   padding: 1rem;
   border-radius: 6px;
   overflow-x: auto;
