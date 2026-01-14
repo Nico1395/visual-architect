@@ -57,7 +57,7 @@ async function saveTask() {
     const result = await promise
 
     emits('submitted', {
-        taskNumber: result
+        taskNumber: result?.taskNumber
     });
 
     closeTaskDialog()

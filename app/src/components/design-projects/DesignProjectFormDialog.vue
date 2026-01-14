@@ -56,7 +56,7 @@ async function saveProject() {
     const result = await promise
 
     emits('submitted', {
-        projectId: result,
+        projectId: result?.projectId,
     });
 
     closeProjectDialog()

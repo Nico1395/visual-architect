@@ -51,3 +51,7 @@ export interface AddDesignTaskDto {
     name: string
     descriptionPayload: string | null
 }
+
+export interface AddDesignTaskResultDto {
+    taskNumber: number
+}
