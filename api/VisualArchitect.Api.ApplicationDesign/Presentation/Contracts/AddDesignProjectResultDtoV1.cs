@@ -1,3 +1,3 @@
 namespace VisualArchitect.Api.ApplicationDesign.Presentation.Contracts;
 
-public sealed record AddDesignProjectResultDto(Guid ProjectId);
+public sealed record AddDesignProjectResultDtoV1(Guid ProjectId);

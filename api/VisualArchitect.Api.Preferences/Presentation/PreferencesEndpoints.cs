@@ -27,14 +27,14 @@ internal static class PreferencesEndpoints
 
             return response
                 .Map(preferences => preferences
-                    .Select(IdentityPreferenceDto.From).ToList())
+                    .Select(IdentityPreferenceDtoV1.From).ToList())
                 .ToResult();
         }).RequireAuthorization();
     }
 
     public static void MapSetPreferenceV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/v1/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceDto request) =>
+        builder.MapPost("/api/v1/preferences/set", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] SetPreferenceDtoV1 request) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();

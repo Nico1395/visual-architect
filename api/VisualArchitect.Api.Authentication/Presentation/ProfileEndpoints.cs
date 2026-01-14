@@ -26,13 +26,13 @@ internal static class ProfileEndpoints
             var query = new GetIdentity.GetIdentityQuery(identityId);
             var response = await mediator.SendAsync<GetIdentity.GetIdentityQuery, Identity>(query, httpContext.RequestAborted);
 
-            return response.Map(IdentityDto.From).ToResult();
+            return response.Map(IdentityDtoV1.From).ToResult();
         }).RequireAuthorization();
     }
 
     internal static void MapSaveProfileV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPatch("/api/v1/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDto identity) =>
+        builder.MapPatch("/api/v1/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDtoV1 identity) =>
         {
             var command = new SaveIdentity.SaveIdentityCommand(identity.To());
             var response = await mediator.SendAsync(command, httpContext.RequestAborted);

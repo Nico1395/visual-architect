@@ -2,7 +2,7 @@ using VisualArchitect.Api.Authentication.Domain;
 
 namespace VisualArchitect.Api.Authentication.Presentation.Contracts;
 
-internal sealed class IdentityDto
+internal sealed class IdentityDtoV1
 {
     public required Guid Id { get; init; }
     public required string Email { get; init; }
@@ -11,7 +11,7 @@ internal sealed class IdentityDto
     public required DateTime CreatedAt { get; init; }
     public required DateTime UpdatedAt { get; init; }
 
-    public static IdentityDto From(Identity identity)
+    public static IdentityDtoV1 From(Identity identity)
     {
         return new()
         {

@@ -2,7 +2,7 @@ using VisualArchitect.Api.ApplicationDesign.Domain;
 
 namespace VisualArchitect.Api.ApplicationDesign.Presentation.Contracts;
 
-public sealed class DesignDto
+public sealed class DesignDtoV1
 {
     public required Guid Id { get; init; }
     public required Guid TaskId { get; init; }
@@ -13,12 +13,12 @@ public sealed class DesignDto
     public required DateTime CreatedAt { get; init; }
     public required DateTime UpdatedAt { get; init; }
 
-    public static List<DesignDto>? From(IEnumerable<Design>? designs)
+    public static List<DesignDtoV1>? From(IEnumerable<Design>? designs)
     {
         return designs?.Select(From).ToList();
     }
 
-    public static DesignDto From(Design design)
+    public static DesignDtoV1 From(Design design)
     {
         return new()
         {

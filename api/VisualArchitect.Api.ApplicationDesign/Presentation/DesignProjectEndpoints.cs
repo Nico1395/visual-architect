@@ -30,7 +30,7 @@ internal static class DesignProjectEndpoints
             var query = new GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery(identityId, includeDesignTasks, includeDesigns);
             var response = await mediator.SendAsync<GetDesignProjectsForIdentity.GetDesignProjectsForIdentityQuery, List<DesignProject>>(query, cancellationToken);
 
-            return response.Map(DesignProjectDto.From).ToResult();
+            return response.Map(DesignProjectDtoV1.From).ToResult();
         }).RequireAuthorization();
     }
 
@@ -50,13 +50,13 @@ internal static class DesignProjectEndpoints
             var query = new GetDesignProjectForIdentityById.GetDesignProjectForIdentityByIdQuery(identityId, projectId, includeDesignTasks, includeDesigns);
             var response = await mediator.SendAsync<GetDesignProjectForIdentityById.GetDesignProjectForIdentityByIdQuery, DesignProject>(query, cancellationToken);
 
-            return response.Map(DesignProjectDto.From).ToResult();
+            return response.Map(DesignProjectDtoV1.From).ToResult();
         }).RequireAuthorization();
     }
 
     public static void MapAddDesignProjectV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/api/v1/app-design/projects/add", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] AddDesignProjectDto contract) =>
+        builder.MapPost("/api/v1/app-design/projects/add", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] AddDesignProjectDtoV1 contract) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
@@ -64,13 +64,13 @@ internal static class DesignProjectEndpoints
             var command = new AddDesignProject.AddDesignProjectCommand(identityId, contract.Name, contract.DescriptionPayload);
             var response = await mediator.SendAsync<AddDesignProject.AddDesignProjectCommand, AddDesignProject.AddDesignProjectCommandResult>(command, cancellationToken);
 
-            return response.Map(r => new AddDesignProjectResultDto(r.ProjectId)).ToResult();
+            return response.Map(r => new AddDesignProjectResultDtoV1(r.ProjectId)).ToResult();
         }).RequireAuthorization();
     }
 
     public static void MapUpdateDesignProjectV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPatch("/api/v1/app-design/projects/update", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] UpdateDesignProjectDto contract) =>
+        builder.MapPatch("/api/v1/app-design/projects/update", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] UpdateDesignProjectDtoV1 contract) =>
         {
             if (!httpContext.TryGetIdentityId(out var identityId))
                 return Results.Unauthorized();
