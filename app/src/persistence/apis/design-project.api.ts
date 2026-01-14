@@ -35,9 +35,12 @@ export async function updateProject(contract: UpdateDesignProjectDtoV1) {
     })
 }
 
-export async function addTask(contract: AddDesignTaskDtoV1) {
-    const { data } = await http.post<AddDesignTaskResultDtoV1>("/api/v1/app-design/tasks/add", {
-        projectId: contract.projectId,
+export async function deleteProject(projectId: string) {
+    await http.delete(`/api/v1/app-design/projects/${projectId}/delete`)
+}
+
+export async function addTask(projectId: string, contract: AddDesignTaskDtoV1) {
+    const { data } = await http.post<AddDesignTaskResultDtoV1>(`/api/v1/app-design/projects/${projectId}tasks/add`, {
         name: contract.name,
         descriptionPayload: contract.descriptionPayload,
     })
