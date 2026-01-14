@@ -67,4 +67,18 @@ internal static class DesignProjectEndpoints
             return response.Map(r => new AddDesignProjectResultDto(r.ProjectId)).ToResult();
         }).RequireAuthorization();
     }
+
+    public static void MapUpdateDesignProjectV1(this IEndpointRouteBuilder builder)
+    {
+        builder.MapPatch("/api/v1/app-design/projects/update", async (HttpContext httpContext, CancellationToken cancellationToken, [FromServices] IMediator mediator, [FromBody] UpdateDesignProjectDto contract) =>
+        {
+            if (!httpContext.TryGetIdentityId(out var identityId))
+                return Results.Unauthorized();
+
+            var command = new UpdateDesignProject.UpdateDesignProjectCommand(contract.Id, contract.Name, contract.DescriptionPayload);
+            var response = await mediator.SendAsync(command, cancellationToken);
+
+            return response.ToResult();
+        }).RequireAuthorization();
+    }
 }

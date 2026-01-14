@@ -6,6 +6,11 @@ namespace VisualArchitect.Api.ApplicationDesign.Infrastructure.Persistence;
 
 internal sealed class DesignProjectReadRepository(DbContext _context) : IDesignProjectReadRepository
 {
+    public Task<DesignProject?> GetByIdAsync(Guid projectId, bool includeDesignTasks, bool includeDesigns, CancellationToken cancellationToken)
+    {
+        return HandleIncludes(_context.Set<DesignProject>(), includeDesignTasks, includeDesigns).SingleOrDefaultAsync(p => p.Id == projectId, cancellationToken);
+    }
+
     public Task<DesignProject?> GetForIdentityByIdAsync(Guid identityId, Guid projectId, bool includeDesignTasks, bool includeDesigns, CancellationToken cancellationToken)
     {
         return HandleIncludes(_context.Set<DesignProject>(), includeDesignTasks, includeDesigns).SingleOrDefaultAsync(p => p.Id == projectId && p.IdentityId == identityId, cancellationToken);

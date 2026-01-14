@@ -10,5 +10,6 @@ public static class Endpoints
         builder.MapGetDesignProjectV1();
         builder.MapGetOwnedDesignProjectsV1();
         builder.MapAddDesignProjectV1();
+        builder.MapUpdateDesignProjectV1();
     }
 }

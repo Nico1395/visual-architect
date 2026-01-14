@@ -17,4 +17,16 @@ internal sealed class DesignProjectWriteRepository(DbContext _context) : IDesign
 
         return Task.CompletedTask;
     }
+
+    public Task UpdateAsync(DesignProject project, CancellationToken cancellationToken)
+    {
+        _context.Update(project);
+        if (project.DesignTasks != null)
+        {
+            foreach (var task in project.DesignTasks)
+                _context.Entry(task).State = EntityState.Unchanged;
+        }
+
+        return Task.CompletedTask;
+    }
 }
