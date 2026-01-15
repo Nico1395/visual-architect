@@ -4,12 +4,21 @@ using VisualArchitect.Api.Authentication.Domain;
 using VisualArchitect.Api.Authentication.Domain.Repositories;
 using VisualArchitect.Api.Authentication.Infrastructure.Auth;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
+using VisualArchitect.Api.Orchestration.Abstractions.Domain.Extensions;
 
 namespace VisualArchitect.Api.Authentication.Application.UseCases;
 
 public static class SynchronizeIdentity
 {
-    public sealed record SynchronizeIdentityCommand(string ProviderKey, string ExternalId, string? DisplayName, string Email, string? AvatarUrl) : ICommand
+    // No validation attributes applied, since this would never be triggered by some
+    // user entries in a form. This is a process-internal-only command that should instead
+    // handle invalid values internally.
+    public sealed record SynchronizeIdentityCommand(
+        string ProviderKey,
+        string ExternalId,
+        string? DisplayName,
+        string Email,
+        string? AvatarUrl) : ICommand
     {
         public static SynchronizeIdentityCommand Create(string providerKey, IReadOnlyList<Claim> claims)
         {
@@ -66,13 +75,13 @@ public static class SynchronizeIdentity
 
             var identity = new Identity()
             {
-                Email = request.Email,
-                DisplayName = request.DisplayName ?? request.Email,
-                AvatarUrl = request.AvatarUrl,
+                Email = request.Email.Truncate(254),
+                DisplayName = request.DisplayName?.Truncate(100) ?? request.Email.Truncate(254),
+                AvatarUrl = request.AvatarUrl?.Truncate(2046),
             };
             var oAuthIdentity = new OAuthIdentity()
             {
-                ExternalId = request.ExternalId,
+                ExternalId = request.ExternalId.Truncate(255),
                 ProviderId = provider.Id,
                 Provider = provider,
                 IdentityId = identity.Id,

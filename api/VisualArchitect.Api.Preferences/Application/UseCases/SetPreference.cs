@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using VisualArchitect.Api.Orchestration.Abstractions.Application.UseCases;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
@@ -11,7 +12,11 @@ namespace VisualArchitect.Api.Preferences.Application.UseCases;
 
 public static class SetPreference
 {
-    public sealed record SetPreferenceCommand(Guid IdentityId, string Key, string? Value, bool ResetToDefault) : ICommand;
+    public sealed record SetPreferenceCommand(
+        Guid IdentityId,
+        [MinLength(1)] string Key,
+        [MaxLength(2048)] string? Value,
+        bool ResetToDefault) : ICommand;
 
     private sealed class SetPreferenceCommandHandler(
         IIdentityPreferenceReadRepository _identityPreferenceReadRepository,

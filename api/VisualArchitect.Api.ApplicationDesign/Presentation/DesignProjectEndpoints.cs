@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 using VisualArchitect.Api.ApplicationDesign.Domain;
 using VisualArchitect.Api.ApplicationDesign.Presentation.Contracts;
+using VisualArchitect.Api.ApplicationDesign.Presentation.Contracts.DesignProjects;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;

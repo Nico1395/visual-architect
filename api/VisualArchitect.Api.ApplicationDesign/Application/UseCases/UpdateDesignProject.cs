@@ -8,9 +8,9 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 public static class UpdateDesignProject
 {
     public sealed record UpdateDesignProjectCommand(
-        [Required] Guid Id,
-        [Required, MaxLength(length: 100)] string Name,
-        [MaxLength(length: 4096)] string? DescriptionPayload = null) : ICommand;
+        Guid Id,
+        [MinLength(1), MaxLength(100)] string Name,
+        [MaxLength(4096)] string? DescriptionPayload = null) : ICommand;
 
     private sealed class UpdateDesignProjectCommandHandler(
         IDesignProjectReadRepository _designProjectReadRepository,

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using VisualArchitect.Api.ApplicationDesign.Application.Persistence;
 using VisualArchitect.Api.ApplicationDesign.Domain.Repositories;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
@@ -7,7 +6,7 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 
 public static class DeleteDesignProject
 {
-    public sealed record DeleteDesignProjectCommand([Required] Guid ProjectId) : ICommand;
+    public sealed record DeleteDesignProjectCommand(Guid ProjectId) : ICommand;
 
     private sealed class DeleteDesignProjectCommandHandler(
         IDesignProjectReadRepository _designProjectReadRepository,

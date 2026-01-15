@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using VisualArchitect.Api.ApplicationDesign.Application.UseCases;
-using VisualArchitect.Api.ApplicationDesign.Presentation.Contracts;
+using VisualArchitect.Api.ApplicationDesign.Presentation.Contracts.DesignTasks;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Commands;
 using VisualArchitect.Api.Orchestration.Abstractions.Cqrs.Queries;
