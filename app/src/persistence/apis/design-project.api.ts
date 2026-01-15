@@ -40,7 +40,7 @@ export async function deleteProject(projectId: string) {
 }
 
 export async function addTask(projectId: string, contract: AddDesignTaskDtoV1) {
-    const { data } = await http.post<AddDesignTaskResultDtoV1>(`/api/v1/app-design/projects/${projectId}tasks/add`, {
+    const { data } = await http.post<AddDesignTaskResultDtoV1>(`/api/v1/app-design/projects/${projectId}/tasks/add`, {
         name: contract.name,
         descriptionPayload: contract.descriptionPayload,
     })
