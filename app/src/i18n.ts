@@ -9,6 +9,14 @@ const en = {
         },
         markdownArea: {
             placeholder: "No content yet.",
+            undo: "Undo",
+            redo: "Redo",
+            header1: "Heading 1",
+            header2: "Heading 2",
+            header3: "Heading 3",
+            bold: "Bold",
+            italic: "Italic",
+            strikethrough: "Strikethrough",
         }
     },
     layout: {
@@ -55,6 +63,10 @@ const en = {
         create: "Create",
         discard: "discard",
         edit: "Edit",
+    },
+    shortcuts: {
+        undo: "{modifier}+Z",
+        redo: "{modifier}+Y",
     },
     notfound: {
         message: "Oops, looks like this page does not exist! 🥺",
@@ -255,6 +267,14 @@ const de = {
         },
         markdownArea: {
             placeholder: "Bisher gibt es noch keine Inhalte.",
+            undo: "Rückgängig machen",
+            redo: "Wiederholen",
+            header1: "Überschrift 1",
+            header2: "Überschrift 2",
+            header3: "Überschrift 3",
+            bold: "Fett",
+            italic: "Kursiv",
+            strikethrough: "Durchgestrichen",
         }
     },
     layout: {

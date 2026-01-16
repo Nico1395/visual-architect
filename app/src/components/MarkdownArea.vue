@@ -2,14 +2,26 @@
 import Button from './ui/button/Button.vue';
 import VueMarkdown from 'vue-markdown-render'
 import Textarea from './ui/textarea/Textarea.vue';
-import { nextTick, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from './Icon.vue';
 import ButtonGroup from './ui/button-group/ButtonGroup.vue';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu'
+import MarkdownAreaContextMenuItem from './MarkdownAreaContextMenuItem.vue';
+import { useModifierKey } from '@/lib/utils';
 
 // TODO -> Actions such as bold or italic arent recognized as an input and cannot be undone using undo
 
 const { t } = useI18n();
+const { modifier } = useModifierKey();
+const undoShortcut = computed(() => t('shortcuts.undo', { modifier: modifier.value }));
+const redoShortcut = computed(() => t('shortcuts.redo', { modifier: modifier.value }));
+
 const props = defineProps<{
     modelValue: string,
     editing?: boolean,
@@ -219,12 +231,79 @@ watch(
         </div>
 
         <div v-if="isEditing" class="markdown-area-body">
-            <Textarea
-                ref="textareaRef"
-                :disabled
-                :id
-                v-model="draft"
-            />
+            <ContextMenu>
+                <ContextMenuTrigger class="markdown-input-context-menu-trigger">
+                    <Textarea
+                        ref="textareaRef"
+                        class="markdown-input"
+                        :disabled
+                        :id
+                        v-model="draft"
+                    />
+                </ContextMenuTrigger>
+
+                <ContextMenuContent>
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-bold" @click="bold">
+                        <template #title>
+                            {{ t('components.markdownArea.bold') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-italic" @click="italic">
+                        <template #title>
+                            {{ t('components.markdownArea.italic') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-strikethrough" @click="strike">
+                        <template #title>
+                            {{ t('components.markdownArea.strikethrough') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <ContextMenuSeparator />
+
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-h1" @click="header(1)">
+                        <template #title>
+                            {{ t('components.markdownArea.header1') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-h2" @click="header(2)">
+                        <template #title>
+                            {{ t('components.markdownArea.header2') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <MarkdownAreaContextMenuItem icon="bi bi-type-h3" @click="header(3)">
+                        <template #title>
+                            {{ t('components.markdownArea.header3') }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <ContextMenuSeparator />
+
+                    <MarkdownAreaContextMenuItem icon="ai-arrow-counter-clockwise" @click="triggerUndo">
+                        <template #title>
+                            {{ t('components.markdownArea.undo') }}
+                        </template>
+
+                        <template #shortcut>
+                            {{ undoShortcut }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+
+                    <MarkdownAreaContextMenuItem icon="ai-arrow-clockwise" @click="triggerRedo">
+                        <template #title>
+                            {{ t('components.markdownArea.redo') }}
+                        </template>
+
+                        <template #shortcut>
+                            {{ redoShortcut }}
+                        </template>
+                    </MarkdownAreaContextMenuItem>
+                </ContextMenuContent>
+            </ContextMenu>
         </div>
 
         <div v-else class="markdown-area-body rendered">
@@ -276,6 +355,7 @@ watch(
             font-size: 10pt;
             font-weight: 500;
             color: var(--muted-foreground);
+            margin-right: 0.5rem;
         }
 
         .markdown-area-header-actions {
@@ -292,34 +372,42 @@ watch(
         flex-direction: column;
         position: relative;
 
-        > * {
-            height: 100%;
-        }
-
-        > textarea {
+        .markdown-input-context-menu-trigger {
             flex: 1;
-            font-family: "JetBrains Mono";
-            font-weight: 500;
-            font-size: 10pt;
-            resize: none;
-            padding: 0.5rem;
-            overflow-y: auto;
-            border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-            border: none;
-            background-color: var(--muted-background);
+            display: flex;
+            flex-direction: column;
 
-            &::placeholder {
-                font-weight: 400;
+            .markdown-input {
+                flex: 1;
+                font-family: "JetBrains Mono";
+                font-weight: 500;
+                font-size: 10pt;
+                resize: none;
+                padding: 0.5rem;
+                overflow-y: auto;
+                border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+                border: none;
+                background-color: var(--background);
+
+                &::placeholder {
+                    font-weight: 400;
+                }
+
+                &::selection {
+                    background-color:var(--selection);
+                }
             }
         }
 
-        > .markdown {
+        .markdown {
+            height: 100%;
             font-size: 10pt;
             padding: 0.5rem 0.7rem;
             overflow-y: auto;
         }
 
         .markdown-area-body-actions-wrapper {
+            height: 100%;
             display: none;
             position: absolute;
             top: 0;
