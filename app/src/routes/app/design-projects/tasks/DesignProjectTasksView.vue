@@ -30,7 +30,7 @@ function onTaskFormDialogSubmitted(result: { taskNumber: number |null | undefine
         return
 
     router.push({
-        path: `/app/design-projects/${project.value.id}/${result.taskNumber}`
+        path: `/app/design-projects/${project.value.id}/tasks/${result.taskNumber}`
     })
 }
 </script>

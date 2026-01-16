@@ -69,13 +69,13 @@ watch(
                 <Button size="sm" variant="secondary" :disabled type="button" @click="cancel">
                     <Icon icon="ai-check" />
 
-                    {{ t('components.markdownArea.cancel') }}
+                    {{ t('actions.cancel') }}
                 </Button>
 
                 <Button size="sm" variant="default" :disabled type="button" @click="save">
                     <Icon icon="ai-check" />
 
-                    {{ t('components.markdownArea.save') }}
+                    {{ t('actions.save') }}
                 </Button>
             </div>
         </div>

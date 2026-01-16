@@ -8,8 +8,6 @@ const en = {
             placeholder: "Write some Markdown...",
         },
         markdownArea: {
-            save: "Save",
-            cancel: "Cancel",
             placeholder: "No content yet.",
         }
     },
@@ -40,7 +38,23 @@ const en = {
             loading: "Saving...",
             success: "Saved successfully!",
             error: "Encountered an error saving. 🫥",
+        },
+        deleting: {
+            loading: "Deleting...",
+            success: "Deleted successfully!",
+            error: "Encountered an error deleting. 🫥",
         }
+    },
+    actions: {
+        okay: "Okay",
+        accept: "Accept",
+        confirm: "Confirm",
+        new: "New",
+        cancel: "Cancel",
+        save: "Save",
+        create: "Create",
+        discard: "discard",
+        edit: "Edit",
     },
     notfound: {
         message: "Oops, looks like this page does not exist! 🥺",
@@ -200,6 +214,36 @@ const en = {
             },
         },
     },
+    designTask: {
+        header: {
+            name: {
+                placeholder: "Enter a name for the design task"
+            }
+        },
+        status: {
+            name: "Status:",
+            todo: "Todo",
+            progress: "In progress",
+            completed: "Completed",
+            setStatus: "Set status"
+        },
+        menu: {
+            deleteTask: {
+                item: "Delete design task",
+                modal: {
+                    title: "Deleting the task",
+                    description: "You are about to delete the design task and all designs associated with it. Do you really want to do that?",
+                },
+            }
+        },
+        description: {
+            title: "Description",
+        },
+        designs: {
+            title: "Designs",
+            noDesigns: "No designs yet. Hit 'New' and create sum more!",
+        }
+    },
 }
 
 const de = {
@@ -210,8 +254,6 @@ const de = {
             placeholder: "Schreib' etwas Markdown...",
         },
         markdownArea: {
-            save: "Speichern",
-            cancel: "Abbrechen",
             placeholder: "Bisher gibt es noch keine Inhalte.",
         }
     },
@@ -242,7 +284,23 @@ const de = {
             loading: "Speichere...",
             success: "Erfolgreich gespeichert!",
             error: "Fehler beim Speichern 🫥",
+        },
+        deleting: {
+            loading: "Lösche...",
+            success: "Erfolgreich gelöscht!",
+            error: "Fehler beim Löschen 🫥",
         }
+    },
+    actions: {
+        okay: "In Ordnung",
+        accept: "Akzeptieren",
+        confirm: "Bestätigen",
+        new: "Neu",
+        cancel: "Abbrechen",
+        save: "Speichern",
+        create: "Erstellen",
+        discard: "Verwerfen",
+        edit: "Bearbeiten",
     },
     notfound: {
         message: "Oops, sieht so aus als würde die Seite nicht existieren! 🥺",
@@ -401,6 +459,36 @@ const de = {
                 }
             },
         },
+    },
+    designTask: {
+        header: {
+            name: {
+                placeholder: "Gib einen Namen für die Designaufgabe ein"
+            }
+        },
+        status: {
+            name: "Zustand:",
+            todo: "Neu",
+            progress: "In Bearbeitung",
+            completed: "Abgeschlossen",
+            setStatus: "Zustand aktualisieren"
+        },
+        menu: {
+            deleteTask: {
+                item: "Designaufgabe löschen",
+                modal: {
+                    title: "Die Designaufgabe löschen",
+                    description: "Du löscht gerade die Designaufgabe und alle zugehörigen Daten, wie Designs. Möchtest du das wirklich tun?",
+                },
+            }
+        },
+        description: {
+            title: "Beschreibung",
+        },
+        designs: {
+            title: "Designs",
+            noDesigns: "Noch keine Designs. Klick 'Neu' und erstell' 'n paar!",
+        }
     },
 }
 

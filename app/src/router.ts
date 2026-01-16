@@ -36,17 +36,17 @@ const router = createRouter({
             children: [
                 {
                     path: "profile",
-                    name: "profilepreferences",
+                    name: "profilePreferences",
                     component: () => import("./routes/app/preferences/profile/ProfilePreferencesView.vue"),
                 },
                 {
                     path: "personalization",
-                    name: "personalizationpreferences",
+                    name: "personalizationPreferences",
                     component: () => import("./routes/app/preferences/personalization/PersonalizationPreferencesView.vue"),
                 },
                 {
                     path: "account",
-                    name: "accountpreferences",
+                    name: "accountPreferences",
                     component: () => import("./routes/app/preferences/account/AccountPreferencesView.vue"),
                 },
             ]
@@ -54,33 +54,39 @@ const router = createRouter({
         {
             path: "design-projects/:projectId",
             redirect: to => ({
-                name: "design-projects-overview",
+                name: "designProjectOverview",
                 params: { projectId: to.params.projectId },
             }),
-            name: "design-projects",
+            name: "designProject",
             component: () => import("./routes/app/design-projects/DesignProjectLayout.vue"),
             children: [
                 {
                     path: "overview",
-                    name: "design-projects-overview",
+                    name: "designProjectOverview",
                     component: () => import("./routes/app/design-projects/overview/DesignProjectOverviewView.vue"),
                 },
                 {
                     path: "tasks",
-                    name: "design-projects-tasks",
+                    name: "designProjectTasks",
                     component: () => import("./routes/app/design-projects/tasks/DesignProjectTasksView.vue"),
                 },
                 {
                     path: "settings",
-                    name: "design-projects-settings",
+                    name: "designProjectSettings",
                     component: () => import("./routes/app/design-projects/settings/DesignProjectSettingsView.vue"),
                 },
             ]
-        }],
+        },
+        {
+            path: "design-projects/:projectId/tasks/:taskNumber",
+            name: "designTask",
+            component: () =>
+                import("./routes/app/design-projects/tasks/DesignTaskView.vue"),
+        },],
     },
     {
         path: "/:pathMatch(.*)*",
-        name: "notfound",
+        name: "notFound",
         component: () => import("./routes/NotFoundView.vue"),
     }],
 })
@@ -98,7 +104,7 @@ router.beforeEach(async (to, _, next) => {
     }
 
     if (await isAuthenticated()) {
-        if (to.name === "notfound") {
+        if (to.name === "notFound") {
             return next({ name: "home" });
         }
 

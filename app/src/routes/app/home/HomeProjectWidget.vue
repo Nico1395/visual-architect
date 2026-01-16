@@ -28,7 +28,7 @@ const props = defineProps<{
     padding: 1rem;
     box-sizing: border-box;
     width: 100%;
-    height: 250px;
+    aspect-ratio: 1;
     cursor: pointer;
     display: flex;
     flex-direction: column;

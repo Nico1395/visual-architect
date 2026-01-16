@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import type { DesignProjectDtoV1 } from "../dtos/design-project.dtos";
-import { addProject, addTask, deleteProject, getOwnedProjects, getProjectById, updateProject } from "../apis/design-project.api";
+import type { DesignProjectDtoV1, UpdateDesignTaskDtoV1 } from "../dtos/design-project.dtos";
+import { addProject, addTask, deleteProject, deleteTask, getOwnedProjects, getProjectById, getTaskByProjectIdAndNumber, updateProject, updateTask } from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
@@ -91,10 +91,36 @@ export const useDesignProjectStore = defineStore("design-project", {
 
             try {
                 const cached = this.projects.find(p => p.id == projectId);
+                await deleteProject(projectId)
+
                 if (cached)
                     this.projects = this.projects.filter(p => p != cached)      // Remove the project from cache
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async getTaskByProjectIdAndNumber(projectId: string, taskNumber: number) {
+            if (this.busy)
+                return null;
 
-                await deleteProject(projectId)
+            this.busy = true
+
+            try {
+                let cached = this.projects.find(p => p.id == projectId)
+                if (!cached)
+                    cached = await getProjectById(projectId)
+
+                let task = cached.designTasks?.find(t => t.number == taskNumber)
+                if (!task)
+                {
+                    task = await getTaskByProjectIdAndNumber(projectId, taskNumber)
+                    cached.designTasks?.push(task)
+                }
+
+                return task;
             } catch (error) {
                 console.error(error)
                 throw error
@@ -109,10 +135,63 @@ export const useDesignProjectStore = defineStore("design-project", {
             this.busy = true
 
             try {
-                return await addTask(projectId, {
+                return addTask(projectId, {
                     name: name,
                     descriptionPayload: description,
                 })
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async updateTask(projectId: string, taskNumber: number, contract: UpdateDesignTaskDtoV1) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                const cached = this.projects.find(p => p.id === projectId)?.designTasks?.find(t => t.number === taskNumber)
+                if (!cached)
+                    throw new Error("Task could not be found.")
+
+                await updateTask(cached.id, {
+                    name: contract.name,
+                    descriptionPayload: contract.descriptionPayload,
+                    status: contract.status
+                })
+
+                cached.name = contract.name;
+                cached.descriptionPayload = contract.descriptionPayload;
+                cached.status = contract.status;
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async deleteTask(projectId: string, taskNumber: number) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                const cached = this.projects.find(p => p.id === projectId)?.designTasks?.find(t => t.number === taskNumber)
+                if (!cached)
+                    throw new Error("Task could not be found.")
+
+                await deleteTask(cached?.id)
+
+                if (cached)
+                {
+                    const project = this.projects.find(p => p.id === projectId);
+                    if (project)
+                        project.designTasks = project.designTasks?.filter(t => t.number != taskNumber)
+                }
             } catch (error) {
                 console.error(error)
                 throw error
