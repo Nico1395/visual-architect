@@ -30,7 +30,7 @@ function togglePreview(preview: boolean) {
 </script>
 
 <template>
-    <div :class="`markdown-editor ${props.class}`.trim()">
+    <div :class="`previewable-markdown-editor ${props.class}`.trim()">
         <ButtonGroup class="actions">
             <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" >
                 <Icon icon="bi bi-markdown" size="16px" />
@@ -45,11 +45,11 @@ function togglePreview(preview: boolean) {
             </Button>
         </ButtonGroup>
 
-        <div v-if="!isPreviewing" class="markdown-editor-body">
+        <div v-if="!isPreviewing" class="previewable-markdown-editor-body">
             <Textarea :disabled :id v-model="value" :placeholder="t('components.markdownEditor.placeholder')" />
         </div>
 
-        <div v-else class="markdown-editor-body preview">
+        <div v-else class="previewable-markdown-editor-body preview">
             <VueMarkdown :disabled class="markdown" :source="value" />
         </div>
     </div>
@@ -57,12 +57,12 @@ function togglePreview(preview: boolean) {
 </template>
 
 <style>
-.markdown-editor {
+.previewable-markdown-editor {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 
-    .markdown-editor-body {
+    .previewable-markdown-editor-body {
         height: 300px;
 
         &.preview {
