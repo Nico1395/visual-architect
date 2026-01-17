@@ -10,6 +10,7 @@ import {
     addTask,
     deleteProject,
     deleteTask,
+    getDesignById,
     getOwnedProjects,
     getProjectById,
     getTaskByProjectIdAndNumber,
@@ -38,8 +39,8 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
-        async getProjectById(projectId: string) {
-            if (this.busy)
+        async getProjectById(projectId: string, ignoreBusy: boolean = false) {
+            if (!ignoreBusy && this.busy)
                 return;
 
             this.busy = true
@@ -48,9 +49,7 @@ export const useDesignProjectStore = defineStore("design-project", {
                 let project = this.projects.find(p => p.id === projectId);
                 if (!project) {
                     project = await getProjectById(projectId)
-                    if (project) {
-                        this.projects.push(project)
-                    }
+                    this.projects.push(project)
                 }
 
                 return project
@@ -87,7 +86,7 @@ export const useDesignProjectStore = defineStore("design-project", {
             try {
                 const cached = this.projects.find(p => p.id == project?.id);
                 if (!cached)
-                    throw new Error("The project to update should be cached")
+                    throw new Error("Project not found.")
 
                 Object.assign(cached, project)
                 await updateProject(cached)
@@ -117,16 +116,16 @@ export const useDesignProjectStore = defineStore("design-project", {
                 this.busy = false
             }
         },
-        async getTaskByProjectIdAndNumber(projectId: string, taskNumber: number) {
-            if (this.busy)
+        async getTaskByProjectIdAndNumber(projectId: string, taskNumber: number, ignoreBusy: boolean = false) {
+            if (!ignoreBusy && this.busy)
                 return null;
 
             this.busy = true
 
             try {
-                let cached = this.projects.find(p => p.id == projectId)
+                const cached = await this.getProjectById(projectId, true)
                 if (!cached)
-                    cached = await getProjectById(projectId)
+                    throw new Error("Project not found.")
 
                 let task = cached.designTasks?.find(t => t.number == taskNumber)
                 if (!task)
@@ -222,6 +221,31 @@ export const useDesignProjectStore = defineStore("design-project", {
 
             try {
                 return await addDesign(taskId, contract)
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async getDesignByProjectIdTaskNumberAndId(projectId: string, taskNumber: number, designId: string) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                const cached = await this.getTaskByProjectIdAndNumber(projectId, taskNumber, true)
+                if (!cached)
+                    throw new Error("Task could not be found.")
+
+                let design = cached.designs?.find(d => d.id == designId)
+                if (!design) {
+                    design = await getDesignById(designId)
+                    cached.designs?.push(design)
+                }
+
+                return design
             } catch (error) {
                 console.error(error)
                 throw error

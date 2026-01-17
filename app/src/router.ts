@@ -87,6 +87,12 @@ const router = createRouter({
             name: "designTask",
             component: () =>
                 import("./routes/app/design-projects/tasks/DesignTaskView.vue"),
+        },
+        {
+            path: "design-projects/:projectId/tasks/:taskNumber/:designId",
+            name: "design",
+            component: () =>
+                import("./routes/app/design-projects/tasks/designs/DesignView.vue"),
         },],
     },
     {

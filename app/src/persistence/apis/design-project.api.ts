@@ -6,6 +6,7 @@ import type {
     AddDesignResultDtoV1,
     AddDesignTaskDtoV1,
     AddDesignTaskResultDtoV1,
+    DesignDtoV1,
     DesignProjectDtoV1,
     DesignTaskDtoV1,
     UpdateDesignProjectDtoV1,
@@ -77,4 +78,9 @@ export async function addDesign(taskId: string, contract: AddDesignDtoV1) {
     })
 
     return data;
+}
+
+export async function getDesignById(designId: string) {
+    const { data } = await http.get<DesignDtoV1>(`/api/v1/app-design/projects/tasks/designs/${designId}`)
+    return data
 }
