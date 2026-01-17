@@ -6,7 +6,11 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 
 public static class GetDesignProjectForIdentityById
 {
-    public sealed record GetDesignProjectForIdentityByIdQuery(Guid IdentityId, Guid ProjectId, bool IncludeDesignTasks, bool IncludeDesigns) : IQuery<DesignProject>;
+    public sealed record GetDesignProjectForIdentityByIdQuery(
+        Guid IdentityId,
+        Guid ProjectId,
+        bool IncludeDesignTasks,
+        bool IncludeDesigns) : IQuery<DesignProject>;
 
     private sealed class GetDesignProjectForIdentityByIdQueryHandler(
         IDesignProjectReadRepository _designProjectReadRepository) : IQueryHandler<GetDesignProjectForIdentityByIdQuery, DesignProject>

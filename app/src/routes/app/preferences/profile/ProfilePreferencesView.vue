@@ -35,12 +35,12 @@ async function saveChanges(promise: Promise<void>) {
 }
 
 async function saveEmail() {
-    await saveChanges(profileStore.saveProfile({ email: form.email, }))
+    await saveChanges(profileStore.saveProfile({ email: form.email, displayName: originalProfile.displayName, avatarUrl: null }))
     originalProfile.email = form.email
 }
 
 async function saveDisplayName() {
-    await saveChanges(profileStore.saveProfile({ displayName: form.displayName, }))
+    await saveChanges(profileStore.saveProfile({ email: originalProfile.email, displayName: form.displayName, avatarUrl: null }))
     originalProfile.displayName = form.displayName
 }
 

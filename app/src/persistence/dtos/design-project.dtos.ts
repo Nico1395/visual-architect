@@ -54,3 +54,9 @@ export interface AddDesignTaskDtoV1 {
 export interface AddDesignTaskResultDtoV1 {
     taskNumber: number
 }
+
+export interface UpdateDesignTaskDtoV1 {
+    name: string
+    descriptionPayload: string
+    status: number
+}

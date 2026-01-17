@@ -13,9 +13,9 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 public static class AddDesignProject
 {
     public sealed record AddDesignProjectCommand(
-        [Required] Guid IdentityId,
-        [Required, MaxLength(length: 100)] string Name,
-        [MaxLength(length: 4096)] string? DescriptionPayload = null) : ICommand<AddDesignProjectCommandResult>;
+        Guid IdentityId,
+        [MinLength(1), MaxLength(100)] string Name,
+        [MaxLength(4096)] string? DescriptionPayload = null) : ICommand<AddDesignProjectCommandResult>;
 
     public sealed record AddDesignProjectCommandResult(Guid ProjectId);
 
@@ -33,8 +33,8 @@ public static class AddDesignProject
             var project = new DesignProject()
             {
                 IdentityId = request.IdentityId,
-                Name = request.Name,
-                DescriptionPayload = request.DescriptionPayload,
+                Name = request.Name.Trim(),
+                DescriptionPayload = request.DescriptionPayload?.Trim(),
             };
 
             await _designProjectWriteRepository.AddAsync(project, cancellationToken);

@@ -22,6 +22,11 @@ internal sealed class DesignProjectReadRepository(DbContext _context) : IDesignP
         return HandleIncludes(query, includeDesignTasks, includeDesigns).ToListAsync(cancellationToken);
     }
 
+    public Task<bool> ExistsByIdAsync(Guid projectId, CancellationToken cancellationToken)
+    {
+        return _context.Set<DesignProject>().AnyAsync(p => p.Id == projectId, cancellationToken);
+    }
+
     private static IQueryable<DesignProject> HandleIncludes(IQueryable<DesignProject> query, bool includeDesignTasks, bool includeDesigns)
     {
         if (includeDesignTasks)
@@ -31,10 +36,5 @@ internal sealed class DesignProjectReadRepository(DbContext _context) : IDesignP
         }
 
         return query;
-    }
-
-    public Task<bool> ExistsByIdAsync(Guid projectId, CancellationToken cancellationToken)
-    {
-        return _context.Set<DesignProject>().AnyAsync(p => p.Id == projectId, cancellationToken);
     }
 }

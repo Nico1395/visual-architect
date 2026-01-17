@@ -9,9 +9,9 @@ namespace VisualArchitect.Api.ApplicationDesign.Application.UseCases;
 public static class AddDesignTask
 {
     public sealed record AddDesignTaskCommand(
-        [Required] Guid ProjectId,
-        [Required, MaxLength(length: 100)] string Name,
-        [Required, MaxLength(length: 4096)] string DescriptionPayload) : ICommand<AddDesignTaskCommandResult>;
+        Guid ProjectId,
+        [MinLength(1), MaxLength(100)] string Name,
+        [MinLength(1), MaxLength(4096)] string DescriptionPayload) : ICommand<AddDesignTaskCommandResult>;
 
     public sealed record AddDesignTaskCommandResult(long TaskNumber);
 
@@ -36,8 +36,8 @@ public static class AddDesignTask
             {
                 ProjectId = request.ProjectId,
                 Number = taskNumber,
-                Name = request.Name,
-                DescriptionPayload = request.DescriptionPayload,
+                Name = request.Name.Trim(),
+                DescriptionPayload = request.DescriptionPayload.Trim(),
             };
 
             await _designTaskWriteRepository.AddAsync(task, cancellationToken);

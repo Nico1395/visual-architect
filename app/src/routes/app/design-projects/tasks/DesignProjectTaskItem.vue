@@ -17,6 +17,7 @@ function getStatusClass() {
         case 0: return "todo"
         case 1: return "progress"
         case 2: return "completed"
+        default: return ""
     }
 }
 
@@ -32,7 +33,7 @@ function getDescription() {
     <Item variant="outline">
         <ItemContent class="design-project-task-item">
             <div class="design-project-task-item-header">
-                <RouterLink class="design-project-task-item-link" :to="`/app/design-projects/${props.task.projectId}/${props.task.number}`">
+                <RouterLink class="design-project-task-item-link" :to="`/app/design-projects/${props.task.projectId}/tasks/${props.task.number}`">
                     {{ props.task.name }}
                 </RouterLink>
 

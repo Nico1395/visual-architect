@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import Input from "@/components/ui/input/Input.vue";
 import Label from "@/components/ui/label/Label.vue";
-import MarkdownEditor from "@/components/MarkdownEditor.vue";
+import PreviewableMarkdownEditor from "@/components/PreviewableMarkdownEditor.vue";
 import { useI18n } from "vue-i18n";
 import { useDesignProjectStore } from "@/persistence/stores/design-project.store";
 import { reactive, ref, watch } from 'vue';
@@ -100,7 +100,7 @@ watch(
                             {{ t('home.newprojdg.descriptionlabel') }}
                         </Label>
 
-                        <MarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" :disabled="designProjectStore.busy" />
+                        <PreviewableMarkdownEditor id="project-description" class="project-description-editor" v-model="projectForm.description" :disabled="designProjectStore.busy" />
                     </div>
                 </div>
 

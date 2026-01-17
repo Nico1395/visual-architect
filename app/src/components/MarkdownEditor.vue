@@ -1,168 +1,341 @@
 <script setup lang="ts">
-import ButtonGroup from './ui/button-group/ButtonGroup.vue';
 import Button from './ui/button/Button.vue';
-import VueMarkdown from 'vue-markdown-render'
 import Textarea from './ui/textarea/Textarea.vue';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from './Icon.vue';
+import ButtonGroup from './ui/button-group/ButtonGroup.vue';
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuSeparator,
+    ContextMenuTrigger,
+} from '@/components/ui/context-menu'
+import MarkdownEditorContextMenuItem from './MarkdownEditorContextMenuItem.vue';
+import { useModifierKey } from '@/lib/utils';
+
+// TODO -> Actions such as bold or italic arent recognized as an input and cannot be undone using undo
 
 const { t } = useI18n();
+const { modifier } = useModifierKey();
+const undoShortcut = computed(() => t('shortcuts.undo', { modifier: modifier.value }));
+const redoShortcut = computed(() => t('shortcuts.redo', { modifier: modifier.value }));
+
 const props = defineProps<{
     modelValue: string,
-    isPreviewing?: boolean,
     disabled?: boolean,
     id?: string,
     class?: string,
+    placeholder?: string | null,
 }>()
 const emits = defineEmits<{
     (e: "update:modelValue", payload: string): void
 }>()
-const isPreviewing = ref(props.isPreviewing ?? false)
-const value = computed({
-  get: () => props.modelValue,
-  set: (val: string) => emits('update:modelValue', val),
-})
 
-function togglePreview(preview: boolean) {
-    isPreviewing.value = preview;
+const innerValue = ref(props.modelValue)
+const textareaRef = ref<{ el: HTMLTextAreaElement | null } | null>(null)
+
+function withSelection(transform: (selected: string) => string, cursorOffset?: number) {
+    const area = textareaRef.value?.el
+    if (!area)
+        return
+
+    const start = area.selectionStart
+    const end = area.selectionEnd
+    const value = area.value
+
+    const selected = value.slice(start, end)
+    const leadingSpaces = selected.match(/^\s*/)?.[0]?.length ?? 0
+    const trailingSpaces = selected.match(/\s*$/)?.[0]?.length ?? 0
+    const trimmed = selected.trim()
+
+    const replacement = transform(trimmed)
+
+    const replaceStart = start + leadingSpaces
+    const replaceEnd = end - trailingSpaces
+
+    area.focus({ preventScroll: true })
+    area.setRangeText(
+        replacement,
+        replaceStart,
+        replaceEnd,
+        'end'
+    )
+
+    innerValue.value = area.value
+
+    nextTick(() => {
+        if (cursorOffset !== undefined) {
+            const pos = replaceStart + cursorOffset
+            area.setSelectionRange(pos, pos)
+        }
+    })
 }
+
+function bold() {
+    withSelection(text =>
+        text.startsWith('**') && text.endsWith('**')
+            ? text.slice(2, -2)
+            : `**${text || ''}**`,
+        2
+    )
+}
+
+function italic() {
+    withSelection(text =>
+        text.startsWith('*') && text.endsWith('*')
+            ? text.slice(1, -1)
+            : `*${text || ''}*`,
+        1
+    )
+}
+
+function strike() {
+    withSelection(text =>
+        text.startsWith('~~') && text.endsWith('~~')
+            ? text.slice(2, -2)
+            : `~~${text || ''}~~`,
+        2
+    )
+}
+
+function header(level: 1 | 2 | 3) {
+    withSelection(text => {
+        const trimmed = text.replace(/^#{1,6}\s*/, "")
+        return `${"#".repeat(level)} ${trimmed}`
+    })
+}
+
+function triggerUndo() {
+    const area = textareaRef.value?.el
+    if (!area)
+        return
+
+    area.focus({ preventScroll: true })
+    document.execCommand('undo')
+}
+
+function triggerRedo() {
+    const area = textareaRef.value?.el
+    if (!area)
+        return
+
+    area.focus({ preventScroll: true })
+    document.execCommand('redo')
+}
+
+watch(
+    () => props.modelValue,
+    v => {
+        if (v !== innerValue.value) {
+            innerValue.value = v
+        }
+    }
+)
+
+watch(innerValue, v => {
+    emits('update:modelValue', v)
+})
 </script>
 
 <template>
-    <div :class="`markdown-editor ${props.class}`.trim()">
-        <ButtonGroup class="actions">
-            <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" >
-                <Icon icon="bi bi-markdown" size="16px" />
+    <div class="markdown-editor">
+        <div class="markdown-editor-header">
+            <div class="markdown-editor-header-actions">
+                <slot name="buttons" />
 
-                {{ t('components.markdownEditor.write') }}
-            </Button>
+                <ButtonGroup>
+                    <Button size="icon-sm" variant="outline" @click="triggerUndo">
+                        <Icon icon="ai-arrow-counter-clockwise" />
+                    </Button>
 
-            <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button" >
-                <Icon icon="bi bi-justify-left" size="16px" />
+                    <Button size="icon-sm" variant="outline" @click="triggerRedo">
+                        <Icon icon="ai-arrow-clockwise" />
+                    </Button>
+                </ButtonGroup>
 
-                {{ t('components.markdownEditor.preview') }}
-            </Button>
-        </ButtonGroup>
+                <ButtonGroup>
+                    <Button size="icon-sm" variant="outline" @click="() => header(1)">
+                        <Icon icon="bi bi-type-h1" />
+                    </Button>
 
-        <div v-if="!isPreviewing" class="markdown-editor-body">
-            <Textarea :disabled :id v-model="value" :placeholder="t('components.markdownEditor.placeholder')" />
+                    <Button size="icon-sm" variant="outline" @click="() => header(2)">
+                        <Icon icon="bi bi-type-h2" />
+                    </Button>
+
+                    <Button size="icon-sm" variant="outline" @click="() => header(3)">
+                        <Icon icon="bi bi-type-h3" />
+                    </Button>
+                </ButtonGroup>
+
+                <ButtonGroup>
+                    <Button size="icon-sm" variant="outline" @click="bold">
+                        <Icon icon="bi bi-type-bold" />
+                    </Button>
+
+                    <Button size="icon-sm" variant="outline" @click="italic">
+                        <Icon icon="bi bi-type-italic" />
+                    </Button>
+
+                    <Button size="icon-sm" variant="outline" @click="strike">
+                        <Icon icon="bi bi-type-strikethrough" />
+                    </Button>
+                </ButtonGroup>
+            </div>
+
+            <div class="markdown-editor-header-title">
+                <slot name="title" />
+            </div>
         </div>
 
-        <div v-else class="markdown-editor-body preview">
-            <VueMarkdown :disabled class="markdown" :source="value" />
+        <div class="markdown-editor-body">
+            <ContextMenu>
+                <ContextMenuTrigger class="markdown-editor-context-menu-trigger">
+                    <Textarea
+                        ref="textareaRef"
+                        class="markdown-editor-textarea"
+                        :disabled
+                        :id
+                        :placeholder
+                        v-model="innerValue"
+                    />
+                </ContextMenuTrigger>
+
+                <ContextMenuContent>
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-bold" @click="bold">
+                        <template #title>
+                            {{ t('components.markdownArea.bold') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-italic" @click="italic">
+                        <template #title>
+                            {{ t('components.markdownArea.italic') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-strikethrough" @click="strike">
+                        <template #title>
+                            {{ t('components.markdownArea.strikethrough') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <ContextMenuSeparator />
+
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-h1" @click="header(1)">
+                        <template #title>
+                            {{ t('components.markdownArea.header1') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-h2" @click="header(2)">
+                        <template #title>
+                            {{ t('components.markdownArea.header2') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <MarkdownEditorContextMenuItem icon="bi bi-type-h3" @click="header(3)">
+                        <template #title>
+                            {{ t('components.markdownArea.header3') }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <ContextMenuSeparator />
+
+                    <MarkdownEditorContextMenuItem icon="ai-arrow-counter-clockwise" @click="triggerUndo">
+                        <template #title>
+                            {{ t('components.markdownArea.undo') }}
+                        </template>
+
+                        <template #shortcut>
+                            {{ undoShortcut }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+
+                    <MarkdownEditorContextMenuItem icon="ai-arrow-clockwise" @click="triggerRedo">
+                        <template #title>
+                            {{ t('components.markdownArea.redo') }}
+                        </template>
+
+                        <template #shortcut>
+                            {{ redoShortcut }}
+                        </template>
+                    </MarkdownEditorContextMenuItem>
+                </ContextMenuContent>
+            </ContextMenu>
         </div>
     </div>
-
 </template>
 
 <style>
 .markdown-editor {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    min-height: 300px;
 
-    .markdown-editor-body {
-        height: 300px;
+    .markdown-editor-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.3rem;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: var(--background);
 
-        &.preview {
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-        }
-
-        > * {
-            height: 100%;
-        }
-
-        > textarea {
-            font-family: "JetBrains Mono";
+        .markdown-editor-header-title {
+            flex: none;
+            font-size: 10pt;
             font-weight: 500;
-            font-size: 10pt;
-            resize: none;
-            padding: 0.5rem;
-            overflow-y: auto;
-
-            &::placeholder {
-                font-weight: 400;
-            }
+            color: var(--muted-foreground);
+            margin-right: 0.5rem;
         }
 
-        > .markdown {
-            cursor: default;
-            font-size: 10pt;
-            padding: 0.5rem 0.7rem;
-            overflow-y: auto;
+        .markdown-editor-header-actions {
+            flex: none;
+            display: flex;
+            flex-direction: row;
+            gap: 0.3rem;
         }
     }
-}
 
-.markdown {
-  line-height: 1.7;
-  color: inherit;
-}
+    .markdown-editor-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
 
-/* Headings */
-.markdown h1 {
-  font-size: 1.7rem;
-  font-weight: 700;
-  margin: 0.7rem 0;
-}
+        .markdown-editor-context-menu-trigger {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
 
-.markdown h2 {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: 0.55rem 0 0.55rem;
-}
+            .markdown-editor-textarea {
+                flex: 1;
+                font-family: "JetBrains Mono";
+                font-weight: 500;
+                font-size: 10pt;
+                resize: none;
+                padding: 0.5rem;
+                overflow-y: auto;
+                border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+                border: none;
+                background-color: var(--background);
 
-.markdown h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0.3rem 0 0.3rem;
-}
+                &::placeholder {
+                    font-weight: 400;
+                }
 
-.markdown p {
-  margin: 0.65rem 0;
-}
-
-.markdown ul,
-.markdown ol {
-  padding-left: 1.5rem;
-  margin: 0.75rem 0;
-}
-
-.markdown ul {
-  list-style: disc;
-}
-
-.markdown ol {
-  list-style: decimal;
-}
-
-.markdown code {
-  font-family: "JetBrains Mono", monospace;
-  background-color: var(--muted-background);
-  padding: 0.15rem 0.35rem;
-  border-radius: 4px;
-}
-
-.markdown pre {
-  background-color: var(--muted-background);
-  padding: 1rem;
-  border-radius: 6px;
-  overflow-x: auto;
-}
-
-.markdown pre code {
-  background: none;
-  padding: 0;
-}
-
-.markdown a {
-    color: var(--link);
-    text-decoration: 1px underline currentColor;
-
-    &:visited {
-        color: var(--visited-link);
+                &::selection {
+                    background-color:var(--selection);
+                }
+            }
+        }
     }
 }
 </style>

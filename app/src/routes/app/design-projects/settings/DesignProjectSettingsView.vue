@@ -70,9 +70,9 @@ async function confirmDelete() {
 
     const promise = designProjectStore.deleteProject(project?.value.id)
     toast.promise(promise, {
-        loading: t('designprojects.settings.delete.toast.loading'),
-        success: t('designprojects.settings.delete.toast.success'),
-        error: t('designprojects.settings.delete.toast.error'),
+        loading: t('toasts.deleting.loading'),
+        success: t('toasts.deleting.success'),
+        error: t('toasts.deleting.error'),
     });
 
     await promise;

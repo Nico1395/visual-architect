@@ -32,9 +32,12 @@ internal static class ProfileEndpoints
 
     internal static void MapSaveProfileV1(this IEndpointRouteBuilder builder)
     {
-        builder.MapPatch("/api/v1/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] IdentityDtoV1 identity) =>
+        builder.MapPatch("/api/v1/profile/save", async (HttpContext httpContext, [FromServices] IMediator mediator, [FromBody] UpdateIdentityDtoV1 contract) =>
         {
-            var command = new SaveIdentity.SaveIdentityCommand(identity.To());
+            if (!httpContext.TryGetIdentityId(out var identityId))
+                return Results.Unauthorized();
+
+            var command = new SaveIdentity.SaveIdentityCommand(identityId, contract.Email, contract.DisplayName, contract.AvatarUrl);
             var response = await mediator.SendAsync(command, httpContext.RequestAborted);
 
             return response.ToResult();

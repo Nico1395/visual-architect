@@ -84,6 +84,7 @@
   --todo: #4BCE97;
   --in-progress: #FBC828;
   --completed: #C97CF4;
+  --selection: oklch(88.837% 0.0001 271.152);
 }
 
 .dark {
@@ -126,6 +127,7 @@
   --todo: #4BCE97;
   --in-progress: #FBC828;
   --completed: #C97CF4;
+  --selection: oklch(37.53% 0.00004 271.152);
 }
 
 @layer base {
