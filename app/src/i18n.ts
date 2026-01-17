@@ -147,6 +147,20 @@ const en = {
             },
         },
     },
+    about: {
+        visualArchitect: {
+            title: "About Visual Architect",
+            project: "",
+        },
+        privacy: {
+            title: "Privacy",
+            body: "Privacy body",
+        },
+        impress: {
+            title: "Impress",
+            body: "",
+        },
+    },
     home: {
         proj: {
             title: "Your design projects",

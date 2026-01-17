@@ -2,6 +2,9 @@
 import { useI18n } from "vue-i18n"
 import UserMenu from "./UserMenu.vue"
 import logo_64x64 from "@/assets/img/logo/visual-architect-logo_64x64.png"
+import FooterItem from "./FooterItem.vue";
+import Icon from "@/components/Icon.vue";
+import ExternalFooterItem from "./ExternalFooterItem.vue";
 
 const { t } = useI18n()
 </script>
@@ -29,7 +32,15 @@ const { t } = useI18n()
     </div>
 
     <div class="footer">
+        <ExternalFooterItem to="https://github.com/Nico1395/visual-architect">
+            <Icon icon="ai-github-fill" />
 
+            Open Source
+        </ExternalFooterItem>
+
+        <FooterItem to="/app/about">
+            About
+        </FooterItem>
     </div>
 </template>
 
@@ -85,8 +96,14 @@ const { t } = useI18n()
 }
 
 .footer {
-    background-color: var(--muted);
+    padding: 3rem 10rem;
+    color: var(--muted-foreground);
+    font-size: 9pt;
     flex: none;
-    height: 100px
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
 }
 </style>

@@ -29,6 +29,11 @@ const router = createRouter({
             component: () => import("./routes/app/home/HomeView.vue"),
         },
         {
+            path: "about",
+            name: "about",
+            component: () => import("./routes/app/about/AboutView.vue"),
+        },
+        {
             path: "preferences",
             redirect: "/app/preferences/profile",
             name: "preferences",
