@@ -189,7 +189,7 @@ provide('design-task', task)
                     </DesignTaskInfoItem>
                 </div>
 
-                <DesignTaskMenu :busy="designProjectStore.busy" @deleted="deleteTask" />
+                <DesignTaskMenu v-if="task" :task="task" :busy="designProjectStore.busy" @deleted="deleteTask" />
             </div>
         </div>
 

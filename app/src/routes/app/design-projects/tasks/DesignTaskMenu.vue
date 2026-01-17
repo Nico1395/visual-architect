@@ -18,10 +18,15 @@ import {
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/Icon.vue';
 import { ref } from 'vue';
+import Popover from '@/components/ui/popover/Popover.vue';
+import PopoverTrigger from '@/components/ui/popover/PopoverTrigger.vue';
+import PopoverContent from '@/components/ui/popover/PopoverContent.vue';
+import type { DesignTaskDtoV1 } from '@/persistence/dtos/design-project.dtos';
 
-const { t } = useI18n();
+const { t, d } = useI18n();
 const props = defineProps<{
     busy: boolean
+    task: DesignTaskDtoV1
 }>()
 const emits = defineEmits<{
     (e: "deleted"): void
@@ -35,12 +40,26 @@ function confirmDelete() {
 </script>
 
 <template>
-    <ButtonGroup class="design-task-actions">
-        <Button variant="outline" size="sm">
-            <Icon icon="ai-clock" />
+    <ButtonGroup>
+        <Popover>
+            <PopoverTrigger as-child>
+                <Button variant="outline" size="sm">
+                    <Icon icon="ai-clock" />
 
-            History
-        </Button>
+                    {{ t('designTask.menu.history.item') }}
+                </Button>
+            </PopoverTrigger>
+
+            <PopoverContent class="design-task-history" variant="destructive">
+                <div>
+                    {{ t('designTask.menu.history.createdAt', { timestamp: d(task.createdAt) }) }}
+                </div>
+
+                <div>
+                    {{ t('designTask.menu.history.updatedAt', { timestamp: d(task.updatedAt) }) }}
+                </div>
+            </PopoverContent>
+        </Popover>
 
         <DropdownMenu>
             <DropdownMenuTrigger as-child>
@@ -82,3 +101,15 @@ function confirmDelete() {
         </DialogContent>
     </Dialog>
 </template>
+
+<style>
+.design-task-history {
+    width: fit-content;
+    font-size: 10pt;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+</style>

@@ -240,13 +240,18 @@ const en = {
             setStatus: "Set status"
         },
         menu: {
+            history: {
+                item: "History",
+                createdAt: "Created at: {timestamp}",
+                updatedAt: "Updated at: {timestamp}",
+            },
             deleteTask: {
                 item: "Delete design task",
                 modal: {
                     title: "Deleting the task",
                     description: "You are about to delete the design task and all designs associated with it. Do you really want to do that?",
                 },
-            }
+            },
         },
         description: {
             title: "Description",
@@ -494,13 +499,18 @@ const de = {
             setStatus: "Zustand aktualisieren"
         },
         menu: {
+            history: {
+                item: "Verlauf",
+                createdAt: "Erstellt: {timestamp}",
+                updatedAt: "Geändert: {timestamp}",
+            },
             deleteTask: {
                 item: "Designaufgabe löschen",
                 modal: {
                     title: "Die Designaufgabe löschen",
                     description: "Du löscht gerade die Designaufgabe und alle zugehörigen Daten, wie Designs. Möchtest du das wirklich tun?",
                 },
-            }
+            },
         },
         description: {
             title: "Beschreibung",
