@@ -35,6 +35,11 @@ const en = {
         app: "Visual Architect",
         login: "Login",
         home: "Home",
+        about: "About",
+        designProjectOverview: "Project Overview",
+        designProjectTasks: "Project Tasks",
+        designProjectSettings: "Project Settings",
+        designTask: "Design Task",
         preferences: "Preferences",
         profilepreferences: "Profile Preferences",
         personalizationpreferences: "Personalization Preferences",
@@ -273,8 +278,22 @@ const en = {
         designs: {
             title: "Designs",
             noDesigns: "No designs yet. Hit 'New' and create sum more!",
+            formDialog: {
+                title: "New design",
+                description: "A design allows you to design parts of a design task in different available formats. In case you need to plan multiple concepts for a task or just need different views, you can always create more designs in your task.",
+                nameLabel: "Name of the design",
+                typeLabel: "Type of the design",
+                descriptionLabel: "Description of the design",
+            },
         }
     },
+    design: {
+        types: {
+            type0: "Code",
+            type1: "Mermaid Diagram",
+            type2: "Plant UML",
+        }
+    }
 }
 
 const de = {
@@ -312,6 +331,11 @@ const de = {
         app: "Visual Architect",
         login: "Einloggen",
         home: "Startseite",
+        about: "Über",
+        designProjectOverview: "Projekt Übersicht",
+        designProjectTasks: "Projekt Aufgaben",
+        designProjectSettings: "Projekt Einstellungen",
+        designTask: "Designaufgabe",
         preferences: "Einstellungen",
         profilepreferences: "Profileinstellungen",
         personalizationpreferences: "Personalisierung",
@@ -532,6 +556,13 @@ const de = {
         designs: {
             title: "Designs",
             noDesigns: "Noch keine Designs. Klick 'Neu' und erstell' 'n paar!",
+            formDialog: {
+                title: "Neues Design",
+                description: "Ein Design erlaubt es dir etwas für eine Designaufgabe in verschiedenen Formaten zu entwerfen. Falls du mehrere Konzepte erarbeiten möchtest oder verschiedene Aspekte eine Designaufgabe darstellen möchstest, kannst du natürlich einfach mehrere Designs anlegen und ausarbeiten.",
+                nameLabel: "Name des Designs",
+                typeLabel: "Typ des Designs",
+                descriptionLabel: "Beschreibung des Designs",
+            },
         }
     },
 }

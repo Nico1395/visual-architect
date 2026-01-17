@@ -60,3 +60,20 @@ export interface UpdateDesignTaskDtoV1 {
     descriptionPayload: string
     status: number
 }
+
+// 0 -> code
+// 1 -> mermaid
+// 2 -> plantuml
+export function getDesignTypes() {
+    return [0, 1, 2];
+}
+
+export interface AddDesignDtoV1 {
+    name: string
+    descriptionPayload: string
+    type: number
+}
+
+export interface AddDesignResultDtoV1 {
+    designId: string
+}

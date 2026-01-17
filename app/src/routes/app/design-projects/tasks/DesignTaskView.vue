@@ -14,11 +14,13 @@ import Button from '@/components/ui/button/Button.vue';
 import DesignTaskMenu from './DesignTaskMenu.vue';
 import Input from '@/components/ui/input/Input.vue';
 import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
+import DesignFormDialog from '@/components/design-projects/DesignFormDialog.vue';
 
 const { t } = useI18n();
 const router = useRouter()
 const route = useRoute()
 const designProjectStore = useDesignProjectStore()
+const designDialogOpened = ref(false)
 
 const projectId = computed(() => route.params.projectId as string)
 const project = computed(() =>
@@ -99,6 +101,19 @@ async function deleteTask() {
 
     router.push({
         path: `/app/design-projects/${projectId.value}/tasks`
+    })
+}
+
+function openDesignDialog() {
+    designDialogOpened.value = true
+}
+
+function onDesignDialogSubmitted(result: { designId: string | undefined }) {
+    if (!result.designId || !project.value || !task.value)
+        return
+
+    router.push({
+        path: `/app/design-projects/${project.value.id}/tasks/${task.value.number}/${result.designId}`
     })
 }
 
@@ -216,7 +231,7 @@ provide('design-task', task)
                 </div>
 
                 <div class="design-task-designs-actions">
-                    <Button size="sm">
+                    <Button size="sm" @click="openDesignDialog()" :disabled="designProjectStore.busy">
                         <Icon icon="ai-plus" />
 
                         {{ t('actions.new') }}
@@ -238,6 +253,13 @@ provide('design-task', task)
             </div>
         </div>
     </ViewMargin>
+
+    <DesignFormDialog
+        v-if="task"
+        :taskId="task?.id"
+        v-model:opened="designDialogOpened"
+        @submitted="onDesignDialogSubmitted"
+     />
 </template>
 
 <style>

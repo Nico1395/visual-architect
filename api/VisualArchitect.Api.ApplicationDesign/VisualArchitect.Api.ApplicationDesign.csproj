@@ -11,4 +11,8 @@
     <ProjectReference Include="../VisualArchitect.Api.Orchestration.Abstractions/VisualArchitect.Api.Orchestration.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Presentation\Contracts\Designs\" />
+  </ItemGroup>
+
 </Project>

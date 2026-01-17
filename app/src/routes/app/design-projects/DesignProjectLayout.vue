@@ -99,6 +99,9 @@ provide('design-project', project)
             height: fit-content;
             border-radius: var(--radius-xl);
             border: 1px solid var(--border);
+            position: sticky;
+            z-index: 10;
+            top: 0.5rem;
         }
 
         .design-project-view {
