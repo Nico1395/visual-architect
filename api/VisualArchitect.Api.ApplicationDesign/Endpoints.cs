@@ -18,6 +18,7 @@ public static class Endpoints
         builder.MapUpdateDesignTaskV1();
         builder.MapDeleteDesignTaskV1();
 
+        builder.MapGetDesignByIdV1();
         builder.MapAddDesignV1();
     }
 }
