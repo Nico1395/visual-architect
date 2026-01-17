@@ -14,6 +14,8 @@ public static class DependencyInjection
         services.AddScoped<IDesignProjectReadRepository, DesignProjectReadRepository>();
         services.AddScoped<IDesignTaskReadRepository, DesignTaskReadRepository>();
         services.AddScoped<IDesignTaskWriteRepository, DesignTaskWriteRepository>();
+        services.AddScoped<IDesignReadRepository, DesignReadRepository>();
+        services.AddScoped<IDesignWriteRepository, DesignWriteRepository>();
 
         return services;
     }
