@@ -23,7 +23,6 @@ const redoShortcut = computed(() => t('shortcuts.redo', { modifier: modifier.val
 
 const props = defineProps<{
     modelValue: string,
-    editing?: boolean,
     disabled?: boolean,
     id?: string,
     class?: string,

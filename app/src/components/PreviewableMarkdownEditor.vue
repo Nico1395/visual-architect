@@ -2,10 +2,10 @@
 import ButtonGroup from './ui/button-group/ButtonGroup.vue';
 import Button from './ui/button/Button.vue';
 import VueMarkdown from 'vue-markdown-render'
-import Textarea from './ui/textarea/Textarea.vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from './Icon.vue';
+import MarkdownEditor from './MarkdownEditor.vue';
 
 const { t } = useI18n();
 const props = defineProps<{
@@ -31,25 +31,43 @@ function togglePreview(preview: boolean) {
 
 <template>
     <div :class="`previewable-markdown-editor ${props.class}`.trim()">
-        <ButtonGroup class="actions">
-            <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" >
-                <Icon icon="bi bi-markdown" size="16px" />
+        <div v-if="isPreviewing" class="previewable-markdown-editor-actions-wrapper">
+            <ButtonGroup class="previewable-markdown-editor-actions">
+                <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" size="sm">
+                    <Icon icon="bi bi-markdown" size="16px" />
 
-                {{ t('components.markdownEditor.write') }}
-            </Button>
+                    {{ t('components.markdownEditor.write') }}
+                </Button>
 
-            <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button" >
-                <Icon icon="bi bi-justify-left" size="16px" />
+                <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button"  size="sm">
+                    <Icon icon="bi bi-justify-left" size="16px" />
 
-                {{ t('components.markdownEditor.preview') }}
-            </Button>
-        </ButtonGroup>
-
-        <div v-if="!isPreviewing" class="previewable-markdown-editor-body">
-            <Textarea :disabled :id v-model="value" :placeholder="t('components.markdownEditor.placeholder')" />
+                    {{ t('components.markdownEditor.preview') }}
+                </Button>
+            </ButtonGroup>
         </div>
 
-        <div v-else class="previewable-markdown-editor-body preview">
+        <div v-if="!isPreviewing" class="previewable-markdown-editor-body">
+            <MarkdownEditor :disabled :id :placeholder="t('components.markdownEditor.placeholder')" v-model="value">
+                <template #title>
+                    <ButtonGroup>
+                        <Button :disabled @click="togglePreview(false)" :variant="isPreviewing ? 'outline' : 'default'" type="button" size="sm">
+                            <Icon icon="bi bi-markdown" size="16px" />
+
+                            {{ t('components.markdownEditor.write') }}
+                        </Button>
+
+                        <Button :disabled @click="togglePreview(true)" :variant="isPreviewing ? 'default' : 'outline'" type="button"  size="sm">
+                            <Icon icon="bi bi-justify-left" size="16px" />
+
+                            {{ t('components.markdownEditor.preview') }}
+                        </Button>
+                    </ButtonGroup>
+                </template>
+            </MarkdownEditor>
+        </div>
+
+        <div v-else class="previewable-markdown-editor-body">
             <VueMarkdown :disabled class="markdown" :source="value" />
         </div>
     </div>
@@ -61,30 +79,43 @@ function togglePreview(preview: boolean) {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    position: relative;
+
+    .previewable-markdown-editor-actions-wrapper {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        pointer-events: none;
+        padding: 0.5rem;
+
+        .previewable-markdown-editor-actions {
+            position: sticky;
+            top: 0.5rem;
+            float: right;
+            z-index: 10;
+            background-color: var(--background);
+            pointer-events: auto;
+            display: inline-flex;
+        }
+    }
 
     .previewable-markdown-editor-body {
         height: 300px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
 
-        &.preview {
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
+        .markdown-editor {
+            border: none;
+
+            .markdown-editor-header-title {
+                margin: 0;
+            }
         }
 
         > * {
             height: 100%;
-        }
-
-        > textarea {
-            font-family: "JetBrains Mono";
-            font-weight: 500;
-            font-size: 10pt;
-            resize: none;
-            padding: 0.5rem;
-            overflow-y: auto;
-
-            &::placeholder {
-                font-weight: 400;
-            }
         }
 
         > .markdown {
