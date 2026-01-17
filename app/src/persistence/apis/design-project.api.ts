@@ -1,7 +1,9 @@
 import http from "@/http"
 import type {
+    AddDesignDtoV1,
     AddDesignProjectDtoV1,
     AddDesignProjectResultDtoV1,
+    AddDesignResultDtoV1,
     AddDesignTaskDtoV1,
     AddDesignTaskResultDtoV1,
     DesignProjectDtoV1,
@@ -65,4 +67,14 @@ export async function updateTask(taskId: string, contract: UpdateDesignTaskDtoV1
 
 export async function deleteTask(taskId: string) {
     await http.delete(`/api/v1/app-design/projects/tasks/${taskId}/delete`)
+}
+
+export async function addDesign(taskId: string, contract: AddDesignDtoV1) {
+    const { data } = await http.post<AddDesignResultDtoV1>(`/api/v1/app-design/projects/tasks/${taskId}/designs/add`, {
+        name: contract.name,
+        descriptionPayload: contract.descriptionPayload,
+        type: contract.type,
+    })
+
+    return data;
 }

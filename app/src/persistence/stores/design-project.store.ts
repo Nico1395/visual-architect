@@ -1,6 +1,21 @@
 import { defineStore } from "pinia";
-import type { DesignProjectDtoV1, UpdateDesignTaskDtoV1 } from "../dtos/design-project.dtos";
-import { addProject, addTask, deleteProject, deleteTask, getOwnedProjects, getProjectById, getTaskByProjectIdAndNumber, updateProject, updateTask } from "../apis/design-project.api";
+import type {
+    AddDesignDtoV1,
+    DesignProjectDtoV1,
+    UpdateDesignTaskDtoV1
+} from "../dtos/design-project.dtos";
+import {
+    addDesign,
+    addProject,
+    addTask,
+    deleteProject,
+    deleteTask,
+    getOwnedProjects,
+    getProjectById,
+    getTaskByProjectIdAndNumber,
+    updateProject,
+    updateTask
+} from "../apis/design-project.api";
 
 export const useDesignProjectStore = defineStore("design-project", {
     state: () => ({
@@ -192,6 +207,21 @@ export const useDesignProjectStore = defineStore("design-project", {
                     if (project)
                         project.designTasks = project.designTasks?.filter(t => t.number != taskNumber)
                 }
+            } catch (error) {
+                console.error(error)
+                throw error
+            } finally {
+                this.busy = false
+            }
+        },
+        async addDesign(taskId: string, contract: AddDesignDtoV1) {
+            if (this.busy)
+                return;
+
+            this.busy = true
+
+            try {
+                return await addDesign(taskId, contract)
             } catch (error) {
                 console.error(error)
                 throw error
