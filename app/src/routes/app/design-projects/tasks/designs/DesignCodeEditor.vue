@@ -1,17 +1,24 @@
  <script setup lang="ts">
-import Icon from '@/components/Icon.vue';
-import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
-import Button from '@/components/ui/button/Button.vue';
 import CodeMirror from 'vue-codemirror6';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from '@/components/ui/menubar'
+import ButtonGroup from '@/components/ui/button-group/ButtonGroup.vue';
+import Button from '@/components/ui/button/Button.vue';
+import Icon from '@/components/Icon.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
     modelValue: string
@@ -22,58 +29,94 @@ const emits = defineEmits<{
     (e: "update:modelValue", payload: string): void
 }>()
 
+const autosave = ref(true);
+
 </script>
 
 <template>
     <div :class="`design-editor design-code-editor`">
         <div class="design-code-editor-toolbar">
-            <ButtonGroup class="design-code-editor-toolbar-language">
-                <Select>
-                    <SelectTrigger size="sm" class="w-[200px]">
-                        <SelectValue placeholder="Select a language" />
-                    </SelectTrigger>
+            <Menubar>
+                <MenubarMenu>
+                    <MenubarTrigger>
+                        File
+                    </MenubarTrigger>
 
-                    <SelectContent>
-                        <SelectLabel>
-                            Languages
-                        </SelectLabel>
+                    <MenubarContent>
+                        <MenubarCheckboxItem inset v-mode="autosave">
+                            Autosave enabled
+                        </MenubarCheckboxItem>
 
-                        <SelectItem value="csharp">
-                            C#
-                        </SelectItem>
+                        <MenubarItem inset :disabled="autosave">
+                            Save
 
-                        <SelectItem value="js">
-                            JavaScript
-                        </SelectItem>
+                            <MenubarShortcut>⌘T</MenubarShortcut>
+                        </MenubarItem>
 
-                        <SelectItem value="ts">
-                            TypeScript
-                        </SelectItem>
-                    </SelectContent>
-                </Select>
+                        <MenubarItem inset>
+                            Reset
+
+                            <MenubarShortcut>⌘T</MenubarShortcut>
+                        </MenubarItem>
+
+                        <MenubarSeparator />
+
+                        <MenubarItem inset>
+                            Export
+                        </MenubarItem>
+
+                        <MenubarItem inset>
+                            Import
+                        </MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+
+                <MenubarMenu>
+                    <MenubarTrigger>
+                        Edit
+                    </MenubarTrigger>
+
+                    <MenubarContent>
+                        <MenubarItem>
+                            Undo
+
+                            <MenubarShortcut>⌘T</MenubarShortcut>
+                        </MenubarItem>
+
+                        <MenubarItem>
+                            Redo
+
+                            <MenubarShortcut>⌘T</MenubarShortcut>
+                        </MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+
+                <MenubarMenu>
+                    <MenubarTrigger>
+                        Settings
+                    </MenubarTrigger>
+
+                    <MenubarContent>
+                        <MenubarItem>
+                            Language
+                        </MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+            </Menubar>
+
+            <ButtonGroup>
+                <Button variant="outline">
+                    <Icon icon="ai-arrow-counter-clockwise" />
+
+                    Undo
+                </Button>
+
+                <Button variant="outline">
+                    <Icon icon="ai-arrow-clockwise" />
+
+                    Redo
+                </Button>
             </ButtonGroup>
-
-            <div class="design-code-editor-toolbar-saves">
-                <ButtonGroup>
-                    <Button size="sm">
-                        <Icon icon="ai-save" />
-
-                        Save
-                    </Button>
-
-                    <Button size="sm" variant="outline">
-                        <Icon icon="ai-arrow-counter-clockwise" />
-
-                        Reset
-                    </Button>
-                </ButtonGroup>
-
-                <Label for="autosave">
-                    <Checkbox id="autosave" :default-value="true" />
-
-                    Autosave
-                </Label>
-            </div>
         </div>
 
         <div class="design-code-editor-editor">
@@ -94,7 +137,7 @@ const emits = defineEmits<{
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.5rem;
     overflow: hidden;
 
     .design-code-editor-toolbar {
@@ -102,21 +145,14 @@ const emits = defineEmits<{
         flex-direction: row;
         justify-content: start;
         align-items: center;
-        gap: 1rem;
-
-        .design-code-editor-toolbar-saves {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        gap: 0.5rem;
     }
 
     .design-code-editor-editor {
         flex: 1;
         overflow: auto;
         border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-lg);
 
         .code-mirror {
             height: 100%;
