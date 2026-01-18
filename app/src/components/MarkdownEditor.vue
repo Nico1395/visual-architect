@@ -278,6 +278,7 @@ watch(innerValue, v => {
     .markdown-editor-header {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         padding: 0.3rem;
@@ -301,6 +302,7 @@ watch(innerValue, v => {
             display: flex;
             flex-direction: row;
             gap: 0.3rem;
+            flex-wrap: wrap;
         }
     }
 

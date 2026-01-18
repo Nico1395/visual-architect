@@ -23,7 +23,7 @@ function getStatusClass() {
 
 function getDescription() {
     const createdAt = new Date(props.task.createdAt)
-    const updatedAt = new Date(props.task.createdAt)
+    const updatedAt = new Date(props.task.updatedAt)
 
     return `#${props.task.number} • ${t('designprojects.tasks.list.task.createdat')} ${d(createdAt)} • ${t('designprojects.tasks.list.task.updatedat')} ${d(updatedAt)}`
 }
@@ -40,10 +40,6 @@ function getDescription() {
                 <Badge :class="`design-project-task-item-status ${getStatusClass()}`">
                     {{ t(`designprojects.tasks.list.task.status.${getStatusClass()}`) }}
                 </Badge>
-            </div>
-
-            <div class="design-project-task-item-status">
-
             </div>
 
             <div class="design-project-task-item-description">
@@ -69,7 +65,7 @@ function getDescription() {
             font-weight: 600;
 
             &:hover {
-                text-decoration: 2px underline var(--foreground);
+                text-decoration: 1px underline;
             }
         }
 

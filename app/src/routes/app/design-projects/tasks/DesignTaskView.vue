@@ -138,14 +138,12 @@ watch(task, (t) => {
             return
 
         Object.assign(originalForm, {
-            id: task.value?.id,
             name: task.value?.name,
             descriptionPayload: task.value?.descriptionPayload,
             status: task.value?.status
         })
 
         Object.assign(form, {
-            id: task.value?.id,
             name: task.value?.name,
             descriptionPayload: task.value?.descriptionPayload,
             status: task.value?.status
@@ -277,6 +275,10 @@ provide('design-task', task)
             .design-task-return-href {
                 font-size: 10pt;
                 font-weight: 500;
+
+                &:hover {
+                    text-decoration: 1px underline;
+                }
             }
 
             .design-task-name-editor {
